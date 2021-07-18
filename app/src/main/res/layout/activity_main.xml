@@ -1,18 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/light_bg"
+    android:id="@+id/mainactivity"
     tools:context=".MainActivity">
 
-    <TextView
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+        <Button
+            android:id="@+id/threedots"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_threedots"
+            android:elevation="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="22dp"/>
+
+    <Button
+        android:id="@+id/focusbutton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:elevation="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/focusbutton"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/pedometerbutton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:backgroundTint="@null"
+        android:elevation="20dp"
+        android:background="@drawable/runningbutton"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+
+   <com.google.android.material.bottomappbar.BottomAppBar
+       android:id="@+id/bottomappbar"
+       android:layout_gravity="bottom"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:fabCradleMargin="10dp"
+       android:backgroundTint="@color/purple_200"
+       >
+       <com.google.android.material.bottomnavigation.BottomNavigationView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/bottomnavview"
+           app:menu="@menu/bottom_navmenu"
+           android:layout_marginEnd="16dp"
+           android:background="@android:color/transparent"/>
+
+   </com.google.android.material.bottomappbar.BottomAppBar>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_add2"
+        app:layout_anchor="@id/bottomappbar"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
