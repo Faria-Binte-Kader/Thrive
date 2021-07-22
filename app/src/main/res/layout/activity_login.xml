@@ -26,14 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        android:textColorHint="@color/purple_500"
+        android:textColorHint="@color/purple_grey"
         android:padding="10dp"
         android:paddingLeft="15dp"
         android:inputType="textEmailAddress"
-        android:background="@drawable/buttonrounded2"
+        android:background="@drawable/buttonrounded4"
         android:textSize="20sp"
         android:layout_marginTop="50dp"
-        android:foregroundTint="@color/purple_500"
+        android:foregroundTint="@color/purple_grey"
         android:elevation="5dp"
         android:fontFamily="@font/averiasanslibre_light"
         />
@@ -44,8 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:background="@drawable/buttonrounded2"
-            android:textColorHint="@color/purple_500"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_grey"
             android:padding="10dp"
             android:paddingLeft="15dp"
             android:fontFamily="@font/averiasanslibre_light"
@@ -53,7 +53,7 @@
             android:elevation="5dp"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
-            android:foregroundTint="@color/purple_500"
+            android:foregroundTint="@color/purple_grey"
             />
 
     <Button
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New here? Sign up!"
-        android:textColor="@color/white"
+        android:textColor="@color/grey"
         android:background="@android:color/transparent"
         android:textStyle="bold"
         android:fontFamily="@font/averiasanslibre_bold"
@@ -97,7 +97,7 @@
         android:fontFamily="@font/averiasanslibre_bold"
         android:padding="10sp"
         android:text="Forgot Password"
-        android:textColor="@color/white"
+        android:textColor="@color/grey"
         android:textStyle="bold" />
 </LinearLayout>`
 
