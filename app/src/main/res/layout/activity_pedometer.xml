@@ -8,11 +8,6 @@
     android:background="@drawable/light_bg"
     tools:context=".Pedometer">
 
-    <!--<Button
-        android:id="@+id/permissionbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Permissions"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,7 +3,6 @@
     package="com.example.thrive">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
-    <uses-permission android:name="android.permission.BODY_SENSORS"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
         <activity android:name=".Pedometer"></activity>
+        <activity android:name=".AddGoals"></activity>
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Shop" />
         <activity android:name=".Stat" />
