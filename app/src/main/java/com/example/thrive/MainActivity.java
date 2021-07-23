@@ -18,15 +18,13 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button dropdownmenu;
+    Button dropdownmenu, focusbutton;
     Button profileBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        profileBtn = (Button) findViewById(R.id.profileButton);
 
         dropdownmenu=(Button)findViewById(R.id.threedots);
         dropdownmenu.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +50,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        focusbutton=(Button)findViewById(R.id.focusbutton);
+        focusbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Focus_Session.class);
+                startActivity(intent);
+            }
+        });
 
         BottomNavigationView nav= findViewById(R.id.bottomnavview);
         findViewById(R.id.bottomnavview).setBackground(null);
@@ -64,18 +69,28 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.placefolder:
                         nav.setEnabled(false);
                         break;
-
+                    case R.id.profile:
+                        Intent intent = new Intent(MainActivity.this, Profile.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.shop:
+                        Intent intent2 = new Intent(MainActivity.this, Shop.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.stat:
+                        Intent intent3 = new Intent(MainActivity.this, Stat.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.friends:
+                        Intent intent4 = new Intent(MainActivity.this, Friends.class);
+                        startActivity(intent4);
+                        break;
                 }
                 return true;
             }
         });
 
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoProfilePage();
-            }
-        });
+
 
     }
 
@@ -111,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void gotoProfilePage(){
-        Intent intent = new Intent(MainActivity.this, Profile.class);
-        startActivity(intent);
-    }
+
+
+
 }
