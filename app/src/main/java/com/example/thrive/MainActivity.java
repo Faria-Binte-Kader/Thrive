@@ -19,10 +19,14 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     Button dropdownmenu;
+    Button profileBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        profileBtn = (Button) findViewById(R.id.profileButton);
 
         dropdownmenu=(Button)findViewById(R.id.threedots);
         dropdownmenu.setOnClickListener(new View.OnClickListener() {
@@ -33,8 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
                 po.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
                 {
-                    public boolean onMenuItemClick(MenuItem item)
+                    public boolean onMenuItemClick(@NonNull  MenuItem item)
                     {
+                        int id = item.getItemId();
+
+                        if(id == R.id.logout) {
+                            startActivity(new Intent(getApplicationContext(), Logout.class));
+                        }
                         return true;
                     }
                 });
@@ -61,7 +70,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoProfilePage();
+            }
+        });
+
     }
+
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,7 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {
-            menu.getItem(2).setEnabled(false);
+        menu.getItem(2).setEnabled(false);
         return true;
+    }
+
+    public void gotoProfilePage(){
+        Intent intent = new Intent(MainActivity.this, Profile.class);
+        startActivity(intent);
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "11210047907",
+    "project_id": "thrive-b1a4e",
+    "storage_bucket": "thrive-b1a4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11210047907:android:6d53a2c3011261bb261a16",
+        "android_client_info": {
+          "package_name": "com.example.thrive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11210047907-8d894tmgqqhpg9fpfeiivgcjclfu7h85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsTeRIetEAjROx6S6a3nE_nKzq-BTdvbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11210047907-8d894tmgqqhpg9fpfeiivgcjclfu7h85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

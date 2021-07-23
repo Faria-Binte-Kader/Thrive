@@ -9,10 +9,10 @@
     tools:context=".MainActivity">
 
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <Button
             android:id="@+id/threedots"
             android:layout_width="30dp"
@@ -22,50 +22,63 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="22dp"/>
 
-    <Button
-        android:id="@+id/focusbutton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="8dp"
-        android:elevation="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/focusbutton"
-        app:backgroundTint="@null" />
+        <Button
+            android:id="@+id/focusbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:elevation="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/focusbutton"
+            app:backgroundTint="@null" />
 
-    <Button
-        android:id="@+id/pedometerbutton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:backgroundTint="@null"
-        android:elevation="20dp"
-        android:background="@drawable/runningbutton"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/pedometerbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:elevation="20dp"
+            android:background="@drawable/runningbutton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/profileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:elevation="20dp"
+            android:background="@drawable/buttonrounded2"
+            android:text="Profile"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
 
 
-   <com.google.android.material.bottomappbar.BottomAppBar
-       android:id="@+id/bottomappbar"
-       android:layout_gravity="bottom"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:fabCradleMargin="10dp"
-       android:backgroundTint="@color/purple_200"
-       >
-       <com.google.android.material.bottomnavigation.BottomNavigationView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:id="@+id/bottomnavview"
-           app:menu="@menu/bottom_navmenu"
-           android:layout_marginEnd="16dp"
-           android:background="@android:color/transparent"/>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomappbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/purple_200"
+        app:fabCradleMargin="10dp">
 
-   </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            app:menu="@menu/bottom_navmenu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add2"
-        app:layout_anchor="@id/bottomappbar"/>
+        app:layout_anchor="@id/bottomappbar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

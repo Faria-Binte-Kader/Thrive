@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/light_bg"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Logout">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure you want to log out?"
+        android:layout_marginTop="200dp"
+        android:textStyle="bold"
+        android:background="@drawable/buttonrounded3"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="23sp"
+        android:padding="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+
+        <Button
+            android:id="@+id/yes_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/buttonrounded"
+            android:fontFamily="@font/averiasanslibre_bold"
+            android:text="YES"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:elevation="10dp"
+            app:backgroundTint="@null"
+            />
+
+
+        <Button
+            android:id="@+id/no_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/buttonrounded"
+            android:padding="10dp"
+            android:text="NO"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:elevation="10dp"
+            app:backgroundTint="@null"
+            />
+    </LinearLayout>
+
+</LinearLayout>

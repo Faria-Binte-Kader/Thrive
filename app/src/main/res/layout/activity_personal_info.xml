@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    tools:context=".Signup">
+    tools:context=".PersonalInfo">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,6 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="110dp"
-            android:layout_marginTop="60dp"
             android:layout_gravity="center"
             android:elevation="10dp"
             android:src="@drawable/logo2"/>
@@ -25,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ENTER YOUR EMAIL TO VERIFY!"
+            android:text="ENTER YOUR INFO TO THRIVE!"
             android:textStyle="bold"
             android:background="@drawable/buttonrounded3"
             android:textAlignment="center"
@@ -35,9 +34,8 @@
             android:padding="10dp"
             />
 
-        <!--
         <EditText
-            android:id="@+id/signupName"
+            android:id="@+id/personalInfoName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="ENTER YOUR NAME"
@@ -48,74 +46,15 @@
             android:inputType="textCapCharacters"
             android:background="@drawable/buttonrounded4"
             android:textSize="18sp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:foregroundTint="@color/purple_500"
             android:elevation="5dp"
             android:fontFamily="@font/averiasanslibre_light"
             />
-         -->
 
         <EditText
 
-            android:id="@+id/signupEmail"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="ENTER YOUR EMAIL ADDRESS"
-            android:textAlignment="center"
-            android:background="@drawable/buttonrounded4"
-            android:textColorHint="@color/purple_grey"
-            android:padding="10dp"
-            android:paddingLeft="15dp"
-            android:fontFamily="@font/averiasanslibre_light"
-            android:inputType="textEmailAddress"
-            android:elevation="5dp"
-            android:textSize="18sp"
-            android:layout_marginTop="70dp"
-            android:foregroundTint="@color/purple_500"
-            />
-
-        <EditText
-
-            android:id="@+id/signupPassword"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="ENTER YOUR PASSWORD"
-            android:textAlignment="center"
-            android:background="@drawable/buttonrounded4"
-            android:textColorHint="@color/purple_grey"
-            android:padding="10dp"
-            android:paddingLeft="15dp"
-            android:fontFamily="@font/averiasanslibre_light"
-            android:inputType="textPassword"
-            android:elevation="5dp"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:foregroundTint="@color/purple_500"
-            />
-
-        <EditText
-
-            android:id="@+id/signupConfirmPassword"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="CONFIRM YOUR PASSWORD"
-            android:textAlignment="center"
-            android:background="@drawable/buttonrounded4"
-            android:textColorHint="@color/purple_grey"
-            android:padding="10dp"
-            android:paddingLeft="15dp"
-            android:fontFamily="@font/averiasanslibre_light"
-            android:inputType="textPassword"
-            android:elevation="5dp"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:foregroundTint="@color/purple_500"
-            />
-
-        <!--
-        <EditText
-
-            android:id="@+id/signupAge"
+            android:id="@+id/personalInfoAge"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="ENTER YOUR AGE"
@@ -134,7 +73,7 @@
 
         <EditText
 
-            android:id="@+id/signupWeight"
+            android:id="@+id/personalInfoWeight"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="ENTER YOUR WEIGHT"
@@ -150,34 +89,38 @@
             android:layout_marginTop="15dp"
             android:foregroundTint="@color/purple_500"
             />
-        -->
+
+        <EditText
+            android:id="@+id/personalInfoDescription"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER DESCRIPTION"
+            android:textAlignment="center"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_grey"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            android:inputType="text"
+            android:elevation="5dp"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp"
+            android:foregroundTint="@color/purple_500"
+            />
 
         <Button
             android:layout_marginTop="40dp"
-            android:id="@+id/signupButton"
+            android:id="@+id/saveInfoButton"
             android:layout_width="162dp"
             android:layout_height="53dp"
             android:background="@drawable/buttonrounded"
             android:fontFamily="@font/averiasanslibre_bold"
-            android:text="SIGN UP"
+            android:text="SAVE"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="24dp"
             android:elevation="10dp"
             app:backgroundTint="@null"
-            />
-        <Button
-            android:id="@+id/alreadyMember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already a member? LOGIN!"
-            android:textColor="@color/grey"
-            android:background="@android:color/transparent"
-            android:textStyle="bold"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:layout_marginTop="10sp"
-            android:padding="10sp"
-            android:onClick="gotoLoginPage"
             />
     </LinearLayout>
 
