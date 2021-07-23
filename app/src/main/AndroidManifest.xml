@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.thrive">
 
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,17 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".ForgotPassword"></activity>
-        <activity android:name=".Shop"></activity>
-        <activity android:name=".Stat"></activity>
-        <activity android:name=".Friends"></activity>
+        <activity android:name=".Pedometer"></activity>
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".Shop" />
+        <activity android:name=".Stat" />
+        <activity android:name=".Friends" />
         <activity android:name=".Profile" />
         <activity android:name=".PersonalInfo" />
         <activity android:name=".Logout" />
         <activity android:name=".VerifyEmail" />
         <activity android:name=".Signup" />
         <activity android:name=".login" />
-        <activity android:name=".Focus_Session"></activity>
+        <activity android:name=".Focus_Session" />
         <activity android:name=".Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

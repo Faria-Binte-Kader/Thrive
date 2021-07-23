@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button dropdownmenu, focusbutton;
+    Button dropdownmenu, focusbutton, pedometerbutton;
     Button profileBtn;
 
     @Override
@@ -55,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Focus_Session.class);
+                startActivity(intent);
+            }
+        });
+
+        pedometerbutton=(Button)findViewById(R.id.pedometerbutton);
+        pedometerbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Pedometer.class);
                 startActivity(intent);
             }
         });
