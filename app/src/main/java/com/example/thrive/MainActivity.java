@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 po.show();
             }
         });
+
 
         focusbutton=(Button)findViewById(R.id.focusbutton);
         focusbutton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        FloatingActionButton addgoalsbtn = findViewById(R.id.fab);
+        addgoalsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddGoals.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
