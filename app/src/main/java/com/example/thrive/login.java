@@ -2,12 +2,15 @@ package com.example.thrive;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,7 +39,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
 
     public static final String TAG = "TAG_LOGIN";
     EditText loginEmail, loginPassword;
-    Button loginBtn, signupBtn;
+    Button loginBtn, signupBtn, forgotPasswordBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
@@ -56,6 +60,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
         loginBtn = (Button) findViewById(R.id.loginButton);
 
         signupBtn = (Button) findViewById(R.id.gotoSignupButton);
+        forgotPasswordBtn = (Button) findViewById(R.id.forgotPassword);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
                 String email = loginEmail.getText().toString();
                 String password = loginPassword.getText().toString();
 
-                if (email.isEmpty() || !email.contains("@")) {
+                if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     showError(loginEmail, "Email is not Valid");
                     return;
                 }
@@ -103,6 +108,55 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
             }
         });
 
+
+        forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoForgotPassword(view);
+            }
+        });
+
+    }
+
+    private void gotoForgotPassword(View v) {
+
+        Intent intent = new Intent(login.this, ForgotPassword.class);
+        startActivity(intent);
+
+        /*
+        EditText resetMail = new EditText(v.getContext());
+        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+        passwordResetDialog.setTitle("Reset Password?");
+        passwordResetDialog.setMessage("Enter your email to receive reset link.");
+        passwordResetDialog.setView(resetMail);
+
+        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String mail = resetMail.getText().toString();
+                fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(login.this, "Reset Password Link sent to your email.", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(login.this, "Error! Reset Link is Not Sent" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        passwordResetDialog.create().show();
+        */
     }
 
     private void showError(EditText input, String s) {

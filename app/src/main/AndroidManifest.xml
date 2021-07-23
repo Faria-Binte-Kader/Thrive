@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".Profile" />
         <activity android:name=".PersonalInfo" />
         <activity android:name=".Logout" />
         <activity android:name=".VerifyEmail" />

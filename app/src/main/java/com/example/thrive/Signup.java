@@ -98,6 +98,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                         userId = fAuth.getCurrentUser().getUid();
                                         DocumentReference documentReference = fStore.collection("User").document(userId);
                                         Map<String, Object> user = new HashMap<>();
+                                        user.put("Name", email);
                                         user.put("Email", email);
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
