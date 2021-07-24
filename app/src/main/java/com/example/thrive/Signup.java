@@ -31,6 +31,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     public static final String TAG = "TAG_SIGNUP";
     Button alreadyMember, signUpBtn;
     private EditText inputEmail, inputPassword, confirmPassword;
+    private EditText inputName, inputAge, inputWeight;
     private String userId;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -46,9 +47,9 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
         inputPassword = findViewById(R.id.signupPassword);
         confirmPassword = findViewById(R.id.signupConfirmPassword);
 
-        //inputName = findViewById(R.id.signupName);
-        //inputAge = findViewById(R.id.signupAge);
-        //inputWeight = findViewById(R.id.signupWeight);
+        inputName = findViewById(R.id.signupName);
+        inputAge = findViewById(R.id.signupAge);
+        inputWeight = findViewById(R.id.signupWeight);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -60,22 +61,22 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                 String password = inputPassword.getText().toString();
                 String conPassword = confirmPassword.getText().toString();
 
-                //final String name = inputName.getText().toString().toUpperCase();
-                //final String age = inputAge.getText().toString();
-                //final String weight = inputWeight.getText().toString();
+                final String name = inputName.getText().toString().toUpperCase();
+                final String age = inputAge.getText().toString();
+                final String weight = inputWeight.getText().toString();
 
-                /*
+
                 if (name.isEmpty() || name.length() < 7) {
                     showError(inputName, "Your Name is not valid");
                     return;
-                }*/
+                }
 
                 if (email.isEmpty() || !email.contains("@")) {
                     showError(inputEmail, "Email is not Valid");
                     return;
                 }
-                if (password.isEmpty() || password.length() < 7) {
-                    showError(inputPassword, "Password must be at least 7 characters");
+                if (password.isEmpty() || password.length() < 6) {
+                    showError(inputPassword, "Password must be at least 6 characters");
                     return;
                 }
                 if (conPassword.isEmpty() || !conPassword.equals(password)) {
@@ -98,8 +99,10 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                         userId = fAuth.getCurrentUser().getUid();
                                         DocumentReference documentReference = fStore.collection("User").document(userId);
                                         Map<String, Object> user = new HashMap<>();
-                                        user.put("Name", email);
+                                        user.put("Name", name);
                                         user.put("Email", email);
+                                        user.put("Age", age);
+                                        user.put("Weight", weight);
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

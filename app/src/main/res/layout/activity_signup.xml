@@ -35,7 +35,7 @@
             android:padding="10dp"
             />
 
-        <!--
+
         <EditText
             android:id="@+id/signupName"
             android:layout_width="300dp"
@@ -45,15 +45,15 @@
             android:textAlignment="center"
             android:padding="10dp"
             android:paddingLeft="15dp"
+            android:layout_marginTop="40dp"
+            android:elevation="5dp"
             android:inputType="textCapCharacters"
             android:background="@drawable/buttonrounded4"
             android:textSize="18sp"
-            android:layout_marginTop="50dp"
             android:foregroundTint="@color/purple_500"
-            android:elevation="5dp"
             android:fontFamily="@font/averiasanslibre_light"
             />
-         -->
+
 
         <EditText
 
@@ -70,7 +70,7 @@
             android:inputType="textEmailAddress"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -89,7 +89,7 @@
             android:inputType="textPassword"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -108,11 +108,11 @@
             android:inputType="textPassword"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
-        <!--
+
         <EditText
 
             android:id="@+id/signupAge"
@@ -128,7 +128,7 @@
             android:inputType="number"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -147,13 +147,12 @@
             android:inputType="number"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
-        -->
 
         <Button
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/signupButton"
             android:layout_width="162dp"
             android:layout_height="53dp"

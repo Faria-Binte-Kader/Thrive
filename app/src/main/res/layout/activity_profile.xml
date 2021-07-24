@@ -6,32 +6,200 @@
     android:layout_width="match_parent"
     android:background="@drawable/light_bg"
     android:orientation="vertical"
-
     tools:context=".Profile">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:gravity="center"
         android:layout_marginTop="20dp"
+        android:padding="30dp"
         >
 
-        <Button
-            android:id="@+id/updatePersonalInfo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/buttonrounded"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="UPDATE Personal Info"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:padding="30dp"
+            >
+
+            <ImageView
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:src="@drawable/ic_profile"
+                android:padding="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/buttonrounded4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="40dp"
+                    />
+                <TextView
+                    android:id="@+id/profileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="40dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+                <TextView
+                    android:id="@+id/profileEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age: "
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+                <TextView
+                    android:id="@+id/profileAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight: "
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+                <TextView
+                    android:id="@+id/profileWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description: "
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+                <TextView
+                    android:id="@+id/profileDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <Button
+                android:id="@+id/updatePersonalInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/buttonrounded"
+                android:elevation="10dp"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:padding="10dp"
+                android:text="UPDATE Personal Info"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -51,8 +219,6 @@
             app:menu="@menu/bottom_navmenu2" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
