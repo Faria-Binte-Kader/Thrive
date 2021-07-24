@@ -16,11 +16,27 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Pedometer extends AppCompatActivity implements SensorEventListener{
 
@@ -30,10 +46,24 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener{
 
     private int SENSOR_PERMISSION_CODE = 1;
 
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
+    String TAG = "TAG StepCounter";
+
+    Date c = Calendar.getInstance().getTime();
+    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+    String formattedDate = df.format(c);
+
+    String todaysteps = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedometer);
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         if(ContextCompat.checkSelfPermission(Pedometer.this,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
@@ -96,13 +126,43 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener{
     protected void onPause() {
         super.onPause();
         running = false;
-
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(running) {
-            textViewStepCounter.setText(String.valueOf(sensorEvent.values[0]));
+            String steps = String.valueOf(sensorEvent.values[0]);
+
+            DocumentReference documentReference1 = fStore.collection("Stepcount").document(fAuth.getUid()).collection("Dailysteps").document(formattedDate);
+            Map<String, Object> step = new HashMap<>();
+            step.put("Count", steps);
+
+            documentReference1.set(step).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: step count is stored");
+                }
+
+            });
+
+            DocumentReference documentReference2 = fStore.collection("Stepcount").document(fAuth.getUid()).collection("Dailysteps").document(formattedDate);
+            documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            todaysteps = document.getString("Count");
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "got failed with ", task.getException());
+                    }
+                }
+            });
+
+            textViewStepCounter.setText(steps);
         }
     }
 
