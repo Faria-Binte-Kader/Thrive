@@ -10,9 +10,6 @@
     android:background="@drawable/light_bg"
     tools:context=".Focus_Session">
 
-
-
-
     <TextView
         android:id="@+id/goalname"
         android:layout_width="wrap_content"
@@ -33,7 +30,7 @@
         android:id="@+id/timerminutetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="ENTER TIME FOR THE SESSION IN MUNTES"
+        android:hint="ENTER TIME FOR THE SESSION IN MINUTES"
         android:background="@drawable/buttonrounded4"
         android:textColorHint="@color/purple_grey"
         android:padding="10dp"
@@ -75,7 +72,7 @@
           android:layout_gravity="center"
           android:fontFamily="@font/averiasanslibre_bold"
           android:text="00:00:00"
-          android:textSize="60dp"
+          android:textSize="50dp"
           android:textStyle="bold" />
 
      <LinearLayout

@@ -8,35 +8,57 @@
     android:background="@drawable/light_bg"
     tools:context=".Pedometer">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_marginTop="200dp">
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:background="@drawable/circle_shape"
+            android:progressDrawable="@drawable/circular_progressbar"
+            android:indeterminate="false"
+            android:textAlignment="center"
+            android:id="@+id/pedometer_progress"
+            />
+
         <TextView
             android:id="@+id/textViewStepCounter"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="0"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
             android:fontFamily="@font/averiasanslibre_bold"
             android:textColor="@color/white"
-            android:textSize="100dp"/>
+            android:textSize="60dp"
+            />
 
         <TextView
+            android:layout_below="@+id/textViewStepCounter"
+            android:id="@+id/textsteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="STEPS"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
             android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
+            android:textColor="@color/purple_200"
             android:textSize="20dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
