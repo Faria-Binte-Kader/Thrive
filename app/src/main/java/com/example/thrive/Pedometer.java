@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +41,7 @@ import java.util.Map;
 
 public class Pedometer extends AppCompatActivity implements SensorEventListener{
 
-    TextView textViewStepCounter;
+    TextView textViewStepCounter,textViewCalorie,textViewDistance;
     SensorManager sensorManager;
     boolean running = false;
 
@@ -73,6 +74,8 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener{
         }
 
         textViewStepCounter = findViewById(R.id.textViewStepCounter);
+        textViewCalorie = findViewById(R.id.textViewCalorie);
+        textViewDistance = findViewById(R.id.textViewDistance);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
 
@@ -131,28 +134,58 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener{
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(running) {
-            String steps = String.valueOf(sensorEvent.values[0]);
+            int steps = (int) (sensorEvent.values[0]);
 
-            DocumentReference documentReference1 = fStore.collection("Stepcount").document(fAuth.getUid()).collection("Dailysteps").document(formattedDate);
-            Map<String, Object> step = new HashMap<>();
-            step.put("Count", steps);
+            textViewStepCounter.setText(String.valueOf(steps));
 
-            documentReference1.set(step).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "onSuccess: step count is stored");
-                }
+            final int[] weight = {0};
+            final int[] height = {0};
+            final float[] calories = {(float) 0};
+            float distance;
 
-            });
+            NumberFormat nf = NumberFormat.getInstance();
+            nf.setMaximumFractionDigits(2);
 
-            DocumentReference documentReference2 = fStore.collection("Stepcount").document(fAuth.getUid()).collection("Dailysteps").document(formattedDate);
-            documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            DocumentReference documentReference = fStore.collection("User").document(fAuth.getUid());
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            todaysteps = document.getString("Count");
+                            String temp = document.getString("Height");
+                            height[0] = Integer.parseInt(temp);
+                            temp = document.getString("Weight");
+                            weight[0] = Integer.parseInt(temp);
+
+                            if(height[0] >=180) {
+                                if(weight[0] <=45) calories[0] =(float) (steps*.028);
+                                if(weight[0] >45 && weight[0] <=55) calories[0] =(float) (steps*.033);
+                                if(weight[0] >55 && weight[0] <=64) calories[0] =(float) (steps*.038);
+                                if(weight[0] >64 && weight[0] <=73) calories[0] =(float) (steps*.044);
+                                if(weight[0] >73 && weight[0] <=82) calories[0] =(float) (steps*.049);
+                                if(weight[0] >82 && weight[0] <=91) calories[0] =(float) (steps*.055);
+                                if(weight[0] >91 && weight[0] <=100) calories[0] =(float) (steps*.060);
+                                if(weight[0] >100 && weight[0] <=114) calories[0] =(float) (steps*.069);
+                                if(weight[0] >114 && weight[0] <=125) calories[0] =(float) (steps*.075);
+                                if(weight[0] >125 && weight[0] <=136) calories[0] =(float) (steps*.082);
+                                if(weight[0] >136) calories[0] =(float) (steps*.090);
+                            } else {
+                                if(weight[0] <=45) calories[0] =(float) (steps*.025);
+                                if(weight[0] >45 && weight[0] <=55) calories[0] =(float) (steps*.030);
+                                if(weight[0] >55 && weight[0] <=64) calories[0] =(float) (steps*.035);
+                                if(weight[0] >64 && weight[0] <=73) calories[0] =(float) (steps*.040);
+                                if(weight[0] >73 && weight[0] <=82) calories[0] =(float) (steps*.045);
+                                if(weight[0] >82 && weight[0] <=91) calories[0] =(float) (steps*.050);
+                                if(weight[0] >91 && weight[0] <=100) calories[0] =(float) (steps*.055);
+                                if(weight[0] >100 && weight[0] <=114) calories[0] =(float) (steps*.062);
+                                if(weight[0] >114 && weight[0] <=125) calories[0] =(float) (steps*.068);
+                                if(weight[0] >125 && weight[0] <=136) calories[0] =(float) (steps*.075);
+                                if(weight[0] >136) calories[0] =(float) (steps*.080);
+                            }
+
+                            textViewCalorie.setText(String.valueOf(nf.format(calories[0])));
+
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -162,7 +195,9 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener{
                 }
             });
 
-            textViewStepCounter.setText(steps);
+            distance = ((float) steps/ (float) 1786);
+
+            textViewDistance.setText(String.valueOf(nf.format(distance)));
         }
     }
 

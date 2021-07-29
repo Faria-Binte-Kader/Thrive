@@ -31,7 +31,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     public static final String TAG = "TAG_SIGNUP";
     Button alreadyMember, signUpBtn;
     private EditText inputEmail, inputPassword, confirmPassword;
-    private EditText inputName, inputAge, inputWeight;
+    private EditText inputName, inputAge, inputHeight, inputWeight;
     private String userId;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -49,6 +49,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
 
         inputName = findViewById(R.id.signupName);
         inputAge = findViewById(R.id.signupAge);
+        inputHeight = findViewById(R.id.signupHeight);
         inputWeight = findViewById(R.id.signupWeight);
 
         fAuth = FirebaseAuth.getInstance();
@@ -63,6 +64,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
 
                 final String name = inputName.getText().toString().toUpperCase();
                 final String age = inputAge.getText().toString();
+                final String height = inputHeight.getText().toString();
                 final String weight = inputWeight.getText().toString();
 
 
@@ -102,6 +104,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                         user.put("Name", name);
                                         user.put("Email", email);
                                         user.put("Age", age);
+                                        user.put("Height", height);
                                         user.put("Weight", weight);
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

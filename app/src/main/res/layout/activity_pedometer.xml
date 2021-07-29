@@ -19,6 +19,7 @@
             android:id="@+id/textViewStepCounter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="0"
@@ -35,7 +36,79 @@
             android:text="STEPS"
             android:fontFamily="@font/averiasanslibre_bold"
             android:textColor="@color/white"
-            android:textSize="20dp"/>
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <TextView
+                android:id="@+id/textViewCalorie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="0"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textColor="@color/white"
+                android:textSize="70dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="CAL"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textColor="@color/white"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="0"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textColor="@color/white"
+                android:textSize="70dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="KM"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textColor="@color/white"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     tools:context=".Signup">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,10 +135,29 @@
 
         <EditText
 
+            android:id="@+id/signupHeight"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER YOUR HEIGHT IN CM"
+            android:textAlignment="center"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_grey"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            android:inputType="number"
+            android:elevation="5dp"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:foregroundTint="@color/purple_500"
+            />
+
+        <EditText
+
             android:id="@+id/signupWeight"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="ENTER YOUR WEIGHT"
+            android:hint="ENTER YOUR WEIGHT IN KG"
             android:textAlignment="center"
             android:background="@drawable/buttonrounded4"
             android:textColorHint="@color/purple_grey"
@@ -180,4 +200,4 @@
             />
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

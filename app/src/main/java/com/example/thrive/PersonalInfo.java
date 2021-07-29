@@ -24,7 +24,7 @@ public class PersonalInfo extends AppCompatActivity {
 
     Button saveBtn;
 
-    private EditText inputName, inputDescription, inputAge, inputWeight;
+    private EditText inputName, inputDescription, inputAge,inputHeight, inputWeight;
 
     private String userId, userEmail;
     FirebaseAuth fAuth;
@@ -39,6 +39,7 @@ public class PersonalInfo extends AppCompatActivity {
         inputName = findViewById(R.id.personalInfoName);
         inputDescription = findViewById(R.id.personalInfoDescription);
         inputAge = findViewById(R.id.personalInfoAge);
+        inputHeight = findViewById(R.id.personalInfoHeight);
         inputWeight = findViewById(R.id.personalInfoWeight);
 
         fAuth = FirebaseAuth.getInstance();
@@ -49,6 +50,7 @@ public class PersonalInfo extends AppCompatActivity {
             public void onClick(View view) {
                 final String name = inputName.getText().toString().toUpperCase();
                 final String age = inputAge.getText().toString();
+                final String height = inputHeight.getText().toString();
                 final String weight = inputWeight.getText().toString();
                 final String description = inputDescription.getText().toString();
 
@@ -67,6 +69,7 @@ public class PersonalInfo extends AppCompatActivity {
                 user.put("Name", name);
                 user.put("Email", email);
                 user.put("Age", age);
+                user.put("Height", height);
                 user.put("Weight", weight);
                 user.put("Description", description);
 
