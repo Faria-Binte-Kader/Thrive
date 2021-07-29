@@ -210,11 +210,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical"
             >
 
             <Button
                 android:id="@+id/updatePersonalInfo"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
@@ -226,7 +229,10 @@
                 android:text="UPDATE Personal Info"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                app:backgroundTint="@null" />
+                app:backgroundTint="@null"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="150dp"/>
 
         </LinearLayout>
 

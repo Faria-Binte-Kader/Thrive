@@ -19,3 +19,4 @@ public class VerifyEmail extends AppCompatActivity {
         startActivity(intent);
     }
 }
+

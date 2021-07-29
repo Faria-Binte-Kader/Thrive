@@ -108,6 +108,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                         user.put("Age", age);
                                         user.put("Height", height);
                                         user.put("Weight", weight);
+                                        user.put("Coin", "100");
                                         user.put("Description","");
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

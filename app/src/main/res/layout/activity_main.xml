@@ -42,6 +42,41 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+           >
+
+            <TextView
+                android:id="@+id/cointextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="6dp"
+                android:fontFamily="@font/averiasanslibre_light"
+                android:layout_toLeftOf="@+id/coinpicture"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/coinpicture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:backgroundTint="@null"
+                android:elevation="20dp"
+                android:background="@drawable/money"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"/>
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
