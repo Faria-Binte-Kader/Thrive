@@ -23,7 +23,7 @@ public class Profile extends AppCompatActivity {
 
     Button updateProfileBtn;
 
-    private TextView name, description, email, age, weight;
+    private TextView name, description, email, age, height, weight;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -38,6 +38,7 @@ public class Profile extends AppCompatActivity {
         email = findViewById(R.id.profileEmail);
         description = findViewById(R.id.profileDescription);
         age = findViewById(R.id.profileAge);
+        height = findViewById(R.id.profileHeight);
         weight = findViewById(R.id.profileWeight);
 
 
@@ -94,7 +95,8 @@ public class Profile extends AppCompatActivity {
                     email.setText(value.getString("Email"));
                     description.setText(value.getString("Description"));
                     age.setText(value.getString("Age"));
-                    weight.setText(value.getString("Weight"));
+                    height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
+                    weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
 
                 }
             }
