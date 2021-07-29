@@ -29,6 +29,7 @@
             >
 
             <ImageView
+                android:id="@+id/myavatar"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/default_profile_picture"
@@ -232,10 +233,39 @@
                 app:backgroundTint="@null"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginBottom="150dp"/>
+               />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/changeavatarbtn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/buttonrounded"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:elevation="10dp"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:padding="10dp"
+                android:text="CHANGE MY AVATAR"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:backgroundTint="@null"
+                android:layout_marginBottom="100dp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

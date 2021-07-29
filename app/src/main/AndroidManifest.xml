@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".AnimalDetails"></activity>
+        <activity android:name=".ChangeAvatar"></activity>
+        <activity android:name=".AnimalDetails" />
         <activity android:name=".Pedometer" />
         <activity android:name=".AddGoals" />
         <activity android:name=".ForgotPassword" />

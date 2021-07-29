@@ -9,11 +9,18 @@
     tools:context=".Pedometer">
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_marginTop="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/paw_prints"
+            android:layout_alignBottom="@+id/pedometer_progress"/>
+
 
         <ProgressBar
             android:layout_width="match_parent"
@@ -38,7 +45,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
+            android:textColor="@color/purple_700"
             android:textSize="60dp"
             />
 
@@ -56,8 +63,9 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/purple_200"
+            android:textColor="@color/purple_500"
             android:textSize="20dp"/>
+
 
     </RelativeLayout>
 
@@ -94,7 +102,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:fontFamily="@font/averiasanslibre_light"
-                android:textColor="@color/purple_200"
+                android:textColor="@color/purple_500"
                 android:textSize="15dp"/>
 
         </LinearLayout>
@@ -126,7 +134,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:fontFamily="@font/averiasanslibre_light"
-                android:textColor="@color/purple_200"
+                android:textColor="@color/purple_500"
                 android:textSize="15dp"/>
 
         </LinearLayout>

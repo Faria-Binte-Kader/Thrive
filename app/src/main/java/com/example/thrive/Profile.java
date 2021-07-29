@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,15 +19,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
 
-    Button updateProfileBtn;
+    Button updateProfileBtn,changeAvatarBtn;
 
     private TextView name, description, email, age, height, weight;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID;
+    String userID,imageuri;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class Profile extends AppCompatActivity {
         age = findViewById(R.id.profileAge);
         height = findViewById(R.id.profileHeight);
         weight = findViewById(R.id.profileWeight);
+        imageView=findViewById(R.id.myavatar);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -86,6 +90,14 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        changeAvatarBtn=findViewById(R.id.changeavatarbtn);
+        changeAvatarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoChangeAvatar();
+            }
+        });
+
         DocumentReference documentReference = fStore.collection("User").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -97,14 +109,22 @@ public class Profile extends AppCompatActivity {
                     age.setText(value.getString("Age"));
                     height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
                     weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
-
+                    imageuri=value.getString("ProPicUrl");
                 }
+                if(imageuri!=null)
+                { Picasso.get().load(imageuri).into(imageView);}
             }
         });
+
     }
 
     public void gotoPersonalInfo(){
         Intent intent = new Intent(Profile.this, PersonalInfo.class);
+        startActivity(intent);
+    }
+
+    public void gotoChangeAvatar(){
+        Intent intent = new Intent(Profile.this, ChangeAvatar.class);
         startActivity(intent);
     }
 
