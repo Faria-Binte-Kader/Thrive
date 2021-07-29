@@ -54,7 +54,7 @@ public class ForgotPassword extends AppCompatActivity {
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            emailEditText.setError("Please provide valid email");
+            emailEditText.setError("Please provide registered email");
             emailEditText.requestFocus();
             return;
         }
@@ -64,7 +64,7 @@ public class ForgotPassword extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(ForgotPassword.this, "Please check your email to reset password", Toast.LENGTH_SHORT).show();
-
+                    finish();
                     Intent intent = new Intent(ForgotPassword.this, login.class);
                     startActivity(intent);
                 }else{

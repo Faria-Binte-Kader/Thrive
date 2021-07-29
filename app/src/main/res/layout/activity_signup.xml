@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ENTER YOUR EMAIL TO VERIFY!"
+            android:text="ENTER YOUR INFO TO THRIVE!"
             android:textStyle="bold"
             android:background="@drawable/buttonrounded3"
             android:textAlignment="center"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -73,10 +74,11 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                     return;
                 }
 
-                if (email.isEmpty() || !email.contains("@")) {
+                if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     showError(inputEmail, "Email is not Valid");
                     return;
                 }
+
                 if (password.isEmpty() || password.length() < 6) {
                     showError(inputPassword, "Password must be at least 6 characters");
                     return;
@@ -106,6 +108,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                         user.put("Age", age);
                                         user.put("Height", height);
                                         user.put("Weight", weight);
+                                        user.put("Description","");
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

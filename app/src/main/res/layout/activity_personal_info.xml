@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -8,16 +8,17 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     tools:context=".PersonalInfo">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="110dp"
+            android:layout_marginTop="60dp"
             android:layout_gravity="center"
             android:elevation="10dp"
             android:src="@drawable/logo2"/>
@@ -25,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ENTER YOUR INFO TO THRIVE!"
+            android:text="UPDATE YOUR PERSONAL INFO!"
             android:textStyle="bold"
             android:background="@drawable/buttonrounded3"
             android:textAlignment="center"
@@ -53,6 +54,64 @@
             android:fontFamily="@font/averiasanslibre_light"
             />
 
+
+        <EditText
+
+            android:id="@+id/personalInfoOldPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER OLD PASSWORD TO UPDATE PASSWORD"
+            android:textAlignment="center"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_200"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            android:inputType="textPassword"
+            android:elevation="5dp"
+            android:textSize="13sp"
+            android:layout_marginTop="10dp"
+            android:foregroundTint="@color/purple_500"
+            />
+
+        <EditText
+
+            android:id="@+id/personalInfoPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER YOUR PASSWORD"
+            android:textAlignment="center"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_grey"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            android:inputType="textPassword"
+            android:elevation="5dp"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:foregroundTint="@color/purple_500"
+            />
+
+        <EditText
+
+            android:id="@+id/personalInfoConfirmPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="CONFIRM YOUR PASSWORD"
+            android:textAlignment="center"
+            android:background="@drawable/buttonrounded4"
+            android:textColorHint="@color/purple_grey"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            android:inputType="textPassword"
+            android:elevation="5dp"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:foregroundTint="@color/purple_500"
+            />
+
         <EditText
 
             android:id="@+id/personalInfoAge"
@@ -68,7 +127,7 @@
             android:inputType="number"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -87,7 +146,7 @@
             android:inputType="number"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -106,7 +165,7 @@
             android:inputType="number"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
@@ -124,12 +183,12 @@
             android:inputType="text"
             android:elevation="5dp"
             android:textSize="18sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_500"
             />
 
         <Button
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/saveInfoButton"
             android:layout_width="162dp"
             android:layout_height="53dp"
@@ -144,4 +203,4 @@
             />
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
