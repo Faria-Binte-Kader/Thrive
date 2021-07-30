@@ -15,7 +15,7 @@ public class VerifyEmail extends AppCompatActivity {
     }
 
     public void gotoLoginPage(View view) {
-        Intent intent = new Intent(VerifyEmail.this, login.class);
+        Intent intent = new Intent(VerifyEmail.this, login.class).putExtra("from", "verifymail");;
         startActivity(intent);
     }
 }
