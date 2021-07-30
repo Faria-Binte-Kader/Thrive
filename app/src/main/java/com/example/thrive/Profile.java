@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,9 +111,17 @@ public class Profile extends AppCompatActivity {
                     height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
                     weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
                     imageuri=value.getString("ProPicUrl");
+                     //if(imageuri!=null)
+                   // { Picasso.get().load(imageuri).into(imageView);}
+                    if (imageuri.isEmpty()) {
+                        imageView.setImageResource(R.drawable.default_profile_picture);
+                    } else{
+                        Picasso.get().load(imageuri).into(imageView);
+                    }
                 }
-                if(imageuri!=null)
-                { Picasso.get().load(imageuri).into(imageView);}
+                //Toast.makeText(Profile.this, "Password Changed ", Toast.LENGTH_SHORT).show();
+               // if(imageuri!=null)
+                //{ Picasso.get().load(imageuri).into(imageView);}
             }
         });
 
