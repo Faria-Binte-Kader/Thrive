@@ -52,6 +52,18 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("User").document(user);
+            documentReference2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (value != null)
+                        startActivity(new Intent(login.this, MainActivity.class));
+                }
+            });
+            finish();
+        }
 
         setContentView(R.layout.activity_login);
 
