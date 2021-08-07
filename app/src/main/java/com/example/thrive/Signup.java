@@ -63,13 +63,13 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                 String password = inputPassword.getText().toString();
                 String conPassword = confirmPassword.getText().toString();
 
-                final String name = inputName.getText().toString().toUpperCase();
-                final String age = inputAge.getText().toString();
-                final String height = inputHeight.getText().toString();
-                final String weight = inputWeight.getText().toString();
+                final String name = inputName.getText().toString().toUpperCase().trim();
+                final String age = inputAge.getText().toString().trim();
+                final String height = inputHeight.getText().toString().trim();
+                final String weight = inputWeight.getText().toString().trim();
 
 
-                if (name.isEmpty() || name.length() < 7) {
+                if (name.isEmpty() || name.length() < 5) {
                     showError(inputName, "Your Name is not valid");
                     return;
                 }

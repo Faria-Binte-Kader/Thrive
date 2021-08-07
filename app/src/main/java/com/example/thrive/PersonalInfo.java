@@ -1,6 +1,7 @@
 package com.example.thrive;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,7 +21,11 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +69,21 @@ public class PersonalInfo extends AppCompatActivity {
                 updatePersonalInfo();
             }
         });
+
+        DocumentReference documentReference = fStore.collection("User").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null) {
+                    inputName.setText(value.getString("Name"));
+                    inputDescription.setText(value.getString("Description"));
+                    inputAge.setText(new StringBuilder().append("AGE: ").append(value.getString("Age")).toString());
+                    inputHeight.setText(new StringBuilder().append("HEIGHT IN CM: ").append(value.getString("Height")).toString());
+                    inputWeight.setText(new StringBuilder().append("WEIGHT IN KG: ").append(value.getString("Weight")).toString());
+                }
+            }
+        });
+
     }
 
     private void showError(EditText input, String s) {
@@ -72,16 +92,20 @@ public class PersonalInfo extends AppCompatActivity {
     }
 
     private void updatePersonalInfo() {
-        final String name = inputName.getText().toString().toUpperCase();
-        final String oldPassword = inputOldPassword.getText().toString();
-        final String newPassword = inputNewPassword.getText().toString();
-        String conPassword = confirmPassword.getText().toString();
-        final String age = inputAge.getText().toString();
-        final String height = inputHeight.getText().toString();
-        final String weight = inputWeight.getText().toString();
-        final String description = inputDescription.getText().toString();
+        final String name = inputName.getText().toString().toUpperCase().trim();
+        final String oldPassword = inputOldPassword.getText().toString().trim();
+        final String newPassword = inputNewPassword.getText().toString().trim();
+        String conPassword = confirmPassword.getText().toString().trim();
+        String age = inputAge.getText().toString().trim();
+        String height = inputHeight.getText().toString().trim();
+        String weight = inputWeight.getText().toString().trim();
+        final String description = inputDescription.getText().toString().trim();
 
-        if (!name.isEmpty() && name.length() < 7) {
+        age = age.replace("AGE: ","");
+        height = height.replace("HEIGHT IN CM: ","");
+        weight = weight.replace("WEIGHT IN KG: ","");
+
+        if (!name.isEmpty() && name.length() < 5) {
             showError(inputName, "Name must have more than 6 characters");
             return;
         }

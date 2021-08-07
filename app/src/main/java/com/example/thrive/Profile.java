@@ -107,7 +107,7 @@ public class Profile extends AppCompatActivity {
                     name.setText(value.getString("Name"));
                     email.setText(value.getString("Email"));
                     description.setText(value.getString("Description"));
-                    age.setText(value.getString("Age"));
+                    age.setText(new StringBuilder().append(value.getString("Age")).append(" years").toString());
                     height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
                     weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
                     imageuri=value.getString("ProPicUrl");

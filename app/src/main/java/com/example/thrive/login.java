@@ -88,8 +88,8 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
                     showError(loginEmail, "Email is not Valid");
                     return;
                 }
-                if (password.isEmpty() || password.length() < 6) {
-                    showError(loginPassword, "Password must be at least 6 characters");
+                if (password.isEmpty()) {
+                    showError(loginPassword, "Please enter your password");
                     return;
                 }
                 if (FirebaseAuth.getInstance() != null && FirebaseFirestore.getInstance() != null) {
