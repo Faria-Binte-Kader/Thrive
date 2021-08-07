@@ -42,12 +42,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOGIN AGAIN"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:background="@drawable/buttonrounded"
             android:textStyle="bold"
             android:fontFamily="@font/averiasanslibre_bold"
-            android:layout_marginTop="30sp"
+            android:layout_marginTop="30dp"
             android:padding="10sp"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:elevation="10dp"
+            app:backgroundTint="@null"
             android:onClick="gotoLoginPage">
         </Button>
 

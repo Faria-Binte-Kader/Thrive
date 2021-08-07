@@ -45,8 +45,8 @@
         android:textSize="15sp"
         android:foregroundTint="@color/purple_500"
         />
-    <Button
 
+    <Button
         android:layout_marginTop="15dp"
         android:layout_above="@+id/countdown"
         android:layout_width="wrap_content"
@@ -57,10 +57,9 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/settimerButton"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:elevation="10dp"
         app:backgroundTint="@null"
-
         />
 
       <TextView
