@@ -2,7 +2,13 @@ package com.example.thrive;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -38,6 +44,7 @@ public class Focus_Session extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus__session);
+        createNotificationChannel();
 
         alarmDialog = new Dialog(Focus_Session.this);
 
@@ -66,8 +73,14 @@ public class Focus_Session extends AppCompatActivity {
         startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!timerRunning) {
+                if (!timerRunning && timeLeftInMillis>0) {
                     startTimer();
+                    Intent intent= new Intent(Focus_Session.this,AlertReceiver.class);
+                    PendingIntent pendingIntent= PendingIntent.getBroadcast(Focus_Session.this,0,intent,0);
+                    AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                    long timeAtButtonClick= System.currentTimeMillis();
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,timeAtButtonClick+timeLeftInMillis, pendingIntent);
+
                 }
             }
         });
@@ -77,6 +90,11 @@ public class Focus_Session extends AppCompatActivity {
             public void onClick(View v) {
                 if (timerRunning) {
                     pauseTimer();
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    Intent intent= new Intent(Focus_Session.this,AlertReceiver.class);
+                    PendingIntent pendingIntent= PendingIntent.getBroadcast(Focus_Session.this,0,intent,0);
+
+                    alarmManager.cancel(pendingIntent);
                 }
 
             }
@@ -86,6 +104,11 @@ public class Focus_Session extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resetTimer();
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent intent= new Intent(Focus_Session.this,AlertReceiver.class);
+                PendingIntent pendingIntent= PendingIntent.getBroadcast(Focus_Session.this,0,intent,0);
+
+                alarmManager.cancel(pendingIntent);
             }
         });
     }
@@ -115,7 +138,6 @@ public class Focus_Session extends AppCompatActivity {
                 alarmDialog.show();
             }
         }.start();
-
         timerRunning = true;
     }
 
@@ -146,29 +168,7 @@ public class Focus_Session extends AppCompatActivity {
         textViewcountdown.setText(timeLeftFormatted);
     }
 
-    /*@Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("millisLeft", timeLeftInMillis);
-        outState.putBoolean("timerRunning", timerRunning);
-        outState.putLong("endTime", endTime);
 
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        timeLeftInMillis=savedInstanceState.getLong("millisLeft");
-        timerRunning= savedInstanceState.getBoolean("timerRunning");
-        updateCountDownText();
-        if(timerRunning){
-            endTime=savedInstanceState.getLong("endTime");
-            timeLeftInMillis=endTime-System.currentTimeMillis();
-            startTimer();
-
-        }
-
-    }*/
 
     @Override
     protected void onStart() {
@@ -243,4 +243,18 @@ public class Focus_Session extends AppCompatActivity {
             }
         });
     }
+
+private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            CharSequence name="faria";
+            String description = "channel for faria";
+            int importance= NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel= new NotificationChannel("notifyalarm", name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+    }
+}
 }
