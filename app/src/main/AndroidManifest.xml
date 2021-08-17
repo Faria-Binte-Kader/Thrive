@@ -11,10 +11,11 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".ChangeAvatar"></activity>
+        <activity android:name=".AddGoalsProductivity"></activity>
+        <activity android:name=".ChangeAvatar" />
         <activity android:name=".AnimalDetails" />
         <activity android:name=".Pedometer" />
-        <activity android:name=".AddGoals" />
+        <activity android:name=".AddGoalsHealth" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Shop" />
         <activity android:name=".Stat" />
@@ -35,7 +36,7 @@
         </activity>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".AlertReceiver"/>
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>
