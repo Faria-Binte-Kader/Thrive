@@ -15,6 +15,7 @@ public class AddGoalsHealth extends AppCompatActivity {
 
     SwitchCompat switchCompat;
     Button waterIntakebtn, medIntakebtn, workoutbtn, yogabtn, foodhabitbtn, sportbtn, sleepbtn, rehabilitationbrn,bodycarebtn;
+    Button reminderbtn;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,15 @@ public class AddGoalsHealth extends AppCompatActivity {
         sleepbtn=findViewById(R.id.sleepbtn);
         rehabilitationbrn=findViewById(R.id.rehabilitationbtn);
         bodycarebtn=findViewById(R.id.bodycarebtn);
+        reminderbtn=findViewById(R.id.reminderbtn);
+        reminderbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddGoalsHealth.this, ReminderGoals.class);
+                startActivity(intent);
+            }
+        });
+
         waterIntakebtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

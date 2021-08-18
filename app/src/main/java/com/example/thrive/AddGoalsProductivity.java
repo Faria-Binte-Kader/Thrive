@@ -12,7 +12,7 @@ import android.widget.CompoundButton;
 
 public class AddGoalsProductivity extends AppCompatActivity {
     SwitchCompat switchCompat;
-    Button studybtn, hobbybtn, softbtn, techbtn;
+    Button studybtn, hobbybtn, softbtn, techbtn,reminderbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,14 @@ public class AddGoalsProductivity extends AppCompatActivity {
         hobbybtn=findViewById(R.id.hobbybtn);
         softbtn=findViewById(R.id.softskillbtn);
         techbtn=findViewById(R.id.technicalbtn);
+        reminderbtn=findViewById(R.id.reminderbtn);
+        reminderbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddGoalsProductivity.this, ReminderGoals.class);
+                startActivity(intent);
+            }
+        });
 
         studybtn.setOnTouchListener(new View.OnTouchListener() {
             @Override

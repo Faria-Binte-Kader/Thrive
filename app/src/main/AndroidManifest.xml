@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".AddGoalsProductivity"></activity>
+        <activity android:name=".ReminderGoals"></activity>
+        <activity android:name=".AddGoalsProductivity" />
         <activity android:name=".ChangeAvatar" />
         <activity android:name=".AnimalDetails" />
         <activity android:name=".Pedometer" />
