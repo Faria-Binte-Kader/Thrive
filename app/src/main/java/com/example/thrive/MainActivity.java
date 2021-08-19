@@ -210,4 +210,7 @@ public class MainActivity extends AppCompatActivity {
         menu.getItem(2).setEnabled(false);
         return true;
     }
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

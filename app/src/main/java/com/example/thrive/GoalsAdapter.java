@@ -1,5 +1,7 @@
 package com.example.thrive;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +113,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
                         }
                     }
                 });
+                mainActivity.startActivity(new Intent(mainActivity, MainActivity.class));
             }
         });
     }

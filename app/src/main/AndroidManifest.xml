@@ -3,6 +3,7 @@
     package="com.example.thrive">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +39,7 @@
         <activity android:name=".MainActivity" />
 
         <receiver android:name=".AlertReceiver" />
+        <receiver android:name=".ReminderGoalsAlertReceiver" />
     </application>
 
 </manifest>
