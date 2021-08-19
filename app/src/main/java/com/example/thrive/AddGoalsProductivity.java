@@ -154,6 +154,9 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 goal.put("Subcategory", category);
                 goal.put("Duration", duration);
                 goal.put("Privacy",privacy);
+                goal.put("Days","0");
+                goal.put("Progress","0");
+                goal.put("id",documentReference1.getId());
 
                 documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

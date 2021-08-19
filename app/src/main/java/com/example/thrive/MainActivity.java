@@ -3,16 +3,23 @@ package com.example.thrive;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,8 +28,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView mRecyclerView;
+    ArrayList<Goals> goalsArrayList;
+    GoalsAdapter adapter;
 
     Button dropdownmenu, focusbutton, pedometerbutton;
     Button profileBtn;
@@ -94,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         BottomNavigationView nav= findViewById(R.id.bottomnavview);
         findViewById(R.id.bottomnavview).setBackground(null);
         nav.setSelectedItemId(R.id.placefolder);
@@ -134,6 +150,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        goalsArrayList = new ArrayList<>();
+
+        mRecyclerView = findViewById(R.id.goalsRV);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        fStore.collection("UserGoalInfo").document(userID).collection("Goals")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (DocumentSnapshot querySnapshot : task.getResult()) {
+                            Goals goals = new Goals(querySnapshot.getString("Progress"),
+                                    querySnapshot.getString("Name"),
+                                    querySnapshot.getString("id"));
+                            goalsArrayList.add(goals);
+                        }
+                        adapter = new GoalsAdapter(MainActivity.this, goalsArrayList);
+                        mRecyclerView.setAdapter(adapter);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "Problem ---I---", Toast.LENGTH_SHORT).show();
+                        Log.v("---I---", e.getMessage());
+                    }
+                });
     }
 
 
@@ -167,8 +210,4 @@ public class MainActivity extends AppCompatActivity {
         menu.getItem(2).setEnabled(false);
         return true;
     }
-
-
-
-
 }
