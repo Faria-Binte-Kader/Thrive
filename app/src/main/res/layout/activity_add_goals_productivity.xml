@@ -154,7 +154,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/loginEmail"
+            android:id="@+id/goalName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ENTER YOUR GOAL NAME"
@@ -165,24 +165,27 @@
             android:inputType="textEmailAddress"
             android:background="@drawable/buttonrounded4"
             android:textSize="20sp"
-
             android:foregroundTint="@color/purple_grey"
             android:elevation="5dp"
             android:fontFamily="@font/averiasanslibre_light"
             />
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/goalDuration"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ENTER DURATION"
-            android:textStyle="bold"
-            android:background="@drawable/buttonrounded3"
-            android:textAlignment="center"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:hint="ENTER DURATION IN DAYS"
+            android:textColorHint="@color/purple_grey"
             android:padding="10dp"
+            android:layout_margin="20dp"
+            android:paddingLeft="15dp"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/buttonrounded4"
+            android:textSize="20sp"
+            android:foregroundTint="@color/purple_grey"
+            android:elevation="5dp"
+            android:fontFamily="@font/averiasanslibre_light"
             />
+
         <TextView
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
