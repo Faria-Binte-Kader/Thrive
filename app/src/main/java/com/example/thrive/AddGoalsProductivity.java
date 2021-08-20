@@ -1,5 +1,6 @@
 package com.example.thrive;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -17,7 +18,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +39,8 @@ public class AddGoalsProductivity extends AppCompatActivity {
     String userID;
     String category;
     String privacy="";
+
+    String goalID;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -167,6 +173,41 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 });
 
                 Toast.makeText(AddGoalsProductivity.this, "Goal Added", Toast.LENGTH_SHORT).show();
+
+                if (privacy == "Public") {
+
+                    final String[] userName = new String[1];
+                    final String[] userProPicURL = new String[1];
+
+                    userID = fAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference_goal = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                    goalID = documentReference_goal.getId();
+
+                    DocumentReference documentReference_user = fStore.collection("User").document(userID);
+                    documentReference_user.addSnapshotListener(AddGoalsProductivity.this, new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(value != null){
+                                userName[0] = value.getString("Name");
+                                userProPicURL[0] = value.getString("ProPicUrl");
+                            }
+                        }
+                    });
+
+                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                    Map<String, Object> public_goal = new HashMap<>();
+                    public_goal.put("GoalID", goalID);
+                    public_goal.put("GoalName",name);
+                    public_goal.put("UserID", userID);
+                    public_goal.put("UserName",userName[0]);
+                    public_goal.put("UserProPicURL",userProPicURL[0]);
+                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "onSuccess: goal is set to public");
+                        }
+                    });
+                }
 
                 goalname.setText("");
                 goalduration.setText("");

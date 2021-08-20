@@ -24,12 +24,12 @@ import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
 
-    Button updateProfileBtn,changeAvatarBtn;
+    Button updateProfileBtn, changeAvatarBtn;
 
     private TextView name, description, email, age, height, weight;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID,imageuri;
+    String userID, imageURI, userEmail;
     ImageView imageView;
 
     @Override
@@ -44,22 +44,23 @@ public class Profile extends AppCompatActivity {
         age = findViewById(R.id.profileAge);
         height = findViewById(R.id.profileHeight);
         weight = findViewById(R.id.profileWeight);
-        imageView=findViewById(R.id.myavatar);
+        imageView = findViewById(R.id.myavatar);
 
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
+        userEmail = fAuth.getCurrentUser().getEmail();
 
 
-        BottomNavigationView nav= findViewById(R.id.bottomnavview2);
+        BottomNavigationView nav = findViewById(R.id.bottomnavview2);
         findViewById(R.id.bottomnavview2).setBackground(null);
         nav.setSelectedItemId(R.id.profile);
 
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
                         Intent intent = new Intent(Profile.this, MainActivity.class);
                         startActivity(intent);
@@ -91,7 +92,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        changeAvatarBtn=findViewById(R.id.changeavatarbtn);
+        changeAvatarBtn = findViewById(R.id.changeavatarbtn);
         changeAvatarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,39 +101,39 @@ public class Profile extends AppCompatActivity {
         });
 
         DocumentReference documentReference = fStore.collection("User").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        documentReference.addSnapshotListener(Profile.this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null) {
                     name.setText(value.getString("Name"));
-                    email.setText(value.getString("Email"));
+                    email.setText(userEmail);
                     description.setText(value.getString("Description"));
                     age.setText(new StringBuilder().append(value.getString("Age")).append(" years").toString());
                     height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
                     weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
-                    imageuri=value.getString("ProPicUrl");
-                     //if(imageuri!=null)
-                   // { Picasso.get().load(imageuri).into(imageView);}
-                    if (imageuri.isEmpty()) {
+                    imageURI = value.getString("ProPicUrl");
+                    //if(imageuri!=null)
+                    // { Picasso.get().load(imageuri).into(imageView);}
+                    if (imageURI.isEmpty()) {
                         imageView.setImageResource(R.drawable.default_profile_picture);
-                    } else{
-                        Picasso.get().load(imageuri).into(imageView);
+                    } else {
+                        Picasso.get().load(imageURI).into(imageView);
                     }
                 }
                 //Toast.makeText(Profile.this, "Password Changed ", Toast.LENGTH_SHORT).show();
-               // if(imageuri!=null)
+                // if(imageuri!=null)
                 //{ Picasso.get().load(imageuri).into(imageView);}
             }
         });
 
     }
 
-    public void gotoPersonalInfo(){
+    public void gotoPersonalInfo() {
         Intent intent = new Intent(Profile.this, PersonalInfo.class);
         startActivity(intent);
     }
 
-    public void gotoChangeAvatar(){
+    public void gotoChangeAvatar() {
         Intent intent = new Intent(Profile.this, ChangeAvatar.class);
         startActivity(intent);
     }

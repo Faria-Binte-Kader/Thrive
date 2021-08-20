@@ -1,5 +1,6 @@
 package com.example.thrive;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -18,7 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +31,7 @@ public class AddGoalsHealth extends AppCompatActivity {
 
     public static final String TAG = "TAG AddGoal";
     SwitchCompat switchCompat;
-    Button waterIntakebtn, medIntakebtn, workoutbtn, yogabtn, foodhabitbtn, sportbtn, sleepbtn, rehabilitationbrn,bodycarebtn;
+    Button waterIntakebtn, medIntakebtn, workoutbtn, yogabtn, foodhabitbtn, sportbtn, sleepbtn, rehabilitationbrn, bodycarebtn;
     Button reminderbtn;
     EditText goalname, goalduration;
     Button setgoal;
@@ -37,31 +41,34 @@ public class AddGoalsHealth extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userID;
     String category;
-    String privacy="";
+    String privacy = "";
+
+    String goalID;
+    String userName, userProPicURL;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goals_health);
-        switchCompat=findViewById(R.id.switchgoal);
-        waterIntakebtn=findViewById(R.id.waterintakebtn);
-        medIntakebtn=findViewById(R.id.medintakebtn);
-        workoutbtn=findViewById(R.id.workout);
-        yogabtn=findViewById(R.id.yogabtn);
-        foodhabitbtn=findViewById(R.id.foodhabitbtn);
-        sportbtn=findViewById(R.id.sportsbtn);
-        sleepbtn=findViewById(R.id.sleepbtn);
-        rehabilitationbrn=findViewById(R.id.rehabilitationbtn);
-        bodycarebtn=findViewById(R.id.bodycarebtn);
-        reminderbtn=findViewById(R.id.reminderbtn);
+        switchCompat = findViewById(R.id.switchgoal);
+        waterIntakebtn = findViewById(R.id.waterintakebtn);
+        medIntakebtn = findViewById(R.id.medintakebtn);
+        workoutbtn = findViewById(R.id.workout);
+        yogabtn = findViewById(R.id.yogabtn);
+        foodhabitbtn = findViewById(R.id.foodhabitbtn);
+        sportbtn = findViewById(R.id.sportsbtn);
+        sleepbtn = findViewById(R.id.sleepbtn);
+        rehabilitationbrn = findViewById(R.id.rehabilitationbtn);
+        bodycarebtn = findViewById(R.id.bodycarebtn);
+        reminderbtn = findViewById(R.id.reminderbtn);
 
-        goalname=findViewById(R.id.goalName);
-        goalduration=findViewById(R.id.goalDuration);
-        setgoal=findViewById(R.id.setgoalbtn);
+        goalname = findViewById(R.id.goalName);
+        goalduration = findViewById(R.id.goalDuration);
+        setgoal = findViewById(R.id.setgoalbtn);
 
-        gopublic=findViewById(R.id.publicbtn);
-        later=findViewById(R.id.laterbtn);
+        gopublic = findViewById(R.id.publicbtn);
+        later = findViewById(R.id.laterbtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -79,7 +86,7 @@ public class AddGoalsHealth extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 waterIntakebtn.setPressed(true);
-                category="Water Intake";
+                category = "Water Intake";
                 medIntakebtn.setPressed(false);
                 yogabtn.setPressed(false);
                 sportbtn.setPressed(false);
@@ -97,7 +104,7 @@ public class AddGoalsHealth extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 waterIntakebtn.setPressed(false);
                 medIntakebtn.setPressed(true);
-                category="Medicine Intake";
+                category = "Medicine Intake";
                 yogabtn.setPressed(false);
                 sportbtn.setPressed(false);
                 sleepbtn.setPressed(false);
@@ -115,7 +122,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 waterIntakebtn.setPressed(false);
                 medIntakebtn.setPressed(false);
                 yogabtn.setPressed(true);
-                category="Yoga";
+                category = "Yoga";
                 sportbtn.setPressed(false);
                 sleepbtn.setPressed(false);
                 rehabilitationbrn.setPressed(false);
@@ -133,7 +140,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 medIntakebtn.setPressed(false);
                 yogabtn.setPressed(false);
                 sportbtn.setPressed(true);
-                category="Sports";
+                category = "Sports";
                 sleepbtn.setPressed(false);
                 rehabilitationbrn.setPressed(false);
                 bodycarebtn.setPressed(false);
@@ -151,7 +158,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 yogabtn.setPressed(false);
                 sportbtn.setPressed(false);
                 sleepbtn.setPressed(true);
-                category="Sleep";
+                category = "Sleep";
                 rehabilitationbrn.setPressed(false);
                 bodycarebtn.setPressed(false);
                 workoutbtn.setPressed(false);
@@ -169,7 +176,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 sportbtn.setPressed(false);
                 sleepbtn.setPressed(false);
                 rehabilitationbrn.setPressed(true);
-                category="Rehabilitation";
+                category = "Rehabilitation";
                 bodycarebtn.setPressed(false);
                 workoutbtn.setPressed(false);
                 foodhabitbtn.setPressed(false);
@@ -187,7 +194,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 sleepbtn.setPressed(false);
                 rehabilitationbrn.setPressed(false);
                 bodycarebtn.setPressed(true);
-                category="Body Care";
+                category = "Body Care";
                 workoutbtn.setPressed(false);
                 foodhabitbtn.setPressed(false);
                 return true;
@@ -204,7 +211,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 rehabilitationbrn.setPressed(false);
                 bodycarebtn.setPressed(false);
                 workoutbtn.setPressed(true);
-                category="Working Out";
+                category = "Working Out";
                 foodhabitbtn.setPressed(false);
                 return true;
             }
@@ -221,7 +228,7 @@ public class AddGoalsHealth extends AppCompatActivity {
                 bodycarebtn.setPressed(false);
                 workoutbtn.setPressed(false);
                 foodhabitbtn.setPressed(true);
-                category="Food Habit";
+                category = "Food Habit";
                 return true;
             }
         });
@@ -230,7 +237,7 @@ public class AddGoalsHealth extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(true);
-                privacy="Public";
+                privacy = "Public";
                 later.setPressed(false);
                 return true;
             }
@@ -240,7 +247,7 @@ public class AddGoalsHealth extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(false);
                 later.setPressed(true);
-                privacy="";
+                privacy = "";
                 return true;
             }
         });
@@ -259,15 +266,15 @@ public class AddGoalsHealth extends AppCompatActivity {
                     return;
                 }
                 DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
-                Map<String,Object> goal = new HashMap<>();
+                Map<String, Object> goal = new HashMap<>();
                 goal.put("Name", name);
                 goal.put("Category", "Health");
                 goal.put("Subcategory", category);
                 goal.put("Duration", duration);
-                goal.put("Privacy",privacy);
-                goal.put("Days","0");
-                goal.put("Progress","0");
-                goal.put("id",documentReference1.getId());
+                goal.put("Privacy", privacy);
+                goal.put("Days", "0");
+                goal.put("Progress", "0");
+                goal.put("id", documentReference1.getId());
 
                 documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -277,6 +284,43 @@ public class AddGoalsHealth extends AppCompatActivity {
 
                 });
                 Toast.makeText(AddGoalsHealth.this, "Goal Added", Toast.LENGTH_SHORT).show();
+
+                if (privacy == "Public") {
+
+                    userID = fAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference_goal = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                    goalID = documentReference_goal.getId();
+
+                    fStore = FirebaseFirestore.getInstance();
+
+                    DocumentReference documentReference_user = fStore.collection("User").document(userID);
+                    documentReference_user.addSnapshotListener(AddGoalsHealth.this, new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(value != null){
+                                userName = value.getString("Name");
+                                userProPicURL = value.getString("ProPicUrl");
+                            }
+                        }
+                    });
+
+                    Log.d(TAG, userName+" "+userProPicURL);
+
+                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                    Map<String, Object> public_goal = new HashMap<>();
+                    public_goal.put("GoalID", goalID);
+                    public_goal.put("GoalName",name);
+                    public_goal.put("UserID", userID);
+                    public_goal.put("UserName",userName);
+                    public_goal.put("UserProPicURL",userProPicURL);
+                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "onSuccess: goal is set to public");
+                        }
+                    });
+                }
+
 
                 goalname.setText("");
                 goalduration.setText("");
@@ -298,15 +342,12 @@ public class AddGoalsHealth extends AppCompatActivity {
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-             if(buttonView.isChecked())
-             {
-                 Intent intent = new Intent(AddGoalsHealth.this, AddGoalsProductivity.class);
-                 startActivity(intent);
-             }
-             else
-             {
+                if (buttonView.isChecked()) {
+                    Intent intent = new Intent(AddGoalsHealth.this, AddGoalsProductivity.class);
+                    startActivity(intent);
+                } else {
 
-             }
+                }
             }
         });
     }

@@ -33,7 +33,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     Button alreadyMember, signUpBtn;
     private EditText inputEmail, inputPassword, confirmPassword;
     private EditText inputName, inputAge, inputHeight, inputWeight;
-    private String userId;
+    private String userID;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
@@ -100,11 +100,12 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Signup.this, "Welcome to Thrive! Please verify your Email Address", Toast.LENGTH_SHORT).show();
 
-                                        userId = fAuth.getCurrentUser().getUid();
-                                        DocumentReference documentReference = fStore.collection("User").document(userId);
+                                        userID = fAuth.getCurrentUser().getUid();
+                                        DocumentReference documentReference = fStore.collection("User").document(userID);
                                         Map<String, Object> user = new HashMap<>();
                                         user.put("Name", name);
-                                        user.put("Email", email);
+                                        //user.put("Email", email);
+                                        user.put("UserID",userID);
                                         user.put("Age", age);
                                         user.put("Height", height);
                                         user.put("Weight", weight);
