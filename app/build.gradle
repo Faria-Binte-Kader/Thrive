@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:23.0.3'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-storage:19.2.2'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -57,6 +58,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
     //circle imageview
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
+    implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
+
 }

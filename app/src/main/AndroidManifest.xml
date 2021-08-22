@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".ReminderGoals"></activity>
+        <activity android:name=".AllReminders"></activity>
+        <activity android:name=".ReminderGoals" />
         <activity android:name=".AddGoalsProductivity" />
         <activity android:name=".ChangeAvatar" />
         <activity android:name=".AnimalDetails" />

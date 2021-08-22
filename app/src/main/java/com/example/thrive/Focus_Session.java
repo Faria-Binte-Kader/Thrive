@@ -79,7 +79,7 @@ public class Focus_Session extends AppCompatActivity {
                     PendingIntent pendingIntent= PendingIntent.getBroadcast(Focus_Session.this,0,intent,0);
                     AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
                     long timeAtButtonClick= System.currentTimeMillis();
-                    alarmManager.set(AlarmManager.RTC_WAKEUP,timeAtButtonClick+timeLeftInMillis, pendingIntent);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,timeAtButtonClick+timeLeftInMillis, pendingIntent);
 
                 }
             }

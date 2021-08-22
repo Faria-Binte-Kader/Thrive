@@ -1,8 +1,11 @@
 package com.example.thrive;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
@@ -73,9 +76,9 @@ public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
                         Log.d("Tag", "failed");
                     }
                 });*/
-        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.samsung_relax);
-        mediaPlayer.start();
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"notifyalarm")
+       // final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.samsung_relax);
+        //mediaPlayer.start();
+        /*NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"notifyalarm")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentTitle("Reminder!")
                 .setAutoCancel(true)
@@ -84,7 +87,18 @@ public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
 
 
         NotificationManagerCompat notificationManagerCompat= NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(200, builder.build());
+        notificationManagerCompat.notify(100, builder.build());*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            NotificationManager notificationManager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"notifyalarm")
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
+                    .setContentTitle("Reminder!")
+                    .setAutoCancel(true)
+                    .setContentText("goal")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            notificationManager.notify(100,builder.build());
+        }
 
     }
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Goals> goalsArrayList;
     GoalsAdapter adapter;
 
-    Button dropdownmenu, focusbutton, pedometerbutton;
+    Button dropdownmenu, focusbutton, pedometerbutton,seeremindersbtn;
     Button profileBtn;
     private TextView cointext;
     private FirebaseAuth fAuth;
@@ -104,6 +104,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Pedometer.class);
+                startActivity(intent);
+            }
+        });
+
+        seeremindersbtn=(Button)findViewById(R.id.seeremindersbtn);
+        seeremindersbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AllReminders.class);
                 startActivity(intent);
             }
         });

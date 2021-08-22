@@ -132,8 +132,7 @@ public class ReminderGoals extends AppCompatActivity {
                         hour = Integer.parseInt(a);
                         String b= time.substring(i+3,i+5);
                         minute= Integer.parseInt(b);
-                        Calendar calendar=Calendar.getInstance();
-                        if(sat.equals("1"))
+                       /* if(sat.equals("1"))
                         {
                             int days = Calendar.SATURDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
                             //calendar.set(Calendar.DAY_OF_WEEK,4);
@@ -146,22 +145,21 @@ public class ReminderGoals extends AppCompatActivity {
                         PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
                         AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
                         long timeAtButtonClick= System.currentTimeMillis();
-                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}*/
                         if(sun.equals("1"))
                         {
-                            int days = Calendar.SUNDAY+ (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                            calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,4);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
                             Log.d("Tag", " "+minute+" "+hour);
                             Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
+                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,i,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                             AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
                             long timeAtButtonClick= System.currentTimeMillis();
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}
-                        if(mon.equals("1"))
+                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7,pendingIntent);}
+                       /* if(mon.equals("1"))
                         {
                            int days = Calendar.MONDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
                             //calendar.set(Calendar.DAY_OF_WEEK,4);
@@ -231,7 +229,7 @@ public class ReminderGoals extends AppCompatActivity {
                             PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
                             AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
                             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);
-                            Log.d("Tag", " "+minute+" "+hour+"fri");}
+                            Log.d("Tag", " "+minute+" "+hour+"fri");}*/
 
                     }
                 }
