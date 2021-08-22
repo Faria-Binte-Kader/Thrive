@@ -15,7 +15,7 @@ public class ViewHolderGoalsFriend extends RecyclerView.ViewHolder {
     public ViewHolderGoalsFriend(@NonNull View itemView) {
         super(itemView);
 
-        friendProfilePic = itemView.findViewById(R.id.friendAvatar);
+     //   friendProfilePic = itemView.findViewById(R.id.friendAvatar);
         friendName = itemView.findViewById(R.id.friendName);
         friendGoalName = itemView.findViewById(R.id.friendGoalName);
     }

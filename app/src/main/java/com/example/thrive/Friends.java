@@ -33,7 +33,7 @@ public class Friends extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stat);
+        setContentView(R.layout.activity_friends);
 
         BottomNavigationView nav= findViewById(R.id.bottomnavview2);
         findViewById(R.id.bottomnavview2).setBackground(null);
@@ -113,8 +113,8 @@ public class Friends extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         friendRecyclerView = findViewById(R.id.recyclerViewFriends);
-        //friendRecyclerView.setHasFixedSize(true);
-        //friendRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        friendRecyclerView.setHasFixedSize(true);
+        friendRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
