@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="70dp">
+        android:layout_marginBottom="60dp">
         <Button
             android:layout_gravity="right"
             android:layout_margin="8dp"
@@ -108,7 +108,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="420dp"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="100dp"
         android:padding="10dp"

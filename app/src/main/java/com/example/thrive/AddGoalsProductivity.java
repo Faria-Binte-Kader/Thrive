@@ -23,6 +23,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
     String category;
     String privacy="";
 
-    String goalID;
+    String goalID,GoalURL;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -64,6 +66,9 @@ public class AddGoalsProductivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateToday=dateFormat.format(calendar.getTime());
 
         reminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +83,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 studybtn.setPressed(true);
                 category="Study";
+                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fstudy.png?alt=media&token=53db3ced-6220-40dc-858e-12a8090ec146";
                 hobbybtn.setPressed(false);
                 softbtn.setPressed(false);
                 techbtn.setPressed(false);
@@ -91,6 +97,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 studybtn.setPressed(false);
                 hobbybtn.setPressed(true);
                 category="Hobby";
+                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fhobby.png?alt=media&token=58daf7a2-22a2-4afe-969d-ee6497b1b66a";
                 softbtn.setPressed(false);
                 techbtn.setPressed(false);
                 return true;
@@ -104,6 +111,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 hobbybtn.setPressed(false);
                 softbtn.setPressed(true);
                 category="Soft Skill Development";
+                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsoftskill.png?alt=media&token=fea34dc7-a2b0-450b-9fae-602c370970c7";
                 techbtn.setPressed(false);
                 return true;
             }
@@ -117,6 +125,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 softbtn.setPressed(false);
                 techbtn.setPressed(true);
                 category="Technical Skill Development";
+                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ftechnicalskill.png?alt=media&token=31b68b43-0ea6-4938-aa61-671b3641f3bd";
                 return true;
             }
         });
@@ -153,6 +162,13 @@ public class AddGoalsProductivity extends AppCompatActivity {
                     showError(goalduration, "Duration must be at least 1 day");
                     return;
                 }
+                if((!studybtn.isPressed()) && (!hobbybtn.isPressed()) && (!softbtn.isPressed()) &&
+                        (!techbtn.isPressed()))
+                {
+                    Toast.makeText(AddGoalsProductivity.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                 DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
                 Map<String,Object> goal = new HashMap<>();
                 goal.put("Name", name);
@@ -163,6 +179,9 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 goal.put("Days","0");
                 goal.put("Progress","0");
                 goal.put("id",documentReference1.getId());
+                goal.put("DateToday",dateToday);
+                goal.put("Flag","0");
+                goal.put("GoalURL",GoalURL);
 
                 documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -217,7 +236,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 techbtn.setPressed(false);
                 gopublic.setPressed(false);
                 later.setPressed(false);
-            }
+            }}
         });
 
         switchCompat.setChecked(true);

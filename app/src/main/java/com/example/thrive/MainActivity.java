@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private String userID;
+    private String Fdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
         cointext=findViewById(R.id.cointextview);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateToday=dateFormat.format(calendar.getTime());
 
         DocumentReference documentReference = fStore.collection("User").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -172,8 +179,13 @@ public class MainActivity extends AppCompatActivity {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
                             Goals goals = new Goals(querySnapshot.getString("Progress"),
                                     querySnapshot.getString("Name"),
-                                    querySnapshot.getString("id"));
+                                    querySnapshot.getString("id"),
+                                     querySnapshot.getString("DateToday"),
+                                    querySnapshot.getString("Flag"),
+                                    querySnapshot.getString("GoalURL"));
+
                             goalsArrayList.add(goals);
+                            Fdate= querySnapshot.getString("DateToday");
                         }
                         adapter = new GoalsAdapter(MainActivity.this, goalsArrayList);
                         mRecyclerView.setAdapter(adapter);
@@ -186,33 +198,25 @@ public class MainActivity extends AppCompatActivity {
                         Log.v("---I---", e.getMessage());
                     }
                 });
-    }
+    if(Fdate==null || !dateToday.equals(Fdate))
+     {fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document()
+                .update("DateToday", dateToday)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.v("Tag",Fdate);
+                    }
+                });
+         fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document()
+                 .update("Flag", "0")
+                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                     @Override
+                     public void onSuccess(Void aVoid) {
+                         Log.v("Tag",Fdate);
+                     }
+                 });
+    }}
 
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.upperleftmenu, menu);
-        return true;
-    }*/
-
-   /* @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id=item.getItemId();
-
-        if(id==R.id.)
-        {
-            Intent intent = new Intent(MainActivity.this, .class);
-            startActivity(intent);
-        }
-        else if(id==R.id.)
-        {
-            startActivity(new Intent(getApplicationContext(), .class));
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {

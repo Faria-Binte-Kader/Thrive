@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="1dp">
 
@@ -16,9 +17,106 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="80dp"
+                android:gravity="right">
+
+                <Button
+                    android:layout_gravity="right"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:elevation="10dp"
+                    app:backgroundTint="@null"
+                    android:id="@+id/editgoal_btn"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_below="@+id/updateprogress_btn"
+                    android:background="@drawable/edit"/>
+                <Button
+                    android:layout_gravity="right"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:elevation="10dp"
+                    app:backgroundTint="@null"
+                    android:id="@+id/deletegoal_btn"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_delete"/>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/constraintprogress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               >
+                <TextView
+                    android:id="@+id/progressgoalname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="abcdef"
+                    android:fontFamily="@font/averiasanslibre_light"
+                   app:layout_constraintBottom_toTopOf="@+id/progress_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/purple_700"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20dp"/>
+
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:id="@+id/goalpicture"
+                    app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
+                    app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+                    app:layout_constraintStart_toStartOf="@+id/progress_bar"
+                    app:layout_constraintTop_toTopOf="@+id/progress_bar"
+                    android:src="@drawable/waterintake"
+                    />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:indeterminateOnly="false"
+                android:progressDrawable="@drawable/circle"
+                android:layout_width="250dp"
+                android:layout_height="220dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:progress="60" />
 
             <TextView
+                android:id="@+id/progress"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+                app:layout_constraintStart_toStartOf="@+id/progress_bar"
+                app:layout_constraintTop_toBottomOf="@+id/progress_bar"
+                android:textColor="@color/purple_700"
+                tools:text="60%" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <!-- <TextView
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -28,20 +126,8 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
-                android:textSize="50dp"/>
+                android:textSize="50dp"/> -->
 
-            <TextView
-                android:id="@+id/progressgoalname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="abcdef"
-                android:layout_below="@+id/progress"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
-                android:textSize="20dp"/>
 
             <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateprogress_btn"
@@ -49,19 +135,32 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add2"
                 android:layout_below="@+id/progressgoalname"/>-->
-            <Button
-                android:id="@+id/updateprogress_btn"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="5dp"
-                android:text="+"
+                android:orientation="vertical"
+                android:id="@+id/progresslinearlayout"
+                android:layout_below="@+id/constraintprogress"
+                android:paddingBottom="10dp"
+                >
+            <Button
                 android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textAllCaps="false"
+                android:elevation="10dp"
+                app:backgroundTint="@null"
+                android:id="@+id/updateprogress_btn"
+                android:textSize="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Update today's progress"
                 android:layout_below="@+id/progressgoalname"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:background="@drawable/buttonroundeddark"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
