@@ -15,28 +15,6 @@
         android:padding="10dp"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp"
-                >
-
-             <ImageView
-                    android:id="@+id/friendAvatarFriends"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:src="@drawable/default_profile_picture"
-                    android:padding="10dp"
-                    android:background="@drawable/buttonrounded5"/>
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,29 +24,40 @@
                 >
 
                 <TextView
-                    android:id="@+id/friendName"
+                    android:id="@+id/categoryFriendPublicGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/purple_500"
                     android:fontFamily="@font/averiasanslibre_light"
                     android:textSize="20sp"
+                    android:text="Category"
                     android:layout_marginTop="10dp"
                     />
+
                 <TextView
-                    android:id="@+id/friendGoalName"
+                    android:id="@+id/subcategoryFriendPublicGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/purple_500"
                     android:fontFamily="@font/averiasanslibre_light"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
+                    android:text="Subcategory"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/goalNameFriendPublicGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:fontFamily="@font/averiasanslibre_light"
+                    android:textSize="17sp"
+                    android:text="Goal Name"
                     android:layout_marginTop="15dp"
                     />
             </LinearLayout>
-
-
-        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

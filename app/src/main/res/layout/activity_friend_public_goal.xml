@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/light_bg"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    tools:context=".FriendPublicGoal">
+
+    <TextView
+        android:id="@+id/friendNameFriendPublicGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friend Name"
+        android:textStyle="bold"
+        android:background="@drawable/buttonrounded3"
+        android:textAlignment="center"
+        android:fontFamily="@font/averiasanslibre_bold"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:padding="10dp"
+        android:layout_margin="25dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFriendPublicGoal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Thrive</string>
+    <string-array name="searchByTypes">
+        <item>Goal Category</item>
+        <item>Goal Subcategory</item>
+    </string-array>
 </resources>

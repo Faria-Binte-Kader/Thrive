@@ -12,7 +12,10 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
+
         <activity android:name=".AllReminders"></activity>
+        <activity android:name=".FriendPublicGoal"/>
+        <activity android:name=".FriendProfile"/>
         <activity android:name=".ReminderGoals" />
         <activity android:name=".AddGoalsProductivity" />
         <activity android:name=".ChangeAvatar" />

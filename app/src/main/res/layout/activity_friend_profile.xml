@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:background="@drawable/light_bg"
+    tools:context=".FriendProfile">
+
+    <ImageView
+            android:id="@+id/friendAvatarFriendProfile"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/default_profile_picture"
+            android:background="@drawable/buttonrounded5"
+            />
+
+    <TextView
+        android:id="@+id/friendNameFriendProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friend Name"
+        android:textStyle="bold"
+        android:background="@drawable/buttonrounded3"
+        android:textAlignment="center"
+        android:fontFamily="@font/averiasanslibre_bold"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:padding="10dp"
+        android:layout_margin="25dp"
+        />
+
+    <Button
+        android:id="@+id/seePublicGoalsFriendProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonrounded5"
+        app:backgroundTint="@null"
+        android:text="SEE PUBLIC GOALS"
+        android:fontFamily="@font/averiasanslibre_bold"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        />
+
+    <Button
+        android:id="@+id/requestFriendProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonrounded5"
+        app:backgroundTint="@null"
+        android:text="REQUEST TO BE FRIENDS"
+        android:fontFamily="@font/averiasanslibre_bold"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:layout_margin="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        />
+
+    <TextView
+        android:layout_alignLeft="@+id/reportFriendProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:fontFamily="@font/averiasanslibre_light"
+        android:text="Report"
+        android:id="@+id/buyanimalprice"
+        android:textColor="@color/purple_500"
+        android:textSize="25dp" />
+
+
+</LinearLayout>

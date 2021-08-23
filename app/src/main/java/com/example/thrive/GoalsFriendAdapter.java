@@ -1,10 +1,12 @@
 package com.example.thrive;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,11 +39,10 @@ public class GoalsFriendAdapter extends RecyclerView.Adapter<ViewHolderGoalsFrie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderGoalsFriend holder, int position) {
-        holder.friendName.setText(goalsFriendArrayList.get(position).getUserID());
-        //holder.friendName.setText(goalsFriendArrayList.get(position).getUserName());
+        holder.friendName.setText(goalsFriendArrayList.get(position).getUserName());
         holder.friendGoalName.setText(goalsFriendArrayList.get(position).getName());
 
-        /*
+
         imageURL = goalsFriendArrayList.get(position).getUserProPicURL();
 
         if (imageURL.isEmpty()) {
@@ -50,7 +51,15 @@ public class GoalsFriendAdapter extends RecyclerView.Adapter<ViewHolderGoalsFrie
             Picasso.get().load(imageURL).into(holder.friendProfilePic);
         }
 
-         */
+        holder.friendName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String friendID = goalsFriendArrayList.get(position).getUserID();
+               String friendName = goalsFriendArrayList.get(position).getUserName();
+               String friendProPicURL = goalsFriendArrayList.get(position).getUserProPicURL();
+               friendsActivity.openFriendProfile(friendID,friendName,friendProPicURL);
+            }
+        });
 
     }
 

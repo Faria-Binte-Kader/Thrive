@@ -15,12 +15,50 @@
         android:orientation="vertical">
 
         <SearchView
-            android:id="@+id/seachViewFriends"
+            android:id="@+id/searchViewFriends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/buttonrounded_search">
+            android:layout_margin="5dp"
+            android:background="@drawable/buttonrounded_search"
+            android:layout_gravity="center"
+            >
         </SearchView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewSearchByFriends"
+                android:gravity="bottom"
+                android:layout_marginBottom="5sp"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:padding="10sp"
+                android:paddingStart="20dp"
+                android:text="Search By: "
+                android:textSize="18dp"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spinnerSearchByType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/searchByTypes"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:textSize="18dp"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginBottom="5sp"
+                />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFriends"
