@@ -301,6 +301,8 @@ public class AddGoalsHealth extends AppCompatActivity {
                 goal.put("Flag","0");
                 goal.put("GoalURL",GoalURL);
 
+                goalID = documentReference1.getId();
+
                 documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -313,10 +315,6 @@ public class AddGoalsHealth extends AppCompatActivity {
                 if (privacy == "Public") {
 
                     userID = fAuth.getCurrentUser().getUid();
-                    DocumentReference documentReference_goal = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
-                    goalID = documentReference_goal.getId();
-
-                    fStore = FirebaseFirestore.getInstance();
 
                     DocumentReference documentReference_user = fStore.collection("User").document(userID);
                     documentReference_user.addSnapshotListener(AddGoalsHealth.this, new EventListener<DocumentSnapshot>() {

@@ -27,6 +27,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GoalsUpdate extends AppCompatActivity {
 
     public static final String TAG = "TAG_UPDATE_GOAL";
@@ -144,6 +147,41 @@ public class GoalsUpdate extends AppCompatActivity {
                             //Toast.makeText(GoalsUpdate.this, "Updated Privacy", Toast.LENGTH_SHORT).show();
                         }
                     });
+            if(privacy.equals("")) {
+                fStore.collection("PublicGoals").document(goalID)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        });
+            }
+            else {
+                DocumentReference documentReference_user = fStore.collection("User").document(userID);
+                documentReference_user.addSnapshotListener(GoalsUpdate.this, new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value != null){
+                            String userName = value.getString("Name");
+                            String userProPicURL = value.getString("ProPicUrl");
+                            DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                            Map<String, Object> public_goal = new HashMap<>();
+                            public_goal.put("GoalID", goalID);
+                            public_goal.put("GoalName",name);
+                            public_goal.put("UserID", userID);
+                            public_goal.put("UserName",userName);
+                            public_goal.put("UserProPicURL",userProPicURL);
+                            documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: goal is set to public");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
             Toast.makeText(GoalsUpdate.this, "Updated Goal", Toast.LENGTH_SHORT).show();
         }
         startActivity(new Intent(getApplicationContext(), MainActivity.class));

@@ -53,16 +53,24 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
 
     public void removeItem(int position) {
-
         final String id= goalsArrayList.get(position).getGoalID();
         fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
+
                     }
                 });
+        fStore.collection("PublicGoals").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+        Toast.makeText(MainActivity.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
         goalsArrayList.remove(position);
         adapter.notifyItemRemoved(position);
     }
