@@ -50,10 +50,33 @@ public class MainActivity extends AppCompatActivity {
     private String Fdate;
     String dateToday;
 
+    public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
+
+    public void removeItem(int position) {
+
+        final String id= goalsArrayList.get(position).getGoalID();
+        fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        goalsArrayList.remove(position);
+        adapter.notifyItemRemoved(position);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        goalsArrayList = new ArrayList<>();
+
+        mRecyclerView = findViewById(R.id.goalsRV);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -175,11 +198,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        goalsArrayList = new ArrayList<>();
-
-        mRecyclerView = findViewById(R.id.goalsRV);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         fStore.collection("UserGoalInfo").document(userID).collection("Goals")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -218,6 +236,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                         adapter = new GoalsAdapter(MainActivity.this, goalsArrayList);
                         mRecyclerView.setAdapter(adapter);
+                        adapter.setOnItemClickListener(new GoalsAdapter.OnItemClickListener() {
+                            @Override
+                            public void onDeleteClick(int position) {
+                                removeItem(position);
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -229,6 +253,22 @@ public class MainActivity extends AppCompatActivity {
                 });
      }
 
+    public void updategoal(String s) {
+        Intent intent = new Intent(MainActivity.this, GoalsUpdate.class);
+        intent.putExtra(EXTRA_TEXT, s);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    /*public void deletegoal(String s) {
+        fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(s)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }*/
 
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {

@@ -29,6 +29,15 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
 
     MainActivity mainActivity;
     ArrayList<Goals> goalsArrayList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public GoalsAdapter(MainActivity mainActivity, ArrayList<Goals> goalsArrayList) {
         this.mainActivity = mainActivity;
@@ -41,7 +50,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
 
         LayoutInflater layoutInflater = LayoutInflater.from(mainActivity.getBaseContext());
         View view = layoutInflater.inflate(R.layout.goal_list, parent, false);
-        return new ViewholderGoals(view);
+        return new ViewholderGoals(view, mListener);
     }
 
     @Override
@@ -67,39 +76,38 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateToday=dateFormat.format(calendar.getTime());
 
-
         holder.updateprogress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if( goalsArrayList.get(position).getFlag().equals("0")) {
-                String goalID = goalsArrayList.get(position).getGoalID();
-                DocumentReference doc = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
-                doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    String cnt;
+                    String goalID = goalsArrayList.get(position).getGoalID();
+                    DocumentReference doc = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
+                    doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        String cnt;
 
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document2 = task.getResult();
-                            if (document2.exists()) {
-                                cnt = document2.getString("Days");
-                                int temp = Integer.parseInt(cnt);
-                                temp = temp + 1;
-                                cnt = String.valueOf(temp);
-                                fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
-                                        .update("Days", cnt)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document2 = task.getResult();
+                                if (document2.exists()) {
+                                    cnt = document2.getString("Days");
+                                    int temp = Integer.parseInt(cnt);
+                                    temp = temp + 1;
+                                    cnt = String.valueOf(temp);
+                                    fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
+                                            .update("Days", cnt)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                }
+                            } else {
+
                             }
-                        } else {
-
                         }
-                    }
-                });
+                    });
 
                     DocumentReference doc2 = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
                     doc2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -149,22 +157,47 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
                         }
                     });
 
-                //mainActivity.startActivity(new Intent(mainActivity, MainActivity.class));
-                holder.name.setText(goalsArrayList.get(position).getName());
-                if(check.equals("Completed!")) {
-                    holder.progressBar.setProgress(100);
-                    holder.progress.setText(goalsArrayList.get(position).getProgress());
+                    //mainActivity.startActivity(new Intent(mainActivity, MainActivity.class));
+                    holder.name.setText(goalsArrayList.get(position).getName());
+                    if(check.equals("Completed!")) {
+                        holder.progressBar.setProgress(100);
+                        holder.progress.setText(goalsArrayList.get(position).getProgress());
+                    }
+                    else
+                    {int strTointProgress=Integer.parseInt(goalsArrayList.get(position).getProgress());
+                        holder.progressBar.setProgress(strTointProgress);
+                        holder.progress.setText(goalsArrayList.get(position).getProgress()+"%");}
                 }
                 else
-                {int strTointProgress=Integer.parseInt(goalsArrayList.get(position).getProgress());
-                    holder.progressBar.setProgress(strTointProgress);
-                    holder.progress.setText(goalsArrayList.get(position).getProgress()+"%");}
-            }
-            else
                 {
                     Toast.makeText(v.getContext(), "You already updated your daily progress once.", Toast.LENGTH_SHORT).show();
                 }}
         });
+
+        holder.editgoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String goalID = goalsArrayList.get(position).getGoalID();
+                mainActivity.updategoal(goalID);
+            }
+        });
+
+        /*holder.deletegoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String goalID = goalsArrayList.get(position).getGoalID();
+                fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //Toast.makeText(GoalsAdapter.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+        });*/
+
     }
 
     @Override

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/light_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    tools:context=".GoalsUpdate">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDIT DETAILS OF YOUR GOAL"
+            android:textStyle="bold"
+            android:background="@drawable/buttonrounded3"
+            android:textAlignment="center"
+            android:fontFamily="@font/averiasanslibre_bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:padding="10dp"
+            />
+
+        <EditText
+            android:id="@+id/goalUpdateName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER YOUR GOAL NAME"
+            android:textAllCaps="false"
+            android:textColorHint="@color/purple_grey"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/buttonrounded4"
+            android:textSize="18sp"
+            android:layout_marginTop="40dp"
+            android:foregroundTint="@color/purple_500"
+            android:elevation="5dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            />
+
+        <EditText
+            android:id="@+id/goalUpdateDuration"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="ENTER DURATION IN DAYS"
+            android:textAllCaps="false"
+            android:textColorHint="@color/purple_grey"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/buttonrounded4"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:foregroundTint="@color/purple_500"
+            android:elevation="5dp"
+            android:fontFamily="@font/averiasanslibre_light"
+            />
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DO YOU WANT TO MAKE YOUR GOAL PUBLIC?"
+            android:textStyle="bold"
+            android:background="@drawable/buttonrounded3"
+            android:textAlignment="center"
+            android:fontFamily="@font/averiasanslibre_bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:padding="10dp"
+            />
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/publicbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/buttonroundeddark"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:text="Go Public!"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:elevation="10dp"
+                app:backgroundTint="@null"
+                android:layout_margin="10dp"
+                />
+            <Button
+                android:layout_margin="10dp"
+                android:id="@+id/laterbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/buttonroundeddark"
+                android:fontFamily="@font/averiasanslibre_bold"
+                android:text="Maybe Later."
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:elevation="10dp"
+                app:backgroundTint="@null"
+                />
+        </LinearLayout>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:id="@+id/updategoalbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonroundeddark"
+            android:fontFamily="@font/averiasanslibre_bold"
+            android:text="UPDATE GOAL!"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:elevation="10dp"
+            app:backgroundTint="@null"
+            />
+    </LinearLayout>
+</ScrollView>

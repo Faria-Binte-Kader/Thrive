@@ -13,9 +13,9 @@ public class ViewholderGoals extends RecyclerView.ViewHolder {
 
     public TextView progress, name;
     public ProgressBar progressBar;
-    public Button updateprogress;
+    public Button updateprogress, editgoal, deletegoal;
     public ImageView goalpicture;
-    public ViewholderGoals(@NonNull View itemView) {
+    public ViewholderGoals(@NonNull View itemView, final GoalsAdapter.OnItemClickListener listener) {
         super(itemView);
 
         progress = itemView.findViewById(R.id.progress);
@@ -23,5 +23,20 @@ public class ViewholderGoals extends RecyclerView.ViewHolder {
         progressBar=itemView.findViewById(R.id.progress_bar);
         goalpicture=itemView.findViewById(R.id.goalpicture);
         updateprogress = itemView.findViewById(R.id.updateprogress_btn);
+        editgoal = itemView.findViewById(R.id.editgoal_btn);
+        deletegoal = itemView.findViewById(R.id.deletegoal_btn);
+
+        deletegoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener!=null) {
+                    int position = getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION) {
+                        listener.onDeleteClick(position);
+
+                    }
+                }
+            }
+        });
     }
 }
