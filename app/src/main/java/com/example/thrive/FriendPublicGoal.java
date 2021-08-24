@@ -65,7 +65,6 @@ public class FriendPublicGoal extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
-                            Log.d(TAG, "traversing goals of " + userID + "with privacy" + querySnapshot.getString("Privacy"));
                             GoalsFriend goalsFriend = new GoalsFriend(querySnapshot.getString("id"),
                                     querySnapshot.getString("Name"),
                                     querySnapshot.getString("Category"),
@@ -74,9 +73,6 @@ public class FriendPublicGoal extends AppCompatActivity {
                                     userName,
                                     querySnapshot.getString("UserProPicURL"));
                             friendPublicGoalArrayList.add(goalsFriend);
-                            String dummy1= goalsFriend.getName();
-                            String dummy2 = goalsFriend.getSubcategory();
-                            Log.d(TAG, dummy1+dummy2);
                         }
                         adapter = new FriendPublicGoalAdapter(FriendPublicGoal.this, friendPublicGoalArrayList);
                         friendPublicGoalRecyclerView.setAdapter(adapter);

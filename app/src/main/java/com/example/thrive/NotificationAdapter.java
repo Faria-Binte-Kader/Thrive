@@ -76,7 +76,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<ViewholderNotifica
                                 Log.v("---I---", "Response changed");
                             }
                         });
-                DocumentReference documentReference_frnd= fStore.collection(notificationArrayList.get(position).getUserName()+"Friends").document();
+                DocumentReference documentReference_frnd= fStore.collection("Friends").document(userID).collection(notificationArrayList.get(position).getUserName()+"Friends").document();
                 Map<String, Object> friend = new HashMap<>();
                 friend.put("FriendID", notificationArrayList.get(position).getSenderID());
                 friend.put("FriendName", notificationArrayList.get(position).getSenderName());
@@ -89,7 +89,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<ViewholderNotifica
                 });
 
 
-                DocumentReference documentReference_frnd2= fStore.collection(notificationArrayList.get(position).getSenderName()+"Friends").document();
+                DocumentReference documentReference_frnd2= fStore.collection("Friends").document(notificationArrayList.get(position).getSenderID()).collection(notificationArrayList.get(position).getSenderName()+"Friends").document();
                 Map<String, Object> friend2 = new HashMap<>();
                 friend2.put("FriendID", userID);
                 friend2.put("FriendName", notificationArrayList.get(position).getUserName());

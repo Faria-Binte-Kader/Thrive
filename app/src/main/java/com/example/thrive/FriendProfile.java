@@ -109,9 +109,14 @@ public class FriendProfile extends AppCompatActivity {
                                                Toast.makeText(FriendProfile.this, "You are already friends!", Toast.LENGTH_SHORT).show();
                                                flag=1;
                                            }
-                                           else if(userID.equals(senderid)&&friendID.equals(receiverid)&&response.equals("1"))
+                                           else if(userID.equals(receiverid)&&friendID.equals(senderid)&&response.equals("1"))
                                            {
                                                Toast.makeText(FriendProfile.this, "You are already friends!", Toast.LENGTH_SHORT).show();
+                                               flag=1;
+                                           }
+                                           else if(userID.equals(friendID))
+                                           {
+                                               Toast.makeText(FriendProfile.this, "Sorry, even though you can be your own friend, but here you cannot send yourself a friend request!", Toast.LENGTH_SHORT).show();
                                                flag=1;
                                            }
 

@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +37,7 @@ public class Friends extends AppCompatActivity implements AdapterView.OnItemSele
     public static final String TAG = "TAG Friends";
 
     FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
 
     RecyclerView friendRecyclerView;
     ArrayList<GoalsFriend> goalsFriendArrayList;
@@ -201,7 +203,72 @@ public class Friends extends AppCompatActivity implements AdapterView.OnItemSele
                                     Log.v("---I---", e.getMessage());
                                 }
                             });
+                } else if (spinner_value.contains("Goal Name")) {
+                    if (goalsFriendArrayList.size() > 0)
+                        goalsFriendArrayList.clear();
+
+                    fStore.collection("PublicGoals")
+                            .whereGreaterThanOrEqualTo("GoalName", s.toUpperCase())
+                            .orderBy("GoalName").startAt(s.toUpperCase()).endAt(s.toUpperCase() + "\uf8ff")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                                    for (DocumentSnapshot querySnapshot : task.getResult()) {
+                                        GoalsFriend goalsFriend = new GoalsFriend(querySnapshot.getString("GoalID"),
+                                                querySnapshot.getString("GoalName"),
+                                                querySnapshot.getString("Category"),
+                                                querySnapshot.getString("Subcategory"),
+                                                querySnapshot.getString("UserID"),
+                                                querySnapshot.getString("UserName"),
+                                                querySnapshot.getString("UserProPicURL"));
+                                        goalsFriendArrayList.add(goalsFriend);
+                                    }
+                                    adapter = new GoalsFriendAdapter(Friends.this, goalsFriendArrayList);
+                                    friendRecyclerView.setAdapter(adapter);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Friends.this, "Problem ---I---", Toast.LENGTH_SHORT).show();
+                                    Log.v("---I---", e.getMessage());
+                                }
+                            });
+                } else if (spinner_value.contains("User Name")) {
+                    if (goalsFriendArrayList.size() > 0)
+                        goalsFriendArrayList.clear();
+
+                    fStore.collection("PublicGoals")
+                            .whereGreaterThanOrEqualTo("UserName", s.toUpperCase())
+                            .orderBy("UserName").startAt(s.toUpperCase()).endAt(s.toUpperCase() + "\uf8ff")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                                    for (DocumentSnapshot querySnapshot : task.getResult()) {
+                                        GoalsFriend goalsFriend = new GoalsFriend(querySnapshot.getString("GoalID"),
+                                                querySnapshot.getString("GoalName"),
+                                                querySnapshot.getString("Category"),
+                                                querySnapshot.getString("Subcategory"),
+                                                querySnapshot.getString("UserID"),
+                                                querySnapshot.getString("UserName"),
+                                                querySnapshot.getString("UserProPicURL"));
+                                        goalsFriendArrayList.add(goalsFriend);
+                                    }
+                                    adapter = new GoalsFriendAdapter(Friends.this, goalsFriendArrayList);
+                                    friendRecyclerView.setAdapter(adapter);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Friends.this, "Problem ---I---", Toast.LENGTH_SHORT).show();
+                                    Log.v("---I---", e.getMessage());
+                                }
+                            });
                 }
+
                 return false;
             }
 
@@ -231,7 +298,7 @@ public class Friends extends AppCompatActivity implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-       // ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        // ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
     }
 
@@ -241,11 +308,17 @@ public class Friends extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public void openFriendProfile(String friendID, String friendName, String friendProPicURL) {
-        Intent intent = new Intent(Friends.this, FriendProfile.class);
-        intent.putExtra(EXTRA_TEXT_ID, friendID);
-        intent.putExtra(EXTRA_TEXT_Name, friendName);
-        intent.putExtra(EXTRA_TEXT_ProPicURL, friendProPicURL);
-        startActivity(intent);
+        fAuth = FirebaseAuth.getInstance();
+        if (friendID.equals(fAuth.getUid())) {
+            Intent intent = new Intent(Friends.this, Profile.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(Friends.this, FriendProfile.class);
+            intent.putExtra(EXTRA_TEXT_ID, friendID);
+            intent.putExtra(EXTRA_TEXT_Name, friendName);
+            intent.putExtra(EXTRA_TEXT_ProPicURL, friendProPicURL);
+            startActivity(intent);
+        }
     }
 
 }

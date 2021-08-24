@@ -204,7 +204,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
                                         DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
                                         Map<String, Object> public_goal = new HashMap<>();
                                         public_goal.put("GoalID", goalID);
-                                        public_goal.put("GoalName", name);
+                                        public_goal.put("GoalName", name.toUpperCase());
                                         public_goal.put("Category", "PRODUCTIVITY");
                                         public_goal.put("Subcategory", category.toUpperCase());
                                         public_goal.put("UserID", userID);

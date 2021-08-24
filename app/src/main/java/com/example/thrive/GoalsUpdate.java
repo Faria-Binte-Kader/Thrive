@@ -26,6 +26,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +44,7 @@ public class GoalsUpdate extends AppCompatActivity {
     private String userID;
 
     String goalID = "";
-    String privacy="";
+    String privacy = "";
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -59,8 +62,8 @@ public class GoalsUpdate extends AppCompatActivity {
         editName = findViewById(R.id.goalUpdateName);
         editDuration = findViewById(R.id.goalUpdateDuration);
 
-        gopublic=findViewById(R.id.publicbtn);
-        later=findViewById(R.id.laterbtn);
+        gopublic = findViewById(R.id.publicbtn);
+        later = findViewById(R.id.laterbtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -73,7 +76,7 @@ public class GoalsUpdate extends AppCompatActivity {
                 if (value != null) {
                     editName.setText(value.getString("Name"));
                     editDuration.setText(value.getString("Duration"));
-                    privacy=value.getString("Privacy");
+                    privacy = value.getString("Privacy");
                 }
             }
         });
@@ -82,7 +85,7 @@ public class GoalsUpdate extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(true);
-                privacy="Public";
+                privacy = "Public";
                 later.setPressed(false);
                 return true;
             }
@@ -91,7 +94,7 @@ public class GoalsUpdate extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(false);
-                privacy="";
+                privacy = "";
                 later.setPressed(true);
                 return true;
             }
@@ -121,8 +124,7 @@ public class GoalsUpdate extends AppCompatActivity {
         if (duration.isEmpty() || duration.equals("0")) {
             showError(editDuration, "Duration must be at least 1 day");
             return;
-        }
-        else {
+        } else {
             fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(goalID)
                     .update("Name", name)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -147,7 +149,8 @@ public class GoalsUpdate extends AppCompatActivity {
                             //Toast.makeText(GoalsUpdate.this, "Updated Privacy", Toast.LENGTH_SHORT).show();
                         }
                     });
-            if(privacy.equals("")) {
+
+            if (privacy.equals("")) {
                 fStore.collection("PublicGoals").document(goalID)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -156,28 +159,41 @@ public class GoalsUpdate extends AppCompatActivity {
 
                             }
                         });
-            }
-            else {
+            } else {
                 DocumentReference documentReference_user = fStore.collection("User").document(userID);
                 documentReference_user.addSnapshotListener(GoalsUpdate.this, new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(value != null){
+                        if (value != null) {
                             String userName = value.getString("Name");
                             String userProPicURL = value.getString("ProPicUrl");
-                            DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
-                            Map<String, Object> public_goal = new HashMap<>();
-                            public_goal.put("GoalID", goalID);
-                            public_goal.put("GoalName",name);
-                            public_goal.put("UserID", userID);
-                            public_goal.put("UserName",userName);
-                            public_goal.put("UserProPicURL",userProPicURL);
-                            documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "onSuccess: goal is set to public");
-                                }
-                            });
+
+
+                            fStore.collection("UserGoalInfo")
+                                    .document(userID).collection("Goals").document(goalID)
+                                    .addSnapshotListener(GoalsUpdate.this, new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                            if(value != null){
+                                                DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                                                Map<String, Object> public_goal = new HashMap<>();
+                                                public_goal.put("GoalID", goalID);
+                                                public_goal.put("GoalName", name.toUpperCase());
+                                                public_goal.put("Category", value.getString("Category").toUpperCase());
+                                                public_goal.put("Subcategory", value.getString("Subcategory").toUpperCase());
+                                                public_goal.put("UserID", userID);
+                                                public_goal.put("UserName", userName.toUpperCase());
+                                                public_goal.put("UserProPicURL", userProPicURL);
+                                                documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "onSuccess: goal is set to public");
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+
                         }
                     }
                 });

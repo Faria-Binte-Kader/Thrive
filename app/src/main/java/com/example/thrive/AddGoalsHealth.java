@@ -326,7 +326,9 @@ public class AddGoalsHealth extends AppCompatActivity {
                                 DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
                                 Map<String, Object> public_goal = new HashMap<>();
                                 public_goal.put("GoalID", goalID);
-                                public_goal.put("GoalName",name);
+                                public_goal.put("GoalName", name.toUpperCase());
+                                public_goal.put("Category", "HEALTH");
+                                public_goal.put("Subcategory", category.toUpperCase());
                                 public_goal.put("UserID", userID);
                                 public_goal.put("UserName",userName);
                                 public_goal.put("UserProPicURL",userProPicURL);

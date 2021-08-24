@@ -3,5 +3,7 @@
     <string-array name="searchByTypes">
         <item>Goal Category</item>
         <item>Goal Subcategory</item>
+        <item>Goal Name</item>
+        <item>User Name</item>
     </string-array>
 </resources>
