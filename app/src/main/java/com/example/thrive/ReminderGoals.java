@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReminderGoals extends AppCompatActivity {
@@ -48,6 +50,8 @@ public class ReminderGoals extends AppCompatActivity {
     String userId;
     String remindernamet;
 
+    List<Calendar> calendarList = new ArrayList<>();
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -58,8 +62,8 @@ public class ReminderGoals extends AppCompatActivity {
         satbtn=findViewById(R.id.satbtn);
         sunbtn=findViewById(R.id.sunbtn);
         monbtn=findViewById(R.id.monbtn);
-        wedbtn=findViewById(R.id.tuesbtn);
-        tuesbtn=findViewById(R.id.wedbtn);
+        wedbtn=findViewById(R.id.wedbtn);
+        tuesbtn=findViewById(R.id.tuesbtn);
         thursbtn=findViewById(R.id.thursbtn);
         fribtn=findViewById(R.id.fribtn);
         remindername=findViewById(R.id.remindername);
@@ -132,108 +136,117 @@ public class ReminderGoals extends AppCompatActivity {
                         hour = Integer.parseInt(a);
                         String b= time.substring(i+3,i+5);
                         minute= Integer.parseInt(b);
-                       /* if(sat.equals("1"))
+                        Log.d("Tag", " "+hour+" "+minute);
+                        if(sat.equals("1"))
                         {
-                            int days = Calendar.SATURDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                            calendar.add(Calendar.DATE, days);
-                        calendar.set(Calendar.HOUR_OF_DAY,hour);
-                        calendar.set(Calendar.MINUTE,minute);
-                        calendar.set(Calendar.SECOND,00);
-                        Log.d("Tag", " "+minute+" "+hour);
-                        Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                        PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
-                        AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                        long timeAtButtonClick= System.currentTimeMillis();
-                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}*/
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);
+                            calendar.set(Calendar.HOUR_OF_DAY,hour);
+                            calendar.set(Calendar.MINUTE,minute);
+                            calendar.set(Calendar.SECOND,00);
+                            Log.d("Tag", " "+calendar.getTime());
+
+                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                         if(sun.equals("1"))
                         {
                             Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,4);
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+minute+" "+hour);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,i,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                            Log.d("Tag", " "+calendar.getTime());
+
                             AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            long timeAtButtonClick= System.currentTimeMillis();
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7,pendingIntent);}
-                       /* if(mon.equals("1"))
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
+                        if(mon.equals("1"))
                         {
-                           int days = Calendar.MONDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                           calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+minute+" "+hour);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
+                            Log.d("Tag", " "+calendar.getTime());
+
                             AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            long timeAtButtonClick= System.currentTimeMillis();
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                         if(tues.equals("1"))
                         {
-                            int days = Calendar.TUESDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                            calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+minute+" "+hour);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            long timeAtButtonClick= System.currentTimeMillis();
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);}
+                            Log.d("Tag", " "+calendar.getTime());
 
+                            //calendarList.add(calendar);
+
+                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                         if(wed.equals("1"))
                         {
-                            int days = Calendar.WEDNESDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                            calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+minute+" "+hour);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
+                            Log.d("Tag", " "+calendar.getTime());
+
                             AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7,pendingIntent);}
-
-
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                         if(thurs.equals("1"))
                         {
-                           // int days = Calendar.THURSDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                           // calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);
-                        Log.d("Tag", " "+minute+" "+hour+"thursday");}
+                            Log.d("Tag", " "+calendar.getTime());
 
+                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                         if(fri.equals("1"))
                         {
-                            int days = Calendar.FRIDAY + (7 - calendar.get(Calendar.DAY_OF_WEEK));
-                            //calendar.set(Calendar.DAY_OF_WEEK,4);
-                            calendar.add(Calendar.DATE, days);
+                            Calendar calendar=Calendar.getInstance();
+                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY);
                             calendar.set(Calendar.HOUR_OF_DAY,hour);
                             calendar.set(Calendar.MINUTE,minute);
                             calendar.set(Calendar.SECOND,00);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 7*(AlarmManager.INTERVAL_DAY),pendingIntent);
-                            Log.d("Tag", " "+minute+" "+hour+"fri");}*/
+                            Log.d("Tag", " "+calendar.getTime());
 
+                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+                        }
                     }
                 }
 
+                /*for(Calendar calendarItem:calendarList)
+                {
+                    AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                    Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
+                    PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendarItem.getTimeInMillis(), pi);
+                }*/
 
             }
         });
@@ -341,7 +354,7 @@ public class ReminderGoals extends AppCompatActivity {
     }
 
 
-    private void newEntry (FlexboxLayout mLayout) {
+    private void newEntry(FlexboxLayout mLayout) {
         LayoutInflater mInf = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             mInf = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -354,9 +367,9 @@ public class ReminderGoals extends AppCompatActivity {
     }
 
     private void remove(){
-        if (entryList.size() > 1) {
-            mLayout.removeView(entryList.get(entryList.size() - 1));
-            entryList.remove(entryList.size() - 1);
+        if (entryList.size()>1) {
+            mLayout.removeView(entryList.get(entryList.size()-1));
+            entryList.remove(entryList.size()-1);
         }
     }
 
@@ -369,12 +382,12 @@ public class ReminderGoals extends AppCompatActivity {
             minutet= l.findViewById(R.id.minutetext);
             hour=hourt.getText().toString();
             minute=minutet.getText().toString();
-            if(hour.equals("")) hour="16";
+            if(hour.equals("")) hour="00";
             if(minute.equals("")) minute="00";
-            time= time+" "+hour+":"+ minute;
+            time= time+" "+hour+":"+minute;
             }
         time=time+" ";
+        Log.d("Tag", " "+time);
         }
-
     }
 
