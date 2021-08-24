@@ -63,4 +63,8 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
     implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
 
+    //cloud message
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+
 }

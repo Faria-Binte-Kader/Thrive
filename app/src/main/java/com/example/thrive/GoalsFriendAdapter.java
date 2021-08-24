@@ -45,7 +45,7 @@ public class GoalsFriendAdapter extends RecyclerView.Adapter<ViewHolderGoalsFrie
 
         imageURL = goalsFriendArrayList.get(position).getUserProPicURL();
 
-        if (imageURL.isEmpty()) {
+        if (imageURL==null) {
             holder.friendProfilePic.setImageResource(R.drawable.default_profile_picture);
         } else {
             Picasso.get().load(imageURL).into(holder.friendProfilePic);

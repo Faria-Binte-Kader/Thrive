@@ -325,25 +325,23 @@ public class AddGoalsHealth extends AppCompatActivity {
                             if(value != null){
                                 userName = value.getString("Name");
                                 userProPicURL = value.getString("ProPicUrl");
+                                DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                                Map<String, Object> public_goal = new HashMap<>();
+                                public_goal.put("GoalID", goalID);
+                                public_goal.put("GoalName",name);
+                                public_goal.put("UserID", userID);
+                                public_goal.put("UserName",userName);
+                                public_goal.put("UserProPicURL",userProPicURL);
+                                documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "onSuccess: goal is set to public");
+                                    }
+                                });
                             }
                         }
                     });
 
-                    Log.d(TAG, userName+" "+userProPicURL);
-
-                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
-                    Map<String, Object> public_goal = new HashMap<>();
-                    public_goal.put("GoalID", goalID);
-                    public_goal.put("GoalName",name);
-                    public_goal.put("UserID", userID);
-                    public_goal.put("UserName",userName);
-                    public_goal.put("UserProPicURL",userProPicURL);
-                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "onSuccess: goal is set to public");
-                        }
-                    });
                 }
 
 

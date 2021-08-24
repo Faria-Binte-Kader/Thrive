@@ -41,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Goals> goalsArrayList;
     GoalsAdapter adapter;
 
-    Button dropdownmenu, focusbutton, pedometerbutton,seeremindersbtn;
+    Button dropdownmenu, focusbutton, pedometerbutton,seeremindersbtn,notifybtn;
     Button profileBtn;
     private TextView cointext;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-    private String userID;
+    private String userID,id;
     private String Fdate;
+    String dateToday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         cointext=findViewById(R.id.cointextview);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        String dateToday=dateFormat.format(calendar.getTime());
+        dateToday=dateFormat.format(calendar.getTime());
 
         DocumentReference documentReference = fStore.collection("User").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -120,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AllReminders.class);
+                startActivity(intent);
+            }
+        });
+        notifybtn=(Button)findViewById(R.id.notificationbtn);
+        notifybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MyNotifications.class);
                 startActivity(intent);
             }
         });
@@ -186,6 +195,26 @@ public class MainActivity extends AppCompatActivity {
 
                             goalsArrayList.add(goals);
                             Fdate= querySnapshot.getString("DateToday");
+                            id=querySnapshot.getString("id");
+
+                            if(!dateToday.equals(Fdate))
+                            {fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(id)
+                                    .update("DateToday", dateToday)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.v("Tag",dateToday);
+                                        }
+                                    });
+                                fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(id)
+                                        .update("Flag", "0")
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.v("Tag","flag");
+                                            }
+                                        });
+                            }
                         }
                         adapter = new GoalsAdapter(MainActivity.this, goalsArrayList);
                         mRecyclerView.setAdapter(adapter);
@@ -198,24 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.v("---I---", e.getMessage());
                     }
                 });
-    if(Fdate==null || !dateToday.equals(Fdate))
-     {fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document()
-                .update("DateToday", dateToday)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.v("Tag",Fdate);
-                    }
-                });
-         fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document()
-                 .update("Flag", "0")
-                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-                     @Override
-                     public void onSuccess(Void aVoid) {
-                         Log.v("Tag",Fdate);
-                     }
-                 });
-    }}
+     }
 
 
     @Override

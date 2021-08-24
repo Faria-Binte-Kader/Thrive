@@ -112,8 +112,6 @@ public class Profile extends AppCompatActivity {
                     height.setText(new StringBuilder().append(value.getString("Height")).append(" cm").toString());
                     weight.setText(new StringBuilder().append(value.getString("Weight")).append(" kg").toString());
                     imageURI = value.getString("ProPicUrl");
-                    //if(imageuri!=null)
-                    // { Picasso.get().load(imageuri).into(imageView);}
                     if (imageURI.isEmpty()) {
                         imageView.setImageResource(R.drawable.default_profile_picture);
                     } else {

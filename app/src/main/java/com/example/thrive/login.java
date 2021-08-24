@@ -31,6 +31,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +45,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
     Button loginBtn, signupBtn, forgotPasswordBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+
 
     String userID;
 
@@ -102,6 +106,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
                                     Intent intent = new Intent(login.this, MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
+                                   // String token=returnMeFCMtoken();
                                     finish();
                                 } else {
                                     Toast.makeText(login.this, "Please verify your Email Address", Toast.LENGTH_SHORT).show();
@@ -194,5 +199,19 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+    public static String returnMeFCMtoken() {
+        final String[] token = {""};
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(task.isComplete()){
+                    token[0] = task.getResult();
+                    Log.e("AppConstants", "onComplete: new Token got: "+token[0] );
+
+                }
+            }
+        });
+        return token[0];
     }
 }

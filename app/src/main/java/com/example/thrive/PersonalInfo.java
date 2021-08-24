@@ -60,7 +60,6 @@ public class PersonalInfo extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
         userID = fAuth.getCurrentUser().getUid();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
