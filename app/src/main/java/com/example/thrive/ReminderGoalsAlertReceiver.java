@@ -29,11 +29,13 @@ import java.util.Calendar;
 public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
+    int hour;
+    String shour;
     String userID,goalname;
     @Override
     public void onReceive(Context context, Intent intent) {
-       /* Calendar calendar=Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        Calendar calendar=Calendar.getInstance();
+        /*int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         String dayOfWeekt;
         if(dayOfWeek==1) dayOfWeekt="Sunday";
         else if(dayOfWeek==2) dayOfWeekt="Monday";
@@ -41,33 +43,22 @@ public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
         else if(dayOfWeek==4) dayOfWeekt="Wednesday";
         else if(dayOfWeek==5) dayOfWeekt="Thursday";
         else if(dayOfWeek==6) dayOfWeekt="Friday";
-        else dayOfWeekt="Saturday";
-        int hour= calendar.get(Calendar.HOUR_OF_DAY);
+        else dayOfWeekt="Saturday";*/
+       /* int hour= calendar.get(Calendar.HOUR_OF_DAY);
+        String shour= Integer.toString(hour);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
         fStore.collection("Alarms/"+userID+"/PersonalAlarms")
-                .whereEqualTo(dayOfWeekt, "1")
+                .whereEqualTo("Hour", shour)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    String name,time;
 
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
-                            name= querySnapshot.getString("ReminderName");
-                            time= querySnapshot.getString("Time");
-                           /* for(int i=1; i<time.length(); i=i+5)
-                            {
-                                if(i+2<time.length())
-                                {String a= time.substring(i,i+2);
-                                int num = Integer.parseInt(a);
-                                if(num==hour || num==hour-1 || num==hour+1)
-                                { break;}}
-                            }
-                            goalname=name;
+                            goalname= querySnapshot.getString("ReminderName");
                         }
-                        Log.d("Tag", goalname);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -76,8 +67,8 @@ public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
                         Log.d("Tag", "failed");
                     }
                 });*/
-       // final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.samsung_relax);
-        //mediaPlayer.start();
+        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.samsung_relax);
+        mediaPlayer.start();
         /*NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"notifyalarm")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentTitle("Reminder!")
@@ -92,12 +83,12 @@ public class ReminderGoalsAlertReceiver extends BroadcastReceiver {
             NotificationManager notificationManager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"notifyalarm")
                     .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
-                    .setContentTitle("Reminder!")
+                    .setContentTitle("Reminder")
                     .setAutoCancel(true)
-                    .setContentText("goal")
+                    .setContentText("Head over to your reminder-list in Thrive.")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            notificationManager.notify(100,builder.build());
+            notificationManager.notify(Integer.parseInt(intent.getData().getSchemeSpecificPart()),builder.build());
         }
 
     }

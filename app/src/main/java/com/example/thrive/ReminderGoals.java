@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.InputType;
@@ -17,9 +18,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,24 +34,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-public class ReminderGoals extends AppCompatActivity {
+public class ReminderGoals extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
 
-    public Button satbtn, sunbtn, monbtn, tuesbtn, wedbtn, thursbtn, fribtn, setreminderbtn;
-    Button addbtn,removebtn;
-    private ArrayList<LinearLayout> entryList = new ArrayList<>();
-    private FlexboxLayout mLayout;
-    EditText remindername;
-    String time="";
-    int hour, minute;
-    String sat,sun,mon,tues,wed, thurs, fri;
+   // public Button satbtn, sunbtn, monbtn, tuesbtn, wedbtn, thursbtn, fribtn, setreminderbtn;
+   // Button addbtn,removebtn;
+  //  private ArrayList<LinearLayout> entryList = new ArrayList<>();
+   // private FlexboxLayout mLayout;
+    EditText remindername,hourt,minutet,durationt;
+    public Button setreminderbtn;
+    int hour, minute,duration;
+    String shour, sminute,sduration;
+    //String sat,sun,mon,tues,wed, thurs, fri;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
     String remindernamet;
+    String spinner_value;
+    String type;
+    int randomnumber;
+    private Spinner spinnerReminderDuration;
+
 
     List<Calendar> calendarList = new ArrayList<>();
 
@@ -58,336 +69,110 @@ public class ReminderGoals extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_goals);
-        mLayout=findViewById(R.id.remindergoalslayout);
-        satbtn=findViewById(R.id.satbtn);
-        sunbtn=findViewById(R.id.sunbtn);
-        monbtn=findViewById(R.id.monbtn);
-        wedbtn=findViewById(R.id.wedbtn);
-        tuesbtn=findViewById(R.id.tuesbtn);
-        thursbtn=findViewById(R.id.thursbtn);
-        fribtn=findViewById(R.id.fribtn);
-        remindername=findViewById(R.id.remindername);
+        hourt = findViewById(R.id.hourtext2);
+        minutet = findViewById(R.id.minutetext2);
+        durationt = findViewById(R.id.reminderduration);
+        remindername = findViewById(R.id.remindername);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
+        spinnerReminderDuration = findViewById(R.id.spinnerreminderdurationType);
+        spinnerReminderDuration.setOnItemSelectedListener(this);
 
-        newEntry(mLayout);
+       /* AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent= new Intent(ReminderGoals.this,AlertReceiver.class);
+        PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderGoals.this,0,intent,0);
 
-        addbtn=findViewById(R.id.addbtn);
-        addbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newEntry(mLayout);
-            }
-        });
-        removebtn=findViewById(R.id.removebtn);
-        removebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove();
-            }
-        });
+        alarmManager.cancel(pendingIntent);*/
 
-        setreminderbtn=findViewById(R.id.setreminderbtn);
+        setreminderbtn = findViewById(R.id.setreminderbtn);
         setreminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAlarmTime();
-                if(remindername.getText()!=null)
-                { remindernamet=remindername.getText().toString();}
-                if(satbtn.isSelected() && satbtn.isActivated()) sat="1";
-                else sat="0";
-                if(sunbtn.isSelected() && sunbtn.isActivated()) sun="1";
-                else sun="0";
-                if(monbtn.isSelected() && monbtn.isActivated()) mon="1";
-                else mon="0";
-                if(tuesbtn.isSelected() && tuesbtn.isActivated()) tues="1";
-                else tues="0";
-                if(wedbtn.isSelected() && wedbtn.isActivated()) wed="1";
-                else wed="0";
-                if(thursbtn.isSelected() && thursbtn.isActivated()) thurs="1";
-                else thurs="0";
-                if(fribtn.isSelected() && fribtn.isActivated()) fri="1";
-                else fri="0";
+                Random random = new Random();
+                randomnumber=random.nextInt(100000);
+                if (remindername.getText() != null) {
+                    remindernamet = remindername.getText().toString();
+                }
+                if (hourt.getText() != null) {
+                    shour = hourt.getText().toString();
+                }
+                else shour="0";
+                if (minutet.getText() != null) {
+                    sminute= minutet.getText().toString();
+                }
+                else sminute="0";
+                if (durationt.getText() == null) {
+                    sduration = "0";
+
+                }
+                else sduration= durationt.getText().toString();
+
+                hour=Integer.parseInt(shour);
+                minute=Integer.parseInt(sminute);
+                duration=Integer.parseInt(sduration);
+
+                spinner_value = spinnerReminderDuration.getSelectedItem().toString();
+
+                if (spinner_value.contains("hour(s)")) {
+                    duration=duration*60;
+                    type="hour(s)";
+                }
+                else if (spinner_value.contains("No repeat")) {
+                    duration=0;
+                    type="No repeat";
+                }
+                else
+                { type="minute(s)";}
+
+                Calendar calendar = Calendar.getInstance();
+                Date date= calendar.getTime();
+                String datet=date.toString();
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, 00);
+                Log.d("Tag", " " + calendar.getTime());
+
 
                 DocumentReference documentReference = fStore.collection("Alarms").document(userId).collection("PersonalAlarms").document();
                 Map<String, Object> reminder = new HashMap<>();
                 reminder.put("UserID", userId);
-                reminder.put("Time", time);
-                reminder.put("Saturday", sat);
-                reminder.put("Sunday", sun);
-                reminder.put("Monday", mon);
-                reminder.put("Tuesday", tues);
-                reminder.put("Wednesday", wed);
-                reminder.put("Thursday", thurs);
-                reminder.put("Friday", fri);
+                reminder.put("Hour", shour);
+                reminder.put("Minute", sminute);
+                reminder.put("Duration", sduration);
                 reminder.put("ReminderName", remindernamet);
+                reminder.put("Date", datet);
+                reminder.put("IntervalType", type);
+                reminder.put("DocumentID", documentReference.getId());
+                reminder.put("IntentID", String.valueOf(randomnumber));
+
                 documentReference.set(reminder).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Tag", "Reminder Added");
+                        Toast.makeText(ReminderGoals.this, "Reminder Added", Toast.LENGTH_SHORT).show();
+                        Log.d("Tag", shour + sminute+sduration);
                     }
                 });
 
-                for(int i=1; i<=time.length(); i=i+6)
-                {
-                    if(i+5<=time.length())
-                    {String a= time.substring(i,i+2);
-                        hour = Integer.parseInt(a);
-                        String b= time.substring(i+3,i+5);
-                        minute= Integer.parseInt(b);
-                        Log.d("Tag", " "+hour+" "+minute);
-                        if(sat.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
 
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(sun.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(mon.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(tues.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            //calendarList.add(calendar);
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(wed.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(thurs.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                        if(fri.equals("1"))
-                        {
-                            Calendar calendar=Calendar.getInstance();
-                            calendar.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY);
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,minute);
-                            calendar.set(Calendar.SECOND,00);
-                            Log.d("Tag", " "+calendar.getTime());
-
-                            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                            Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                            PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-                        }
-                    }
-                }
-
-                /*for(Calendar calendarItem:calendarList)
-                {
-                    AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                    Intent intent= new Intent(ReminderGoals.this,ReminderGoalsAlertReceiver.class);
-                    PendingIntent pi=PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendarItem.getTimeInMillis(), pi);
-                }*/
-
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(ReminderGoals.this, ReminderGoalsAlertReceiver.class);
+                intent.setData(Uri.parse(String.valueOf(randomnumber)));
+                intent.addFlags( Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                PendingIntent pi = PendingIntent.getBroadcast(ReminderGoals.this, 0, intent, 0);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*duration , pi); // Millisec * Second * Minute
             }
         });
-
-        satbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(satbtn.isSelected() && satbtn.isActivated())
-                {
-                  satbtn.setSelected(false);
-                    satbtn.setActivated(false);
-                }
-                else
-                {satbtn.setSelected(true);
-                    satbtn.setActivated(true);
-                }
-            }
-        });
-
-        sunbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(sunbtn.isSelected() && sunbtn.isActivated())
-                {
-                    sunbtn.setSelected(false);
-                    sunbtn.setActivated(false);
-                }
-                else
-                {sunbtn.setSelected(true);
-                    sunbtn.setActivated(true);
-                }
-            }
-        });
-        monbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(monbtn.isSelected() && monbtn.isActivated())
-                {
-                    monbtn.setSelected(false);
-                    monbtn.setActivated(false);
-                }
-                else
-                {monbtn.setSelected(true);
-                    monbtn.setActivated(true);
-                }
-            }
-        });
-        tuesbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(tuesbtn.isSelected() && tuesbtn.isActivated())
-                {
-                    tuesbtn.setSelected(false);
-                    tuesbtn.setActivated(false);
-                }
-                else
-                {tuesbtn.setSelected(true);
-                    tuesbtn.setActivated(true);
-                }
-            }
-        });
-        wedbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(wedbtn.isSelected() && wedbtn.isActivated())
-                {
-                    wedbtn.setSelected(false);
-                    wedbtn.setActivated(false);
-                }
-                else
-                {wedbtn.setSelected(true);
-                    wedbtn.setActivated(true);
-                }
-            }
-        });
-        thursbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(thursbtn.isSelected() && thursbtn.isActivated())
-                {
-                    thursbtn.setSelected(false);
-                    thursbtn.setActivated(false);
-                }
-                else
-                {thursbtn.setSelected(true);
-                    thursbtn.setActivated(true);
-                }
-            }
-        });
-        fribtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(fribtn.isSelected() && fribtn.isActivated())
-                {
-                    fribtn.setSelected(false);
-                    fribtn.setActivated(false);
-                }
-                else
-                {fribtn.setSelected(true);
-                    fribtn.setActivated(true);
-                }
-            }
-        });
-
     }
 
-
-    private void newEntry(FlexboxLayout mLayout) {
-        LayoutInflater mInf = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            mInf = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-        View v = mInf.inflate(R.layout.reminderentry, mLayout, false);
-        LinearLayout entry = v.findViewById(R.id.entry);
-        entryList.add(entry);
-        mLayout.addView(entry);
-
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
     }
 
-    private void remove(){
-        if (entryList.size()>1) {
-            mLayout.removeView(entryList.get(entryList.size()-1));
-            entryList.remove(entryList.size()-1);
-        }
-    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
-    public void getAlarmTime()
-    {
-        EditText hourt, minutet;
-        String hour, minute;
-        for (LinearLayout l : entryList) {
-            hourt= l.findViewById(R.id.hourtext);
-            minutet= l.findViewById(R.id.minutetext);
-            hour=hourt.getText().toString();
-            minute=minutet.getText().toString();
-            if(hour.equals("")) hour="00";
-            if(minute.equals("")) minute="00";
-            time= time+" "+hour+":"+minute;
-            }
-        time=time+" ";
-        Log.d("Tag", " "+time);
-        }
     }
+}
 

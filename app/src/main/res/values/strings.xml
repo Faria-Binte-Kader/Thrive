@@ -6,4 +6,9 @@
         <item>Goal Name</item>
         <item>User Name</item>
     </string-array>
+    <string-array name="ReminderDurationType">
+        <item>minute(s)</item>
+        <item>hour(s)</item>
+        <item>No repeat</item>
+    </string-array>
 </resources>
