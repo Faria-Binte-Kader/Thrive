@@ -30,6 +30,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,19 +42,19 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Goals> goalsArrayList;
     GoalsAdapter adapter;
 
-    Button dropdownmenu, focusbutton, pedometerbutton,seeremindersbtn,notifybtn;
+    Button dropdownmenu, focusbutton, pedometerbutton, seeremindersbtn, notifybtn;
     Button profileBtn;
     private TextView cointext;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-    private String userID,id;
+    private String userID, id;
     private String Fdate;
     String dateToday;
 
     public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
 
     public void removeItem(int position) {
-        final String id= goalsArrayList.get(position).getGoalID();
+        final String id = goalsArrayList.get(position).getGoalID();
         fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
         goalsArrayList.remove(position);
         adapter.notifyItemRemoved(position);
+
     }
 
     @Override
@@ -89,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
-        cointext=findViewById(R.id.cointextview);
+        cointext = findViewById(R.id.cointextview);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        dateToday=dateFormat.format(calendar.getTime());
+        dateToday = dateFormat.format(calendar.getTime());
 
         DocumentReference documentReference = fStore.collection("User").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -104,20 +106,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dropdownmenu=(Button)findViewById(R.id.threedots);
+        dropdownmenu = (Button) findViewById(R.id.threedots);
         dropdownmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu po=new PopupMenu(MainActivity.this,dropdownmenu); //for drop-down menu
-                po.getMenuInflater().inflate(R.menu.upperleftmenu,po.getMenu());
+                PopupMenu po = new PopupMenu(MainActivity.this, dropdownmenu); //for drop-down menu
+                po.getMenuInflater().inflate(R.menu.upperleftmenu, po.getMenu());
 
-                po.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-                {
-                    public boolean onMenuItemClick(@NonNull  MenuItem item)
-                    {
+                po.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(@NonNull MenuItem item) {
                         int id = item.getItemId();
 
-                        if(id == R.id.logout) {
+                        if (id == R.id.logout) {
                             startActivity(new Intent(getApplicationContext(), Logout.class));
                         }
                         return true;
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        focusbutton=(Button)findViewById(R.id.focusbutton);
+        focusbutton = (Button) findViewById(R.id.focusbutton);
         focusbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        pedometerbutton=(Button)findViewById(R.id.pedometerbutton);
+        pedometerbutton = (Button) findViewById(R.id.pedometerbutton);
         pedometerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        seeremindersbtn=(Button)findViewById(R.id.seeremindersbtn);
+        seeremindersbtn = (Button) findViewById(R.id.seeremindersbtn);
         seeremindersbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        notifybtn=(Button)findViewById(R.id.notificationbtn);
+        notifybtn = (Button) findViewById(R.id.notificationbtn);
         notifybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,14 +165,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-        BottomNavigationView nav= findViewById(R.id.bottomnavview);
+        BottomNavigationView nav = findViewById(R.id.bottomnavview);
         findViewById(R.id.bottomnavview).setBackground(null);
         nav.setSelectedItemId(R.id.placefolder);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.placefolder:
                         nav.setEnabled(false);
                         break;
@@ -215,29 +214,29 @@ public class MainActivity extends AppCompatActivity {
                             Goals goals = new Goals(querySnapshot.getString("Progress"),
                                     querySnapshot.getString("Name"),
                                     querySnapshot.getString("id"),
-                                     querySnapshot.getString("DateToday"),
+                                    querySnapshot.getString("DateToday"),
                                     querySnapshot.getString("Flag"),
                                     querySnapshot.getString("GoalURL"));
 
                             goalsArrayList.add(goals);
-                            Fdate= querySnapshot.getString("DateToday");
-                            id=querySnapshot.getString("id");
+                            Fdate = querySnapshot.getString("DateToday");
+                            id = querySnapshot.getString("id");
 
-                            if(!dateToday.equals(Fdate))
-                            {fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(id)
-                                    .update("DateToday", dateToday)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.v("Tag",dateToday);
-                                        }
-                                    });
+                            if (!dateToday.equals(Fdate)) {
+                                fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(id)
+                                        .update("DateToday", dateToday)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.v("Tag", dateToday);
+                                            }
+                                        });
                                 fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(id)
                                         .update("Flag", "0")
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Log.v("Tag","flag");
+                                                Log.v("Tag", "flag");
                                             }
                                         });
                             }
@@ -259,7 +258,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.v("---I---", e.getMessage());
                     }
                 });
-     }
+
+    }
 
     public void updategoal(String s) {
         Intent intent = new Intent(MainActivity.this, GoalsUpdate.class);
@@ -279,10 +279,11 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.getItem(2).setEnabled(false);
         return true;
     }
+
     public void onBackPressed() {
         finishAffinity();
     }

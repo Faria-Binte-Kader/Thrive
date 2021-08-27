@@ -162,7 +162,7 @@ public class PersonalInfo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(PersonalInfo.this, "Updated Name", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PersonalInfo.this, "Updated Name", Toast.LENGTH_SHORT).show();
                             inputName.setText("");
                         }
                     });
@@ -174,7 +174,7 @@ public class PersonalInfo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(PersonalInfo.this, "Updated Age", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PersonalInfo.this, "Updated Age", Toast.LENGTH_SHORT).show();
                             inputAge.setText("");
                         }
                     });
@@ -186,7 +186,7 @@ public class PersonalInfo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(PersonalInfo.this, "Updated Height", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PersonalInfo.this, "Updated Height", Toast.LENGTH_SHORT).show();
                             inputHeight.setText("");
                         }
                     });
@@ -198,7 +198,7 @@ public class PersonalInfo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(PersonalInfo.this, "Updated Weight", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PersonalInfo.this, "Updated Weight", Toast.LENGTH_SHORT).show();
                             inputWeight.setText("");
                         }
                     });
@@ -210,7 +210,7 @@ public class PersonalInfo extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(PersonalInfo.this, "Updated Description", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PersonalInfo.this, "Updated Description", Toast.LENGTH_SHORT).show();
                             inputDescription.setText("");
                         }
                     });

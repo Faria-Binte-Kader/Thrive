@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +59,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        if(getIntent().getStringExtra("from")==null){
+        if (getIntent().getStringExtra("from") == null) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("User").document(user);
@@ -69,7 +72,7 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
                 });
                 finish();
             }
-        }else if(getIntent().getStringExtra("from").equals("verifymail")){
+        } else if (getIntent().getStringExtra("from").equals("verifymail")) {
 
         }
 
@@ -106,7 +109,8 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
                                     Intent intent = new Intent(login.this, MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
-                                   // String token=returnMeFCMtoken();
+                                    updateToken();
+                                    // String token=returnMeFCMtoken();
                                     finish();
                                 } else {
                                     Toast.makeText(login.this, "Please verify your Email Address", Toast.LENGTH_SHORT).show();
@@ -200,14 +204,38 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    public void updateToken() {
+        String userID = FirebaseAuth.getInstance().getUid();
+        /*
+        FirebaseAuth.getInstance().getCurrentUser().getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<GetTokenResult> task) {
+                        if(task.isSuccessful()){
+                            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
+                        }
+                    }
+                });*/
+
+
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(task -> {
+            // get token
+            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
+            Log.d("TAG Login getToken", "YOUR " + task.getResult().getToken().toString());
+            Log.d("TAG Login token ", "YOUR " + task.getResult().toString());
+        });
+
+    }
+
     public static String returnMeFCMtoken() {
         final String[] token = {""};
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
-                if(task.isComplete()){
+                if (task.isComplete()) {
                     token[0] = task.getResult();
-                    Log.e("AppConstants", "onComplete: new Token got: "+token[0] );
+                    Log.e("AppConstants", "onComplete: new Token got: " + token[0]);
 
                 }
             }
