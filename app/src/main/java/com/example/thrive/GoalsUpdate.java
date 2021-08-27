@@ -141,6 +141,37 @@ public class GoalsUpdate extends AppCompatActivity {
                             //Toast.makeText(GoalsUpdate.this, "Updated Duration", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+            DocumentReference doc2 = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
+            doc2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                String cnt, duration, progress;
+
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document2 = task.getResult();
+                        if (document2.exists()) {
+                            cnt = document2.getString("Days");
+                            duration = document2.getString("Duration");
+                            int temp = Integer.parseInt(cnt);
+                            int temp2 = Integer.parseInt(duration);
+                            int temp3 = (temp * 100) / temp2;
+                            progress = String.valueOf(temp3);
+                            fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
+                                    .update("Progress", progress)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+                        }
+                    } else {
+
+                    }
+                }
+            });
+
             fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(goalID)
                     .update("Privacy", privacy)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {

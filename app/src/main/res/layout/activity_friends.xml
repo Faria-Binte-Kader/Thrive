@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/purple_200"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:fabCradleMargin="10dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -86,6 +87,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             app:menu="@menu/bottom_navmenu2" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
