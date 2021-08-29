@@ -79,7 +79,6 @@ public class NotificationSenderFriendRequest {
                     header.put("authorization", "key=" + fcmServerKey);
                     return header;
 
-
                 }
             };
             requestQueue.add(request);

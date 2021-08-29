@@ -183,12 +183,14 @@ public class FriendProfile extends AppCompatActivity {
                                         public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot valueReceiver, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
                                             if (valueReceiver != null) {
                                                 String receiverToken = valueReceiver.getString("Token") + "";
+
                                                 NotificationSenderFriendRequest notificationSender = new NotificationSenderFriendRequest(
-                                                        receiverToken + "", "Friend Request", valueSender.getString("Name") + " sent you a friend request",
+                                                        receiverToken + "",
+                                                        "Friend Request",
+                                                        valueSender.getString("Name") + " sent you a friend request",
                                                         getApplicationContext(), FriendProfile.this);
 
                                                 notificationSender.sendNotification();
-                                                //sendNotificationToAll(valueReceiver.getString("Friend Request"));
                                             }
                                         }
                                     });
@@ -202,18 +204,6 @@ public class FriendProfile extends AppCompatActivity {
         NotificationSenderFriendRequest notificationSender2 = new NotificationSenderFriendRequest(
                 "/topics/all", title, "Someone has sent a friend request", getApplicationContext(), FriendProfile.this);
 
-        /*
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                NotificationSenderFriendRequest notificationSender = new NotificationSenderFriendRequest(
-                        task.toString(), title, message, getApplicationContext(), FriendProfile.this);
-                Log.d(TAG, task.toString() + " <-your token currently" + message);
-                Log.d(TAG, " your token is " + task.toString());
-            }
-        });*/
-
-        //updateToken();
         notificationSender2.sendNotification();
     }
 

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -207,39 +208,19 @@ public class login extends AppCompatActivity implements AdapterView.OnItemSelect
 
     public void updateToken() {
         String userID = FirebaseAuth.getInstance().getUid();
-        /*
-        FirebaseAuth.getInstance().getCurrentUser().getIdToken(true)
-                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<GetTokenResult> task) {
-                        if(task.isSuccessful()){
-                            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
-                        }
-                    }
-                });*/
 
-
-        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(task -> {
-            // get token
-            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
-            Log.d("TAG Login getToken", "YOUR " + task.getResult().getToken().toString());
-            Log.d("TAG Login token ", "YOUR " + task.getResult().toString());
-        });
-
-    }
-
-    public static String returnMeFCMtoken() {
-        final String[] token = {""};
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (task.isComplete()) {
-                    token[0] = task.getResult();
-                    Log.e("AppConstants", "onComplete: new Token got: " + token[0]);
-
-                }
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+            if (!TextUtils.isEmpty(token)) {
+                fStore.collection("User").document(userID).update("Token", token);
+                Log.d(TAG, "YOUR token is " + token);
+            } else {
+                Log.w(TAG, "token should not be null...");
             }
-        });
-        return token[0];
+        }).addOnFailureListener(e -> {
+
+        }).addOnCanceledListener(() -> {
+
+        }).addOnCompleteListener(task -> Log.v(TAG, "This is the token : " + task.getResult()));
+
     }
 }

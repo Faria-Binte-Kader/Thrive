@@ -33,8 +33,6 @@ public class FirebaseMessagingServiceFriendRequest extends com.google.firebase.m
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-
-// playing audio and vibration when user se reques
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         r.play();
@@ -51,12 +49,10 @@ public class FirebaseMessagingServiceFriendRequest extends com.google.firebase.m
         int resourceImage = getResources().getIdentifier(remoteMessage.getNotification().getIcon(), "drawable", getPackageName());
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "TASMIA_CHANNEL_ID");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            builder.setSmallIcon(R.drawable.icontrans);
             builder.setSmallIcon(resourceImage);
         } else {
-//            builder.setSmallIcon(R.drawable.icon_kritikar);
             builder.setSmallIcon(resourceImage);
         }
 
@@ -77,10 +73,10 @@ public class FirebaseMessagingServiceFriendRequest extends com.google.firebase.m
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "Your_channel_id";
+            String channelId = "Tasmia_channel_id";
             NotificationChannel channel = new NotificationChannel(
                     channelId,
-                    "Channel human readable title",
+                    "Friend Request Notification Channel",
                     NotificationManager.IMPORTANCE_HIGH);
             mNotificationManager.createNotificationChannel(channel);
             builder.setChannelId(channelId);

@@ -1,5 +1,6 @@
 package com.example.thrive;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,30 +18,28 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import org.jetbrains.annotations.NotNull;
 
 public class FirebaseIdServiceFriendRequest extends FirebaseMessagingService {
+
+    private String TAG = "TAG FirebaseIDServiceFriendRequest";
+
     @Override
     public void onNewToken(String s)
     {
         super.onNewToken(s);
         FirebaseFirestore fStore = FirebaseFirestore.getInstance();
         String userID = FirebaseAuth.getInstance().getUid();
-        /*
-        FirebaseAuth.getInstance().getCurrentUser().getIdToken(true)
-                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<GetTokenResult> task) {
-                        if(task.isSuccessful()){
-                            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
-                        }
-                    }
-                });*/
 
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+            if (!TextUtils.isEmpty(token)) {
+                fStore.collection("User").document(userID).update("Token", token);
+                Log.d(TAG, "YOUR token is " + token);
+            } else {
+                Log.w(TAG, "token should not be null...");
+            }
+        }).addOnFailureListener(e -> {
 
-        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(task -> {
-            // get token
-            fStore.collection("User").document(userID).update("Token", task.getResult().getToken().toString());
-            Log.d("TAG Login getToken", task.getResult().getToken().toString());
-            Log.d("TAG Login token ", task.getResult().toString());
-        });
+        }).addOnCanceledListener(() -> {
+
+        }).addOnCompleteListener(task -> Log.v(TAG, "This is the token : " + task.getResult()));
 
     }
 }
