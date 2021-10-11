@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".GoalsUpdate"></activity>
+        <activity android:name=".GoalView"></activity>
+        <activity android:name=".GoalsUpdate" />
         <activity android:name=".MyNotifications" />
         <activity android:name=".AllReminders" />
         <activity android:name=".FriendPublicGoal" />

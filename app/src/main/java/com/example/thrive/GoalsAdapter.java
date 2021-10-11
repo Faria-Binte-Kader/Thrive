@@ -25,19 +25,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implements AdapterView.OnItemSelectedListener {
+public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implements AdapterView.OnItemSelectedListener{
 
     MainActivity mainActivity;
     ArrayList<Goals> goalsArrayList;
-    private OnItemClickListener mListener;
+    //private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
+    /*public interface OnItemClickListener {
         void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
-    }
+    }*/
 
     public GoalsAdapter(MainActivity mainActivity, ArrayList<Goals> goalsArrayList) {
         this.mainActivity = mainActivity;
@@ -50,14 +50,30 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
 
         LayoutInflater layoutInflater = LayoutInflater.from(mainActivity.getBaseContext());
         View view = layoutInflater.inflate(R.layout.goal_list, parent, false);
-        return new ViewholderGoals(view, mListener);
+        return new ViewholderGoals(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewholderGoals holder, final int position) {
         String check=goalsArrayList.get(position).getProgress();
         holder.name.setText(goalsArrayList.get(position).getName());
-        Picasso.get().load(goalsArrayList.get(position).getUrl()).into(holder.goalpicture);
+        holder.progress.setText(goalsArrayList.get(position).getProgress());
+
+        FirebaseAuth fAuth;
+        FirebaseFirestore fStore;
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String goalID = goalsArrayList.get(position).getGoalID();
+                mainActivity.loadgoal(goalID);
+            }
+        });
+
+        /*Picasso.get().load(goalsArrayList.get(position).getUrl()).into(holder.goalpicture);
         if(check.equals("Completed!")) {
             holder.progressBar.setProgress(100);
             holder.progress.setText(goalsArrayList.get(position).getProgress());

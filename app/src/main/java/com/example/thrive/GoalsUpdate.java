@@ -56,7 +56,7 @@ public class GoalsUpdate extends AppCompatActivity {
         setContentView(R.layout.activity_goals_update);
 
         Intent intent = getIntent();
-        goalID = intent.getStringExtra(MainActivity.EXTRA_TEXT);
+        goalID = intent.getStringExtra(GoalView.EXTRA_TEXT);
 
         updateBtn = findViewById(R.id.updategoalbtn);
         editName = findViewById(R.id.goalUpdateName);
