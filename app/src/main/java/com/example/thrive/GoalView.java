@@ -27,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -35,6 +37,10 @@ public class GoalView extends AppCompatActivity {
     MainActivity mainActivity;
 
     String goalID = "";
+
+    String TAG = "TAG GoalView";
+
+    String month_str = "";
 
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
@@ -62,8 +68,8 @@ public class GoalView extends AppCompatActivity {
 
         progress = findViewById(R.id.progress);
         name = findViewById(R.id.progressgoalname);
-        progressBar= findViewById(R.id.progress_bar);
-        goalpicture= findViewById(R.id.goalpicture);
+        progressBar = findViewById(R.id.progress_bar);
+        goalpicture = findViewById(R.id.goalpicture);
         updateprogress = findViewById(R.id.updateprogress_btn);
         editgoal = findViewById(R.id.editgoal_btn);
         deletegoal = findViewById(R.id.deletegoal_btn);
@@ -82,20 +88,19 @@ public class GoalView extends AppCompatActivity {
                     progress.setText(prog);
 
                     Picasso.get().load(url).into(goalpicture);
-                    if(prog.equals("Completed!")) {
+                    if (prog.equals("Completed!")) {
                         progressBar.setProgress(100);
                         progress.setText(prog);
-                    }
-                    else {
-                        int strTointProgress=Integer.parseInt(prog);
+                    } else {
+                        int strTointProgress = Integer.parseInt(prog);
                         progressBar.setProgress(strTointProgress);
-                        progress.setText(prog+"%");
+                        progress.setText(prog + "%");
                     }
 
                     updateprogress.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(flag.equals("0")) {
+                            if (flag.equals("0")) {
                                 DocumentReference doc = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
                                 doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     String cnt;
@@ -143,6 +148,7 @@ public class GoalView extends AppCompatActivity {
                                                     p = String.valueOf(temp3);
                                                     int proint = Integer.parseInt(p);
                                                     progressBar.setProgress(proint);
+
                                                 } else if (temp3 >= 100) {
                                                     p = "Completed!";
                                                     progressBar.setProgress(100);
@@ -172,21 +178,68 @@ public class GoalView extends AppCompatActivity {
                                     }
                                 });
 
+                                //update goal achieved stat by 1 day
+                                Calendar calendar = Calendar.getInstance();
+                                int month = calendar.get(Calendar.MONTH);
+                                month_str = Integer.toString(month);
+
+
+                                Log.d(TAG, "Month is " + month_str);
+
+
+                                DocumentReference documentReference_prevGoalAchieved = fStore.collection("Statistics").document(fAuth.getCurrentUser().getUid())
+                                        .collection("Goals").document(goalID);
+
+                                documentReference_prevGoalAchieved.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    String goalAchieved_str, prev_goalAchieved_str;
+
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+
+                                            //Log.d(TAG, "Success ");
+
+
+                                            DocumentSnapshot document3 = task.getResult();
+                                            if (document3.exists()) {
+                                                prev_goalAchieved_str = document3.getString(month_str);
+                                                int prev_goalAchieved = Integer.parseInt(prev_goalAchieved_str);
+                                                int goalAchieved = prev_goalAchieved + 1;
+                                                goalAchieved_str = String.valueOf(goalAchieved);
+
+                                                //Log.d(TAG, "Current values is " + goalAchieved_str);
+
+
+                                                fStore.collection("Statistics").document(fAuth.getUid()).collection("Goals").document(goalID)
+                                                        .update(month_str, goalAchieved_str)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(TAG, "Stat updated for " + month_str);
+                                                            }
+                                                        });
+                                            }
+                                        } else {
+                                            Log.d(TAG, "Error ");
+                                        }
+                                    }
+
+                                });
+
                                 name.setText(nam);
-                                if(prog.equals("Completed!")) {
+
+                                if (prog.equals("Completed!")) {
                                     progressBar.setProgress(100);
                                     progress.setText(prog);
-                                }
-                                else {
-                                    int strTointProgress=Integer.parseInt(prog);
+                                } else {
+                                    int strTointProgress = Integer.parseInt(prog);
                                     progressBar.setProgress(strTointProgress);
-                                    progress.setText(prog+"%");
+                                    progress.setText(prog + "%");
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(v.getContext(), "You already updated your daily progress once.", Toast.LENGTH_SHORT).show();
-                            }}
+                            }
+                        }
                     });
 
                     editgoal.setOnClickListener(new View.OnClickListener() {
@@ -197,18 +250,18 @@ public class GoalView extends AppCompatActivity {
                     });
 
                     deletegoal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        //Toast.makeText(GoalsAdapter.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        Intent intent = new Intent(GoalView.this, MainActivity.class);
-                        startActivity(intent);
+                        @Override
+                        public void onClick(View v) {
+                            fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            //Toast.makeText(GoalsAdapter.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            Intent intent = new Intent(GoalView.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     });
 

@@ -27,11 +27,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddGoalsProductivity extends AppCompatActivity {
     public static final String TAG = "TAG AddGoal";
     SwitchCompat switchCompat;
-    Button studybtn, hobbybtn, softbtn, techbtn,reminderbtn;
+    Button studybtn, hobbybtn, softbtn, techbtn, reminderbtn;
     EditText goalname, goalduration;
     Button setgoal;
     Button gopublic, later;
@@ -40,35 +41,35 @@ public class AddGoalsProductivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userID;
     String category;
-    String privacy="";
+    String privacy = "";
 
-    String goalID,GoalURL;
+    String goalID, GoalURL;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goals_productivity);
-        switchCompat=findViewById(R.id.switchgoal);
-        studybtn=findViewById(R.id.studybtn);
-        hobbybtn=findViewById(R.id.hobbybtn);
-        softbtn=findViewById(R.id.softskillbtn);
-        techbtn=findViewById(R.id.technicalbtn);
-        reminderbtn=findViewById(R.id.reminderbtn);
+        switchCompat = findViewById(R.id.switchgoal);
+        studybtn = findViewById(R.id.studybtn);
+        hobbybtn = findViewById(R.id.hobbybtn);
+        softbtn = findViewById(R.id.softskillbtn);
+        techbtn = findViewById(R.id.technicalbtn);
+        reminderbtn = findViewById(R.id.reminderbtn);
 
-        goalname=findViewById(R.id.goalName);
-        goalduration=findViewById(R.id.goalDuration);
-        setgoal=findViewById(R.id.setgoalbtn);
+        goalname = findViewById(R.id.goalName);
+        goalduration = findViewById(R.id.goalDuration);
+        setgoal = findViewById(R.id.setgoalbtn);
 
-        gopublic=findViewById(R.id.publicbtn);
-        later=findViewById(R.id.laterbtn);
+        gopublic = findViewById(R.id.publicbtn);
+        later = findViewById(R.id.laterbtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        userID = fAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        String dateToday=dateFormat.format(calendar.getTime());
+        String dateToday = dateFormat.format(calendar.getTime());
 
         reminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +83,8 @@ public class AddGoalsProductivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 studybtn.setPressed(true);
-                category="Study";
-                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fstudy.png?alt=media&token=53db3ced-6220-40dc-858e-12a8090ec146";
+                category = "Study";
+                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fstudy.png?alt=media&token=53db3ced-6220-40dc-858e-12a8090ec146";
                 hobbybtn.setPressed(false);
                 softbtn.setPressed(false);
                 techbtn.setPressed(false);
@@ -96,8 +97,8 @@ public class AddGoalsProductivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 studybtn.setPressed(false);
                 hobbybtn.setPressed(true);
-                category="Hobby";
-                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fhobby.png?alt=media&token=58daf7a2-22a2-4afe-969d-ee6497b1b66a";
+                category = "Hobby";
+                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fhobby.png?alt=media&token=58daf7a2-22a2-4afe-969d-ee6497b1b66a";
                 softbtn.setPressed(false);
                 techbtn.setPressed(false);
                 return true;
@@ -110,8 +111,8 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 studybtn.setPressed(false);
                 hobbybtn.setPressed(false);
                 softbtn.setPressed(true);
-                category="Soft Skill Development";
-                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsoftskill.png?alt=media&token=fea34dc7-a2b0-450b-9fae-602c370970c7";
+                category = "Soft Skill Development";
+                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsoftskill.png?alt=media&token=fea34dc7-a2b0-450b-9fae-602c370970c7";
                 techbtn.setPressed(false);
                 return true;
             }
@@ -124,8 +125,8 @@ public class AddGoalsProductivity extends AppCompatActivity {
                 hobbybtn.setPressed(false);
                 softbtn.setPressed(false);
                 techbtn.setPressed(true);
-                category="Technical Skill Development";
-                GoalURL="https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ftechnicalskill.png?alt=media&token=31b68b43-0ea6-4938-aa61-671b3641f3bd";
+                category = "Technical Skill Development";
+                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ftechnicalskill.png?alt=media&token=31b68b43-0ea6-4938-aa61-671b3641f3bd";
                 return true;
             }
         });
@@ -134,7 +135,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(true);
-                privacy="Public";
+                privacy = "Public";
                 later.setPressed(false);
                 return true;
             }
@@ -143,7 +144,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gopublic.setPressed(false);
-                privacy="";
+                privacy = "";
                 later.setPressed(true);
                 return true;
             }
@@ -162,90 +163,113 @@ public class AddGoalsProductivity extends AppCompatActivity {
                     showError(goalduration, "Duration must be at least 1 day");
                     return;
                 }
-                if((!studybtn.isPressed()) && (!hobbybtn.isPressed()) && (!softbtn.isPressed()) &&
-                        (!techbtn.isPressed()))
-                {
+                if ((!studybtn.isPressed()) && (!hobbybtn.isPressed()) && (!softbtn.isPressed()) &&
+                        (!techbtn.isPressed())) {
                     Toast.makeText(AddGoalsProductivity.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
-                Map<String,Object> goal = new HashMap<>();
-                goal.put("Name", name);
-                goal.put("Category", "Productivity");
-                goal.put("Subcategory", category);
-                goal.put("Duration", duration);
-                goal.put("Privacy",privacy);
-                goal.put("Days","0");
-                goal.put("Progress","0");
-                goal.put("id",documentReference1.getId());
-                goal.put("DateToday",dateToday);
-                goal.put("Flag","0");
-                goal.put("GoalURL",GoalURL);
+                } else {
+                    DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                    Map<String, Object> goal = new HashMap<>();
+                    goal.put("Name", name);
+                    goal.put("Category", "Productivity");
+                    goal.put("Subcategory", category);
+                    goal.put("Duration", duration);
+                    goal.put("Privacy", privacy);
+                    goal.put("Days", "0");
+                    goal.put("Progress", "0");
+                    goal.put("id", documentReference1.getId());
+                    goal.put("DateToday", dateToday);
+                    goal.put("Flag", "0");
+                    goal.put("GoalURL", GoalURL);
 
-                documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: goal is created");
-
-                        if (privacy == "Public") {
-
-                            userID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference_goal = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
-                            goalID = documentReference_goal.getId();
-
-                            fStore = FirebaseFirestore.getInstance();
-
-                            DocumentReference documentReference_user = fStore.collection("User").document(userID);
-                            documentReference_user.addSnapshotListener(AddGoalsProductivity.this, new EventListener<DocumentSnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    if (value != null) {
-                                        DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
-                                        Map<String, Object> public_goal = new HashMap<>();
-                                        public_goal.put("GoalID", goalID);
-                                        public_goal.put("GoalName", name.toUpperCase());
-                                        public_goal.put("Category", "PRODUCTIVITY");
-                                        public_goal.put("Subcategory", category.toUpperCase());
-                                        public_goal.put("UserID", userID);
-                                        public_goal.put("UserName", value.getString("Name"));
-                                        public_goal.put("UserProPicURL", value.getString("ProPicUrl"));
-                                        documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "onSuccess: goal is set to public");
-                                            }
-                                        });
-                                    }
-                                }
-                            });
+                    documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "onSuccess: goal is created");
                         }
+                    });
+
+                    Toast.makeText(AddGoalsProductivity.this, "Goal Added", Toast.LENGTH_SHORT).show();
+
+                    fAuth = FirebaseAuth.getInstance();
+                    //userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+
+                    //create goal achieved stat for 12 months
+                    Calendar calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    String year_str = Integer.toString(year);
+
+                    userID = fAuth.getCurrentUser().getUid();
+                    //DocumentReference documentReference_goal_stat = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                    goalID = documentReference1.getId();
+
+
+                    DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(userID).collection("Goals").document(goalID);
+                    Map<String, Object> goal_achieved = new HashMap<>();
+                    goal_achieved.put("Year", year_str);
+                    goal_achieved.put("GoalName", name);
+                    goal_achieved.put("GoalID", goalID);
+
+                    for (int month = 0; month <= 11; month++) {
+                        String month_str = Integer.toString(month);
+                        goal_achieved.put(month_str,"0");
                     }
 
-                });
+                    documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                        }
+                    });
 
-                Toast.makeText(AddGoalsProductivity.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                    if (privacy == "Public") {
 
-                goalname.setText("");
-                goalduration.setText("");
-                studybtn.setPressed(false);
-                hobbybtn.setPressed(false);
-                softbtn.setPressed(false);
-                techbtn.setPressed(false);
-                gopublic.setPressed(false);
-                later.setPressed(false);
-            }}
+                        userID = fAuth.getCurrentUser().getUid();
+
+                        DocumentReference documentReference_user = fStore.collection("User").document(userID);
+                        documentReference_user.addSnapshotListener(AddGoalsProductivity.this, new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (value != null) {
+                                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                                    Map<String, Object> public_goal = new HashMap<>();
+                                    public_goal.put("GoalID", goalID);
+                                    public_goal.put("GoalName", name.toUpperCase());
+                                    public_goal.put("Category", "PRODUCTIVITY");
+                                    public_goal.put("Subcategory", category.toUpperCase());
+                                    public_goal.put("UserID", userID);
+                                    public_goal.put("UserName", value.getString("Name"));
+                                    public_goal.put("UserProPicURL", value.getString("ProPicUrl"));
+                                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: goal is set to public");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+
+
+
+                    goalname.setText("");
+                    goalduration.setText("");
+                    studybtn.setPressed(false);
+                    hobbybtn.setPressed(false);
+                    softbtn.setPressed(false);
+                    techbtn.setPressed(false);
+                    gopublic.setPressed(false);
+                    later.setPressed(false);
+                }
+            }
         });
 
         switchCompat.setChecked(true);
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked())
-                {
-                }
-                else
-                {
+                if (buttonView.isChecked()) {
+                } else {
                     Intent intent = new Intent(AddGoalsProductivity.this, AddGoalsHealth.class);
                     startActivity(intent);
                 }
