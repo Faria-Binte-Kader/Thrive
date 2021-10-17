@@ -82,7 +82,9 @@ public class FriendProfile extends AppCompatActivity {
                 goToFrienPublicGoals(friendID, friendName);
             }
         });
+
         DocumentReference documentReference = fStore.collection("User").document(userID);
+
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -91,6 +93,7 @@ public class FriendProfile extends AppCompatActivity {
                 }
             }
         });
+
         friendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

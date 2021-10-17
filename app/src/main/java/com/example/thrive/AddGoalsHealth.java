@@ -6,14 +6,18 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,16 +32,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AddGoalsHealth extends AppCompatActivity {
+public class AddGoalsHealth extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     public static final String TAG = "TAG AddGoal";
     SwitchCompat switchCompat;
-    Button waterIntakebtn, medIntakebtn, workoutbtn, yogabtn, foodhabitbtn, sportbtn, sleepbtn, rehabilitationbrn, bodycarebtn;
+    private Spinner spinnerGoalCatHealth;
     Button reminderbtn;
     EditText goalname, goalduration;
-    Button setgoal;
+    Button setgoal,goToTeamGoal;
     Button gopublic, later;
 
     FirebaseAuth fAuth;
@@ -48,27 +53,22 @@ public class AddGoalsHealth extends AppCompatActivity {
 
     String goalID;
     String userName, userProPicURL, GoalURL;
+    List<String> URL_list = new ArrayList<String>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goals_health);
+        spinnerGoalCatHealth = findViewById(R.id.spinnerGoalCatHealth);
+        spinnerGoalCatHealth.setOnItemSelectedListener(this);
         switchCompat = findViewById(R.id.switchgoal);
-        waterIntakebtn = findViewById(R.id.waterintakebtn);
-        medIntakebtn = findViewById(R.id.medintakebtn);
-        workoutbtn = findViewById(R.id.workout);
-        yogabtn = findViewById(R.id.yogabtn);
-        foodhabitbtn = findViewById(R.id.foodhabitbtn);
-        sportbtn = findViewById(R.id.sportsbtn);
-        sleepbtn = findViewById(R.id.sleepbtn);
-        rehabilitationbrn = findViewById(R.id.rehabilitationbtn);
-        bodycarebtn = findViewById(R.id.bodycarebtn);
         reminderbtn = findViewById(R.id.reminderbtn);
 
         goalname = findViewById(R.id.goalName);
         goalduration = findViewById(R.id.goalDuration);
         setgoal = findViewById(R.id.setgoalbtn);
+        goToTeamGoal = findViewById(R.id.addfriendsbtnhealth);
 
         gopublic = findViewById(R.id.publicbtn);
         later = findViewById(R.id.laterbtn);
@@ -79,6 +79,16 @@ public class AddGoalsHealth extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateToday = dateFormat.format(calendar.getTime());
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fwaterintake.png?alt=media&token=44be3217-520b-4373-aa14-d53a175a4d26");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fmedicineintake.png?alt=media&token=2cba95d8-6470-42d3-bbc8-8c0e046f8f84");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fyoga.png?alt=media&token=1ac633fc-e621-4d14-bf87-14343d590edd");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fworkout.png?alt=media&token=320f0e46-5841-4be3-b556-16fdb0782546");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ffoodhabit.png?alt=media&token=8d37d1fe-25c1-4dc6-af8d-290ab67d5bd1");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fyoga.png?alt=media&token=1ac633fc-e621-4d14-bf87-14343d590edd");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsport.png?alt=media&token=d2db35fb-881f-4fa5-ad01-e6751ea3319c");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsleep.png?alt=media&token=8bf17670-a7e8-4b3e-9f5a-87ba35c98866");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fbodycare.png?alt=media&token=d420c96d-af89-49f5-a681-c4b75f44522b");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Frehab.png?alt=media&token=15027308-f6a7-4c54-b854-6a493835042e");
 
         reminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,165 +98,15 @@ public class AddGoalsHealth extends AppCompatActivity {
             }
         });
 
-        waterIntakebtn.setOnTouchListener(new View.OnTouchListener() {
+        goToTeamGoal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(true);
-                category = "Water Intake";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fwaterintake.png?alt=media&token=44be3217-520b-4373-aa14-d53a175a4d26";
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(AddGoalsHealth.this, TeamGoalHealth.class);
+                startActivity(intent);
             }
         });
 
-        medIntakebtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(true);
-                category = "Medicine Intake";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fmedicineintake.png?alt=media&token=2cba95d8-6470-42d3-bbc8-8c0e046f8f84";
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
 
-        yogabtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(true);
-                category = "Yoga";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fyoga.png?alt=media&token=1ac633fc-e621-4d14-bf87-14343d590edd";
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        sportbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(true);
-                category = "Sports";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsport.png?alt=media&token=d2db35fb-881f-4fa5-ad01-e6751ea3319c";
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        sleepbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(true);
-                category = "Sleep";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsleep.png?alt=media&token=8bf17670-a7e8-4b3e-9f5a-87ba35c98866";
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        rehabilitationbrn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(true);
-                category = "Rehabilitation";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Frehab.png?alt=media&token=15027308-f6a7-4c54-b854-6a493835042e";
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        bodycarebtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(true);
-                category = "Body Care";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fbodycare.png?alt=media&token=d420c96d-af89-49f5-a681-c4b75f44522b";
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-        workoutbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(true);
-                category = "Working Out";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fworkout.png?alt=media&token=320f0e46-5841-4be3-b556-16fdb0782546";
-                foodhabitbtn.setPressed(false);
-                return true;
-            }
-        });
-        foodhabitbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                waterIntakebtn.setPressed(false);
-                medIntakebtn.setPressed(false);
-                yogabtn.setPressed(false);
-                sportbtn.setPressed(false);
-                sleepbtn.setPressed(false);
-                rehabilitationbrn.setPressed(false);
-                bodycarebtn.setPressed(false);
-                workoutbtn.setPressed(false);
-                foodhabitbtn.setPressed(true);
-                category = "Food Habit";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ffoodhabit.png?alt=media&token=8d37d1fe-25c1-4dc6-af8d-290ab67d5bd1";
-                return true;
-            }
-        });
 
         gopublic.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -284,16 +144,42 @@ public class AddGoalsHealth extends AppCompatActivity {
                     showError(goalduration, "Please give a duration of not more than a year");
                     return;
                 }
-                if ((!waterIntakebtn.isPressed()) && (!medIntakebtn.isPressed()) && (!yogabtn.isPressed()) &&
-                        (!sportbtn.isPressed()) && (!sleepbtn.isPressed()) && (!rehabilitationbrn.isPressed()) && (!bodycarebtn.isPressed()) &&
-                        (!workoutbtn.isPressed()) && (!foodhabitbtn.isPressed())) {
+                final String spinner_value = spinnerGoalCatHealth.getSelectedItem().toString();
+                if (spinner_value.equals("Water Intake")) {
+                GoalURL=URL_list.get(0);
+                }
+                if (spinner_value.equals("Medicine Intake")) {
+                    GoalURL=URL_list.get(1);
+                }
+                if (spinner_value.equals("Working Out")) {
+                    GoalURL=URL_list.get(2);
+                }
+                if (spinner_value.equals("Food Habits")) {
+                    GoalURL=URL_list.get(3);
+                }
+                if (spinner_value.equals("Yoga")) {
+                    GoalURL=URL_list.get(4);
+                }
+                if (spinner_value.equals("Sports")) {
+                    GoalURL=URL_list.get(5);
+                }
+                if (spinner_value.equals("Sleep")) {
+                    GoalURL=URL_list.get(6);
+                }
+                if (spinner_value.equals("Body Care")) {
+                    GoalURL=URL_list.get(7);
+                }
+                if (spinner_value.equals("Rehabilitation")) {
+                    GoalURL=URL_list.get(8);
+                }
+                if (spinner_value.equals("No category")) {
                     Toast.makeText(AddGoalsHealth.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
                 } else {
                     DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
                     Map<String, Object> goal = new HashMap<>();
                     goal.put("Name", name);
                     goal.put("Category", "Health");
-                    goal.put("Subcategory", category);
+                    goal.put("Subcategory", spinner_value);
                     goal.put("Duration", duration);
                     goal.put("Privacy", privacy);
                     goal.put("Days", "0");
@@ -377,15 +263,6 @@ public class AddGoalsHealth extends AppCompatActivity {
 
                     goalname.setText("");
                     goalduration.setText("");
-                    waterIntakebtn.setPressed(false);
-                    medIntakebtn.setPressed(false);
-                    yogabtn.setPressed(false);
-                    sportbtn.setPressed(false);
-                    sleepbtn.setPressed(false);
-                    rehabilitationbrn.setPressed(false);
-                    bodycarebtn.setPressed(false);
-                    workoutbtn.setPressed(false);
-                    foodhabitbtn.setPressed(false);
                     gopublic.setPressed(false);
                     later.setPressed(false);
                 }
@@ -416,5 +293,16 @@ public class AddGoalsHealth extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(AddGoalsHealth.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        ((TextView) adapterView.getChildAt(0)).setTextColor(Color.WHITE);
+        Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

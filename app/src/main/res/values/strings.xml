@@ -1,10 +1,30 @@
 <resources>
     <string name="app_name">Thrive</string>
+    <string name="spinner_title">No Friend</string>
     <string-array name="searchByTypes">
         <item>Goal Category</item>
         <item>Goal Subcategory</item>
         <item>Goal Name</item>
         <item>User Name</item>
+    </string-array>
+    <string-array name="GoalSubTypeHealth">
+        <item>No category</item>
+        <item>Water Intake</item>
+        <item>Medicine Intake</item>
+        <item>Working Out</item>
+        <item>Food Habits</item>
+        <item>Yoga</item>
+        <item>Sports</item>
+        <item>Sleep</item>
+        <item>Body Care</item>
+        <item>Rehabilitation</item>
+    </string-array>
+    <string-array name="GoalSubTypeProductivity">
+        <item>No category</item>
+        <item>Hobby</item>
+        <item>Soft Skill Development</item>
+        <item>Study</item>
+        <item>Technical Skill</item>
     </string-array>
     <string-array name="ReminderDurationType">
         <item>minute(s)</item>

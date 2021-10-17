@@ -88,13 +88,15 @@ public class GoalView extends AppCompatActivity {
                     progress.setText(prog);
 
                     Picasso.get().load(url).into(goalpicture);
-                    if (prog.equals("Completed!")) {
-                        progressBar.setProgress(100);
-                        progress.setText(prog);
-                    } else {
-                        int strTointProgress = Integer.parseInt(prog);
-                        progressBar.setProgress(strTointProgress);
-                        progress.setText(prog + "%");
+                    if(prog!=null) {
+                        if (prog.equals("Completed!")) {
+                            progressBar.setProgress(100);
+                            progress.setText(prog);
+                        } else {
+                            int strTointProgress = Integer.parseInt(prog);
+                            progressBar.setProgress(strTointProgress);
+                            progress.setText(prog + "%");
+                        }
                     }
 
                     updateprogress.setOnClickListener(new View.OnClickListener() {

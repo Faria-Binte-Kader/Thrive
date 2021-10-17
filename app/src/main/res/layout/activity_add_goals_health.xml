@@ -28,7 +28,7 @@
          android:layout_marginTop="10dp"/>
 
         <Button
-            android:id="@+id/addfriendsbtn"
+            android:id="@+id/addfriendsbtnhealth"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:backgroundTint="@null"
@@ -80,157 +80,23 @@
         android:padding="10dp"
         />
 
-    <LinearLayout
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/spinnerGoalCatHealth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/waterintakebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Water Intake"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            android:layout_margin="8dp"
-            />
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/medintakebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Medicine Intake"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-       android:paddingLeft="10dp">
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/workout"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Working out"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/foodhabitbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Food Habits"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/yogabtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Yoga"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp">
-
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/sportsbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Sports"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/sleepbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Sleep"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/bodycarebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="Body care"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:elevation="10dp"
-            app:backgroundTint="@null"
-            />
-
-    </LinearLayout>
-    <Button
-       android:layout_gravity="left"
-        android:layout_marginLeft="15dp"
-       android:layout_marginTop="10dp"
-        android:id="@+id/rehabilitationbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:background="@drawable/buttonroundeddark"
+        android:entries="@array/GoalSubTypeHealth"
         android:fontFamily="@font/averiasanslibre_bold"
-        android:text="Rehabilitation"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        android:elevation="10dp"
-        app:backgroundTint="@null"
+        android:textSize="18dp"
+        android:textColor="@color/grey"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_marginBottom="5sp"
         />
+
+
     <EditText
         android:id="@+id/goalName"
         android:layout_width="match_parent"

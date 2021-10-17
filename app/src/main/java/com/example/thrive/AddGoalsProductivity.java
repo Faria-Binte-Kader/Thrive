@@ -6,13 +6,17 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,17 +28,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class AddGoalsProductivity extends AppCompatActivity {
+public class AddGoalsProductivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     public static final String TAG = "TAG AddGoal";
+    private Spinner spinnerGoalCatProductivity;
     SwitchCompat switchCompat;
     Button studybtn, hobbybtn, softbtn, techbtn, reminderbtn;
     EditText goalname, goalduration;
-    Button setgoal;
+    Button setgoal,goToTeamGoal;
     Button gopublic, later;
 
     FirebaseAuth fAuth;
@@ -42,6 +49,7 @@ public class AddGoalsProductivity extends AppCompatActivity {
     String userID;
     String category;
     String privacy = "";
+    List<String> URL_list = new ArrayList<String>();
 
     String goalID, GoalURL;
 
@@ -50,12 +58,11 @@ public class AddGoalsProductivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goals_productivity);
+        spinnerGoalCatProductivity = findViewById(R.id.spinnerGoalCatProductivity);
+        spinnerGoalCatProductivity.setOnItemSelectedListener(this);
         switchCompat = findViewById(R.id.switchgoal);
-        studybtn = findViewById(R.id.studybtn);
-        hobbybtn = findViewById(R.id.hobbybtn);
-        softbtn = findViewById(R.id.softskillbtn);
-        techbtn = findViewById(R.id.technicalbtn);
         reminderbtn = findViewById(R.id.reminderbtn);
+        goToTeamGoal = findViewById(R.id.addfriendsbtnproductivity);
 
         goalname = findViewById(R.id.goalName);
         goalduration = findViewById(R.id.goalDuration);
@@ -71,6 +78,11 @@ public class AddGoalsProductivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateToday = dateFormat.format(calendar.getTime());
 
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fhobby.png?alt=media&token=58daf7a2-22a2-4afe-969d-ee6497b1b66a");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsoftskill.png?alt=media&token=fea34dc7-a2b0-450b-9fae-602c370970c7");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fstudy.png?alt=media&token=53db3ced-6220-40dc-858e-12a8090ec146");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ftechnicalskill.png?alt=media&token=31b68b43-0ea6-4938-aa61-671b3641f3bd");
+
         reminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,55 +91,11 @@ public class AddGoalsProductivity extends AppCompatActivity {
             }
         });
 
-        studybtn.setOnTouchListener(new View.OnTouchListener() {
+        goToTeamGoal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                studybtn.setPressed(true);
-                category = "Study";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fstudy.png?alt=media&token=53db3ced-6220-40dc-858e-12a8090ec146";
-                hobbybtn.setPressed(false);
-                softbtn.setPressed(false);
-                techbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        hobbybtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                studybtn.setPressed(false);
-                hobbybtn.setPressed(true);
-                category = "Hobby";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fhobby.png?alt=media&token=58daf7a2-22a2-4afe-969d-ee6497b1b66a";
-                softbtn.setPressed(false);
-                techbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        softbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                studybtn.setPressed(false);
-                hobbybtn.setPressed(false);
-                softbtn.setPressed(true);
-                category = "Soft Skill Development";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsoftskill.png?alt=media&token=fea34dc7-a2b0-450b-9fae-602c370970c7";
-                techbtn.setPressed(false);
-                return true;
-            }
-        });
-
-        techbtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                studybtn.setPressed(false);
-                hobbybtn.setPressed(false);
-                softbtn.setPressed(false);
-                techbtn.setPressed(true);
-                category = "Technical Skill Development";
-                GoalURL = "https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ftechnicalskill.png?alt=media&token=31b68b43-0ea6-4938-aa61-671b3641f3bd";
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(AddGoalsProductivity.this, TeamGoalProductivity.class);
+                startActivity(intent);
             }
         });
 
@@ -163,8 +131,21 @@ public class AddGoalsProductivity extends AppCompatActivity {
                     showError(goalduration, "Duration must be at least 1 day");
                     return;
                 }
-                if ((!studybtn.isPressed()) && (!hobbybtn.isPressed()) && (!softbtn.isPressed()) &&
-                        (!techbtn.isPressed())) {
+                final String spinner_value = spinnerGoalCatProductivity.getSelectedItem().toString();
+                if (spinner_value.equals("Hobby")) {
+                    GoalURL=URL_list.get(0);
+                }
+                if (spinner_value.equals("Soft Skill Development")) {
+                    GoalURL=URL_list.get(1);
+                }
+                if (spinner_value.equals("Study")) {
+                    GoalURL=URL_list.get(2);
+                }
+                if (spinner_value.equals("Technical Skill")) {
+                    GoalURL=URL_list.get(3);
+                }
+                if (spinner_value.equals("No category"))
+                         {
                     Toast.makeText(AddGoalsProductivity.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
                 } else {
                     DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
@@ -254,10 +235,6 @@ public class AddGoalsProductivity extends AppCompatActivity {
 
                     goalname.setText("");
                     goalduration.setText("");
-                    studybtn.setPressed(false);
-                    hobbybtn.setPressed(false);
-                    softbtn.setPressed(false);
-                    techbtn.setPressed(false);
                     gopublic.setPressed(false);
                     later.setPressed(false);
                 }
@@ -280,6 +257,17 @@ public class AddGoalsProductivity extends AppCompatActivity {
     private void showError(EditText input, String s) {
         input.setError(s);
         input.requestFocus();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        ((TextView) adapterView.getChildAt(0)).setTextColor(Color.WHITE);
+        Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     @Override

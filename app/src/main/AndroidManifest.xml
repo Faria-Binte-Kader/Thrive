@@ -5,10 +5,9 @@
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.SET_ALARM" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +16,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".GoalView"></activity>
+        <activity android:name=".TeamGoalProductivity"></activity>
+        <activity android:name=".TeamGoalHealth" />
+        <activity android:name=".GoalView" />
         <activity android:name=".GoalsUpdate" />
         <activity android:name=".MyNotifications" />
         <activity android:name=".AllReminders" />
@@ -47,8 +48,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop" />
 
         <receiver android:name=".AlertReceiver" />
         <receiver android:name=".ReminderGoalsAlertReceiver" />
@@ -61,7 +63,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".FirebaseIdServiceFriendRequest"
             android:enabled="true"
@@ -70,7 +71,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
