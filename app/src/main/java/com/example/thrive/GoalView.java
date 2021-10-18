@@ -262,6 +262,14 @@ public class GoalView extends AppCompatActivity {
                                             //Toast.makeText(GoalsAdapter.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                            fStore.collection("PublicGoals").document(goalID)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
                             Intent intent = new Intent(GoalView.this, MainActivity.class);
                             startActivity(intent);
                         }

@@ -240,21 +240,30 @@ public class AddGoalsHealth extends AppCompatActivity implements AdapterView.OnI
                                 if (value != null) {
                                     userName = value.getString("Name");
                                     userProPicURL = value.getString("ProPicUrl");
-                                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
-                                    Map<String, Object> public_goal = new HashMap<>();
-                                    public_goal.put("GoalID", goalID);
-                                    public_goal.put("GoalName", name.toUpperCase());
-                                    public_goal.put("Category", "HEALTH");
-                                    public_goal.put("Subcategory", category.toUpperCase());
-                                    public_goal.put("UserID", userID);
-                                    public_goal.put("UserName", userName);
-                                    public_goal.put("UserProPicURL", userProPicURL);
-                                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: goal is set to public");
-                                        }
-                                    });
+                                    fStore.collection("UserGoalInfo")
+                                            .document(userID).collection("Goals").document(goalID)
+                                            .addSnapshotListener(AddGoalsHealth.this, new EventListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                                    if(value != null){
+                                                        DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                                                        Map<String, Object> public_goal = new HashMap<>();
+                                                        public_goal.put("GoalID", goalID);
+                                                        public_goal.put("GoalName", name.toUpperCase());
+                                                        public_goal.put("Category", "HEALTH");
+                                                        public_goal.put("Subcategory", value.getString("Subcategory").toUpperCase());
+                                                        public_goal.put("UserID", userID);
+                                                        public_goal.put("UserName", userName.toUpperCase());
+                                                        public_goal.put("UserProPicURL", userProPicURL);
+                                                        documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(TAG, "onSuccess: goal is set to public");
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         });

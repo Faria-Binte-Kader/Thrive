@@ -51,7 +51,8 @@ public class AddGoalsProductivity extends AppCompatActivity implements AdapterVi
     String privacy = "";
     List<String> URL_list = new ArrayList<String>();
 
-    String goalID, GoalURL;
+    String goalID;
+    String userName, userProPicURL, GoalURL;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -152,7 +153,7 @@ public class AddGoalsProductivity extends AppCompatActivity implements AdapterVi
                     Map<String, Object> goal = new HashMap<>();
                     goal.put("Name", name);
                     goal.put("Category", "Productivity");
-                    goal.put("Subcategory", category);
+                    goal.put("Subcategory", spinner_value);
                     goal.put("Duration", duration);
                     goal.put("Privacy", privacy);
                     goal.put("Days", "0");
@@ -211,21 +212,32 @@ public class AddGoalsProductivity extends AppCompatActivity implements AdapterVi
                             @Override
                             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                                 if (value != null) {
-                                    DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
-                                    Map<String, Object> public_goal = new HashMap<>();
-                                    public_goal.put("GoalID", goalID);
-                                    public_goal.put("GoalName", name.toUpperCase());
-                                    public_goal.put("Category", "PRODUCTIVITY");
-                                    public_goal.put("Subcategory", category.toUpperCase());
-                                    public_goal.put("UserID", userID);
-                                    public_goal.put("UserName", value.getString("Name"));
-                                    public_goal.put("UserProPicURL", value.getString("ProPicUrl"));
-                                    documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: goal is set to public");
-                                        }
-                                    });
+                                    userName = value.getString("Name");
+                                    userProPicURL = value.getString("ProPicUrl");
+                                    fStore.collection("UserGoalInfo")
+                                            .document(userID).collection("Goals").document(goalID)
+                                            .addSnapshotListener(AddGoalsProductivity.this, new EventListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                                    if(value != null){
+                                                        DocumentReference documentReference_publicGoal = fStore.collection("PublicGoals").document(goalID);
+                                                        Map<String, Object> public_goal = new HashMap<>();
+                                                        public_goal.put("GoalID", goalID);
+                                                        public_goal.put("GoalName", name.toUpperCase());
+                                                        public_goal.put("Category", "PRODUCTIVITY");
+                                                        public_goal.put("Subcategory", value.getString("Subcategory").toUpperCase());
+                                                        public_goal.put("UserID", userID);
+                                                        public_goal.put("UserName", userName.toUpperCase());
+                                                        public_goal.put("UserProPicURL", userProPicURL);
+                                                        documentReference_publicGoal.set(public_goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(TAG, "onSuccess: goal is set to public");
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         });

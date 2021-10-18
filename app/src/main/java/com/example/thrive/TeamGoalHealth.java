@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,10 +37,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private Spinner spinnerGoalCatHealth,spinnerfriend1, spinnerfriend2;;
+    private Spinner spinnerGoalCatHealth,spinnerfriend1, spinnerfriend2;
+    public static final String TAG = "TAG AddGoal";
     SwitchCompat switchCompat;
     EditText goalname, goalduration;
     Button setgoal,goToTeamGoal;
@@ -54,8 +59,10 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
     String spinner_value1="",spinner_value2="",spinner_subCategory_value="";
 
     String goalID;
-    String userName, userProPicURL, GoalURL, friendname;
+    String userName, userProPicURL, GoalURL, friendname, friendid;
+    List<String> URL_list = new ArrayList<String>();
 
+    ArrayList<FriendList> friendListArrayList = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -87,6 +94,16 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, friends);
         friends.add("No Friends");
 
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fwaterintake.png?alt=media&token=44be3217-520b-4373-aa14-d53a175a4d26");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fmedicineintake.png?alt=media&token=2cba95d8-6470-42d3-bbc8-8c0e046f8f84");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fworkout.png?alt=media&token=320f0e46-5841-4be3-b556-16fdb0782546");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Ffoodhabit.png?alt=media&token=8d37d1fe-25c1-4dc6-af8d-290ab67d5bd1");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fyoga.png?alt=media&token=1ac633fc-e621-4d14-bf87-14343d590edd");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsport.png?alt=media&token=d2db35fb-881f-4fa5-ad01-e6751ea3319c");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fsleep.png?alt=media&token=8bf17670-a7e8-4b3e-9f5a-87ba35c98866");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Fbodycare.png?alt=media&token=d420c96d-af89-49f5-a681-c4b75f44522b");
+        URL_list.add("https://firebasestorage.googleapis.com/v0/b/thrive-b1a4e.appspot.com/o/GoalLogos%2Frehab.png?alt=media&token=15027308-f6a7-4c54-b854-6a493835042e");
+
         reminderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,19 +131,6 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        switchCompat.setChecked(false);
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isChecked()) {
-                    Intent intent = new Intent(TeamGoalHealth.this, TeamGoalProductivity.class);
-                    startActivity(intent);
-                } else {
-
-                }
-            }
-        });
-
         DocumentReference documentReference = fStore.collection("User").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -142,7 +146,10 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     for (DocumentSnapshot querySnapshot : task.getResult()) {
                                         friendname = querySnapshot.getString("FriendName");
+                                        friendid = querySnapshot.getString("FriendID");
                                         friends.add(friendname);
+                                        FriendList friendList = new FriendList(friendname, friendid);
+                                        friendListArrayList.add(friendList);
                                     }
 
                                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -161,33 +168,406 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         });
+
         setgoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spinnerfriend1.getSelectedItem()!=null && spinnerfriend2.getSelectedItem()!=null)
-                {  spinner_value1 = spinnerfriend1.getSelectedItem().toString();
+                if (spinnerfriend1.getSelectedItem() != null && spinnerfriend2.getSelectedItem() != null) {
+                    spinner_value1 = spinnerfriend1.getSelectedItem().toString();
                     spinner_value2 = spinnerfriend2.getSelectedItem().toString();
-                    if(spinner_value1.equals("No friends"))
-                    {
-                        text="You must choose a friend for a team goal.";
-                    }
-                    else if (spinner_value1.equals(spinner_value2)) {
-                        text="You have set a team goal with "+spinner_value1;
-                    }
-                    else
-                    {
-                        text="You have set a team goal with "+spinner_value1+" and "+spinner_value2;
+                    if (spinner_value1.equals("No friends")) {
+                        text = "You must choose a friend for a team goal.";
+                    } else if (spinner_value1.equals(spinner_value2)) {
+                        text = "You have set a team goal with " + spinner_value1;
+                        /////////////////////////////
+                        String name = goalname.getText().toString();
+                        String duration = goalduration.getText().toString();
+                        if (name.isEmpty()) {
+                            showError(goalname, "Name must not be empty");
+                            return;
+                        }
+                        if (duration.isEmpty() || duration.equals("0")) {
+                            showError(goalduration, "Duration must be at least 1 day");
+                            return;
+                        }
+                        if (Integer.parseInt(duration) > 365) {
+                            showError(goalduration, "Please give a duration of not more than a year");
+                            return;
+                        }
+                        final String spinner_value = spinnerGoalCatHealth.getSelectedItem().toString();
+                        if (spinner_value.equals("Water Intake")) {
+                            GoalURL = URL_list.get(0);
+                        }
+                        if (spinner_value.equals("Medicine Intake")) {
+                            GoalURL = URL_list.get(1);
+                        }
+                        if (spinner_value.equals("Working Out")) {
+                            GoalURL = URL_list.get(2);
+                        }
+                        if (spinner_value.equals("Food Habits")) {
+                            GoalURL = URL_list.get(3);
+                        }
+                        if (spinner_value.equals("Yoga")) {
+                            GoalURL = URL_list.get(4);
+                        }
+                        if (spinner_value.equals("Sports")) {
+                            GoalURL = URL_list.get(5);
+                        }
+                        if (spinner_value.equals("Sleep")) {
+                            GoalURL = URL_list.get(6);
+                        }
+                        if (spinner_value.equals("Body Care")) {
+                            GoalURL = URL_list.get(7);
+                        }
+                        if (spinner_value.equals("Rehabilitation")) {
+                            GoalURL = URL_list.get(8);
+                        }
+                        if (spinner_value.equals("No category")) {
+                            Toast.makeText(TeamGoalHealth.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
+                        } else {
+                            DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                            Map<String, Object> goal = new HashMap<>();
+                            goal.put("Name", name);
+                            goal.put("Category", "Health");
+                            goal.put("Subcategory", spinner_value);
+                            goal.put("Duration", duration);
+                            goal.put("Privacy", privacy);
+                            goal.put("Days", "0");
+                            goal.put("Progress", "0");
+                            goal.put("id", documentReference1.getId());
+                            goal.put("DateToday", dateToday);
+                            goal.put("Flag", "0");
+                            goal.put("GoalURL", GoalURL);
+
+                            goalID = documentReference1.getId();
+
+                            documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: goal is created");
+                                }
+
+                            });
+
+                            //create goal achieved stat for 12 months
+                            Calendar calendar = Calendar.getInstance();
+                            int year = calendar.get(Calendar.YEAR);
+                            String year_str = Integer.toString(year);
+
+
+                            DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(fAuth.getUid()).collection("Goals").document(goalID);
+                            Map<String, Object> goal_achieved = new HashMap<>();
+                            goal_achieved.put("Year", year_str);
+                            goal_achieved.put("GoalName", name);
+                            goal_achieved.put("GoalID", documentReference1.getId());
+
+                            for (int month = 0; month <= 11; month++) {
+                                String month_str = Integer.toString(month);
+                                goal_achieved.put(month_str, "0");
+                            }
+
+                            documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                                }
+                            });
+                            Toast.makeText(TeamGoalHealth.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            goalname.setText("");
+                            goalduration.setText("");
+                            gopublic.setPressed(false);
+                            later.setPressed(false);
+                        }
+                        /////////////////////////////
+                        for (int i = 0; i < friendListArrayList.size(); i++) {
+                            if (friendListArrayList.get(i).getName().equals(spinner_value1)) {
+                                String fid = friendListArrayList.get(i).getID();
+                                //////////////////////
+                                if (!spinner_value.equals("No category")) {
+                                    DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(fid).collection("Goals").document();
+                                    Map<String, Object> goal = new HashMap<>();
+                                    goal.put("Name", name);
+                                    goal.put("Category", "Health");
+                                    goal.put("Subcategory", spinner_value);
+                                    goal.put("Duration", duration);
+                                    goal.put("Privacy", privacy);
+                                    goal.put("Days", "0");
+                                    goal.put("Progress", "0");
+                                    goal.put("id", documentReference1.getId());
+                                    goal.put("DateToday", dateToday);
+                                    goal.put("Flag", "0");
+                                    goal.put("GoalURL", GoalURL);
+
+                                    goalID = documentReference1.getId();
+
+                                    documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: goal is created");
+                                        }
+
+                                    });
+                                     //create goal achieved stat for 12 months
+                                    Calendar calendar = Calendar.getInstance();
+                                    int year = calendar.get(Calendar.YEAR);
+                                    String year_str = Integer.toString(year);
+
+                                    DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(fid).collection("Goals").document(goalID);
+                                    Map<String, Object> goal_achieved = new HashMap<>();
+                                    goal_achieved.put("Year", year_str);
+                                    goal_achieved.put("GoalName", name);
+                                    goal_achieved.put("GoalID", documentReference1.getId());
+
+                                    for (int month = 0; month <= 11; month++) {
+                                        String month_str = Integer.toString(month);
+                                        goal_achieved.put(month_str, "0");
+                                    }
+
+                                    documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                                        }
+                                    });
+                                }
+                                /////////////////////
+                            }
+                        }
+                    } else {
+                        text = "You have set a team goal with " + spinner_value1 + " and " + spinner_value2;
+                        ////////////////////////////
+                        String name = goalname.getText().toString();
+                        String duration = goalduration.getText().toString();
+                        if (name.isEmpty()) {
+                            showError(goalname, "Name must not be empty");
+                            return;
+                        }
+                        if (duration.isEmpty() || duration.equals("0")) {
+                            showError(goalduration, "Duration must be at least 1 day");
+                            return;
+                        }
+                        if (Integer.parseInt(duration) > 365) {
+                            showError(goalduration, "Please give a duration of not more than a year");
+                            return;
+                        }
+                        final String spinner_value = spinnerGoalCatHealth.getSelectedItem().toString();
+                        if (spinner_value.equals("Water Intake")) {
+                            GoalURL = URL_list.get(0);
+                        }
+                        if (spinner_value.equals("Medicine Intake")) {
+                            GoalURL = URL_list.get(1);
+                        }
+                        if (spinner_value.equals("Working Out")) {
+                            GoalURL = URL_list.get(2);
+                        }
+                        if (spinner_value.equals("Food Habits")) {
+                            GoalURL = URL_list.get(3);
+                        }
+                        if (spinner_value.equals("Yoga")) {
+                            GoalURL = URL_list.get(4);
+                        }
+                        if (spinner_value.equals("Sports")) {
+                            GoalURL = URL_list.get(5);
+                        }
+                        if (spinner_value.equals("Sleep")) {
+                            GoalURL = URL_list.get(6);
+                        }
+                        if (spinner_value.equals("Body Care")) {
+                            GoalURL = URL_list.get(7);
+                        }
+                        if (spinner_value.equals("Rehabilitation")) {
+                            GoalURL = URL_list.get(8);
+                        }
+                        if (spinner_value.equals("No category")) {
+                            Toast.makeText(TeamGoalHealth.this, "You must add a category for your goal", Toast.LENGTH_SHORT).show();
+                        } else {
+                            DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document();
+                            Map<String, Object> goal = new HashMap<>();
+                            goal.put("Name", name);
+                            goal.put("Category", "Health");
+                            goal.put("Subcategory", spinner_value);
+                            goal.put("Duration", duration);
+                            goal.put("Privacy", privacy);
+                            goal.put("Days", "0");
+                            goal.put("Progress", "0");
+                            goal.put("id", documentReference1.getId());
+                            goal.put("DateToday", dateToday);
+                            goal.put("Flag", "0");
+                            goal.put("GoalURL", GoalURL);
+
+                            goalID = documentReference1.getId();
+
+                            documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: goal is created");
+                                }
+
+                            });
+
+                            //create goal achieved stat for 12 months
+                            Calendar calendar = Calendar.getInstance();
+                            int year = calendar.get(Calendar.YEAR);
+                            String year_str = Integer.toString(year);
+
+
+                            DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(fAuth.getUid()).collection("Goals").document(goalID);
+                            Map<String, Object> goal_achieved = new HashMap<>();
+                            goal_achieved.put("Year", year_str);
+                            goal_achieved.put("GoalName", name);
+                            goal_achieved.put("GoalID", documentReference1.getId());
+
+                            for (int month = 0; month <= 11; month++) {
+                                String month_str = Integer.toString(month);
+                                goal_achieved.put(month_str, "0");
+                            }
+
+                            documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                                }
+                            });
+                            Toast.makeText(TeamGoalHealth.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            goalname.setText("");
+                            goalduration.setText("");
+                            gopublic.setPressed(false);
+                            later.setPressed(false);
+                        }
+                        ///////////////////////////
+                        for (int i = 0; i < friendListArrayList.size(); i++) {
+                            if (friendListArrayList.get(i).getName().equals(spinner_value1)) {
+                                String fid = friendListArrayList.get(i).getID();
+                                //////////////////////
+                                if (!spinner_value.equals("No category")) {
+                                    DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(fid).collection("Goals").document();
+                                    Map<String, Object> goal = new HashMap<>();
+                                    goal.put("Name", name);
+                                    goal.put("Category", "Health");
+                                    goal.put("Subcategory", spinner_value);
+                                    goal.put("Duration", duration);
+                                    goal.put("Privacy", privacy);
+                                    goal.put("Days", "0");
+                                    goal.put("Progress", "0");
+                                    goal.put("id", documentReference1.getId());
+                                    goal.put("DateToday", dateToday);
+                                    goal.put("Flag", "0");
+                                    goal.put("GoalURL", GoalURL);
+
+                                    goalID = documentReference1.getId();
+
+                                    documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: goal is created");
+                                        }
+
+                                    });
+                                    //create goal achieved stat for 12 months
+                                    Calendar calendar = Calendar.getInstance();
+                                    int year = calendar.get(Calendar.YEAR);
+                                    String year_str = Integer.toString(year);
+
+                                    DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(fid).collection("Goals").document(goalID);
+                                    Map<String, Object> goal_achieved = new HashMap<>();
+                                    goal_achieved.put("Year", year_str);
+                                    goal_achieved.put("GoalName", name);
+                                    goal_achieved.put("GoalID", documentReference1.getId());
+
+                                    for (int month = 0; month <= 11; month++) {
+                                        String month_str = Integer.toString(month);
+                                        goal_achieved.put(month_str, "0");
+                                    }
+
+                                    documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                                        }
+                                    });
+                                }
+                                /////////////////////
+                            }
+                            if (friendListArrayList.get(i).getName().equals(spinner_value2)) {
+                                String fid = friendListArrayList.get(i).getID();
+                                //////////////////////
+                                if (!spinner_value.equals("No category")) {
+                                    DocumentReference documentReference1 = fStore.collection("UserGoalInfo").document(fid).collection("Goals").document();
+                                    Map<String, Object> goal = new HashMap<>();
+                                    goal.put("Name", name);
+                                    goal.put("Category", "Health");
+                                    goal.put("Subcategory", spinner_value);
+                                    goal.put("Duration", duration);
+                                    goal.put("Privacy", privacy);
+                                    goal.put("Days", "0");
+                                    goal.put("Progress", "0");
+                                    goal.put("id", documentReference1.getId());
+                                    goal.put("DateToday", dateToday);
+                                    goal.put("Flag", "0");
+                                    goal.put("GoalURL", GoalURL);
+
+                                    goalID = documentReference1.getId();
+
+                                    documentReference1.set(goal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: goal is created");
+                                        }
+
+                                    });
+                                    //create goal achieved stat for 12 months
+                                    Calendar calendar = Calendar.getInstance();
+                                    int year = calendar.get(Calendar.YEAR);
+                                    String year_str = Integer.toString(year);
+
+                                    DocumentReference documentReference_goalAchieved = fStore.collection("Statistics").document(fid).collection("Goals").document(goalID);
+                                    Map<String, Object> goal_achieved = new HashMap<>();
+                                    goal_achieved.put("Year", year_str);
+                                    goal_achieved.put("GoalName", name);
+                                    goal_achieved.put("GoalID", documentReference1.getId());
+
+                                    for (int month = 0; month <= 11; month++) {
+                                        String month_str = Integer.toString(month);
+                                        goal_achieved.put(month_str, "0");
+                                    }
+
+                                    documentReference_goalAchieved.set(goal_achieved).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "onSuccess: goalAchieved stat is created");
+                                        }
+                                    });
+                                }
+                                /////////////////////
+                            }
+                        }
                     }
                 }
 
+                if (spinnerGoalCatHealth.getSelectedItem() != null) {
+                    spinner_subCategory_value = spinnerGoalCatHealth.getSelectedItem().toString();
+                }
+            }
+        });
 
-                if(spinnerGoalCatHealth.getSelectedItem()!=null)
-                {
-                    spinner_subCategory_value = spinnerGoalCatHealth.getSelectedItem().toString();}
+        switchCompat.setChecked(false);
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    Intent intent = new Intent(TeamGoalHealth.this, AddGoalsProductivity.class);
+                    startActivity(intent);
+                } else {
+
+                }
             }
         });
     }
 
+    private void showError(EditText input, String s) {
+        input.setError(s);
+        input.requestFocus();
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
