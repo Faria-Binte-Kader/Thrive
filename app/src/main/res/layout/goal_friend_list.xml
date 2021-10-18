@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/purple_500"
-                    android:fontFamily="@font/averiasanslibre_light"
+                    android:fontFamily="@font/roboto_regular"
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"
                     />
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/purple_500"
-                    android:fontFamily="@font/averiasanslibre_light"
+                    android:fontFamily="@font/roboto_regular"
                     android:textSize="15sp"
                     android:layout_marginTop="15dp"
                     />

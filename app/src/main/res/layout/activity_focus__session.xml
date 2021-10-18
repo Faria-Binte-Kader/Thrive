@@ -15,33 +15,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HAVE YOUR OWN FOCUS SESSIONS!"
-        android:textStyle="bold"
-        android:background="@drawable/buttonrounded3"
-        android:textAlignment="center"
+       android:textStyle="bold"
+       android:textAlignment="center"
+       android:fontFamily="@font/roboto_bold"
+       android:textColor="@color/purple_700"
+       android:textSize="20sp"
+       android:padding="10dp"
         android:layout_above="@+id/timerminutetext"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/averiasanslibre_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:padding="10dp"
        android:layout_marginBottom="60dp"
         />
     <EditText
 
         android:id="@+id/timerminutetext"
         android:layout_width="wrap_content"
+        android:layout_marginLeft="40dp"
+
         android:layout_height="wrap_content"
         android:hint="ENTER TIME FOR THE SESSION IN MINUTES"
-        android:background="@drawable/buttonrounded4"
+        android:background="@color/white"
         android:textColorHint="@color/purple_grey"
         android:padding="10dp"
         android:layout_above="@+id/settimerButton"
         android:layout_centerHorizontal="true"
         android:paddingLeft="15dp"
-        android:fontFamily="@font/averiasanslibre_light"
+        android:fontFamily="@font/roboto_regular"
         android:inputType="number"
         android:maxLength="4"
-        android:elevation="5dp"
         android:textSize="15sp"
         android:foregroundTint="@color/purple_500"
         />
@@ -49,17 +49,25 @@
     <Button
         android:layout_marginTop="15dp"
         android:layout_above="@+id/countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonrounded"
-        android:fontFamily="@font/averiasanslibre_bold"
+
         android:text="SET"
         android:layout_centerHorizontal="true"
         android:id="@+id/settimerButton"
-        android:textColor="@color/white"
+        android:textColor="@color/purple_grey"
         android:textSize="20dp"
         android:elevation="10dp"
         app:backgroundTint="@null"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonroundednew"
+        android:fontFamily="@font/roboto_bold"
+
+        android:textAllCaps="false"
+
         />
 
       <TextView
@@ -70,7 +78,7 @@
           android:layout_above="@+id/buttons"
           android:layout_centerHorizontal="true"
           android:layout_gravity="center"
-          android:fontFamily="@font/averiasanslibre_bold"
+          android:fontFamily="@font/roboto_regular"
           android:text="00:00:00"
           android:textSize="50dp"
           android:textStyle="bold" />
@@ -96,7 +104,7 @@
            android:layout_height="wrap_content"
            android:text="Start"
            android:textStyle="bold"
-           android:fontFamily="@font/averiasanslibre_light"
+           android:fontFamily="@font/roboto_light"
            android:layout_marginLeft="10dp"
            android:layout_marginTop="10dp"/>
 
@@ -121,7 +129,7 @@
           android:layout_height="wrap_content"
           android:text="Pause"
           android:textStyle="bold"
-          android:fontFamily="@font/averiasanslibre_light"
+          android:fontFamily="@font/roboto_light"
           android:layout_marginLeft="10dp"
           android:layout_marginTop="10dp"/>
 
@@ -147,7 +155,7 @@
           android:layout_height="wrap_content"
           android:text="Reset"
           android:textStyle="bold"
-          android:fontFamily="@font/averiasanslibre_light"
+          android:fontFamily="@font/roboto_light"
           android:layout_marginLeft="10dp"
           android:layout_marginTop="10dp"/>
 

@@ -281,5 +281,11 @@ public class GoalView extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(GoalView.this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }

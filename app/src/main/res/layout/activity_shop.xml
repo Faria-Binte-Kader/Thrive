@@ -25,10 +25,9 @@
         android:layout_height="wrap_content"
         android:text="AVAILABLE TODAY!"
         android:textStyle="bold"
-        android:background="@drawable/buttonrounded3"
         android:textAlignment="center"
-        android:fontFamily="@font/averiasanslibre_bold"
-        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/purple_700"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_marginTop="20dp"
@@ -68,7 +67,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:fontFamily="@font/averiasanslibre_light"
+                        android:fontFamily="@font/roboto_light"
                         android:text="0"
                         android:textColor="@color/purple_500"
                         android:textSize="20dp" />
@@ -110,7 +109,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:fontFamily="@font/averiasanslibre_light"
+                        android:fontFamily="@font/roboto_light"
                         android:text="0"
                         android:id="@+id/animal2price"
                         android:textColor="@color/purple_500"
@@ -160,7 +159,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:fontFamily="@font/averiasanslibre_light"
+                        android:fontFamily="@font/roboto_light"
                         android:text="0"
                         android:textColor="@color/purple_500"
                         android:textSize="20dp" />
@@ -203,7 +202,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:fontFamily="@font/averiasanslibre_light"
+                        android:fontFamily="@font/roboto_light"
                         android:text="0"
                         android:textColor="@color/purple_500"
                         android:textSize="20dp" />
@@ -235,10 +234,12 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:fontFamily="@font/averiasanslibre_light"
+            android:fontFamily="@font/roboto_regular"
             android:text="SEE MY BAG!"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="15dp"
+            android:padding="5dp"/>
 
     </LinearLayout>
     </LinearLayout>

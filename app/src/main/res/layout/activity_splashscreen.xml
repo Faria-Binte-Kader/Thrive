@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="START TODAY!"
-        android:fontFamily="@font/averiasanslibre_bold"
+        android:fontFamily="@font/roboto_bold"
         android:textSize="20dp"
 
         android:textColor="@color/white"

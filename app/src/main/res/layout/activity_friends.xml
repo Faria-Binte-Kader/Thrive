@@ -36,7 +36,7 @@
                 android:id="@+id/textViewSearchByFriends"
                 android:gravity="bottom"
                 android:layout_marginBottom="5sp"
-                android:fontFamily="@font/averiasanslibre_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:padding="10sp"
                 android:paddingStart="20dp"
                 android:text="Search By: "

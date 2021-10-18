@@ -19,7 +19,7 @@
         android:id="@+id/alarmno"
         android:textSize="20sp"
         android:padding="10dp"
-        android:fontFamily="@font/averiasanslibre_light"
+        android:fontFamily="@font/roboto_regular"
         android:layout_marginLeft="25dp" />
 
     <EditText
@@ -32,7 +32,7 @@
         android:textSize="30dp"
         android:foregroundTint="@color/purple_500"
         android:textColorHint="@color/purple_grey"
-        android:fontFamily="@font/averiasanslibre_light"/>
+        android:fontFamily="@font/roboto_regular"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:textSize="30dp"
         android:textColorHint="@color/purple_grey"
         android:foregroundTint="@color/purple_500"
-        android:fontFamily="@font/averiasanslibre_light"/>
+        android:fontFamily="@font/roboto_regular"/>
 
 
 </LinearLayout>

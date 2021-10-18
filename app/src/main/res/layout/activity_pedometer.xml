@@ -44,7 +44,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:fontFamily="@font/averiasanslibre_bold"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/purple_700"
             android:textSize="60dp"
             />
@@ -62,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:fontFamily="@font/averiasanslibre_bold"
+            android:fontFamily="@font/roboto_regular"
             android:textColor="@color/purple_500"
             android:textSize="20dp"/>
 
@@ -90,7 +90,7 @@
                 android:text="0"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:fontFamily="@font/averiasanslibre_light"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/white"
                 android:textSize="50dp"/>
 
@@ -101,7 +101,7 @@
                 android:text="CAL"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:fontFamily="@font/averiasanslibre_light"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/purple_500"
                 android:textSize="15dp"/>
 
@@ -122,7 +122,7 @@
                 android:text="0"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:fontFamily="@font/averiasanslibre_light"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/white"
                 android:textSize="50dp"/>
 
@@ -133,7 +133,7 @@
                 android:text="KM"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:fontFamily="@font/averiasanslibre_light"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/purple_500"
                 android:textSize="15dp"/>
 

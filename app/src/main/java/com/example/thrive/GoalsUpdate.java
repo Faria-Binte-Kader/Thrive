@@ -235,4 +235,10 @@ public class GoalsUpdate extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(GoalsUpdate.this, MainActivity.class);
+        startActivity(intent);
+    }
 }

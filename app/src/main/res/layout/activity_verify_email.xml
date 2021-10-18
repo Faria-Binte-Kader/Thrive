@@ -29,30 +29,35 @@
             android:layout_marginTop="30dp"
             android:text="PLEASE VERIFY YOUR EMAIL AND LOGIN AGAIN"
             android:textStyle="bold"
-            android:background="@drawable/buttonrounded3"
             android:textAlignment="center"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/purple_700"
             android:textSize="20sp"
             android:padding="10dp"
             />
 
         <Button
             android:id="@+id/gotoLoginFromVerifyPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="LOGIN AGAIN"
-            android:textColor="@color/white"
-            android:background="@drawable/buttonrounded"
             android:textStyle="bold"
-            android:fontFamily="@font/averiasanslibre_bold"
             android:layout_marginTop="30dp"
             android:padding="10sp"
             android:layout_centerHorizontal="true"
+            android:onClick="gotoLoginPage"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonroundednew"
+            android:fontFamily="@font/roboto_bold"
+
+            android:textAllCaps="false"
+            android:textColor="@color/purple_grey"
             android:textSize="20dp"
             android:elevation="10dp"
-            app:backgroundTint="@null"
-            android:onClick="gotoLoginPage">
+            app:backgroundTint="@null">
         </Button>
 
     </LinearLayout>

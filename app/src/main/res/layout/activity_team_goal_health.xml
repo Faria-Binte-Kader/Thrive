@@ -44,32 +44,30 @@
             app:track="@drawable/switch_track"
             />
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ENTER DETAILS OF YOUR GOAL"
-        android:textStyle="bold"
-        android:background="@drawable/buttonrounded3"
-        android:textAlignment="center"
-        android:fontFamily="@font/averiasanslibre_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:padding="10dp"
-        />
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CHOOSE ANY CATEGORY FROM BELOW"
-        android:textStyle="bold"
-        android:background="@drawable/buttonrounded3"
-        android:textAlignment="center"
-        android:fontFamily="@font/averiasanslibre_bold"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:padding="10dp"
-        />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ENTER DETAILS OF YOUR GOAL"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/purple_700"
+            android:textSize="20sp"
+            android:padding="10dp"
+            />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHOOSE ANY CATEGORY FROM BELOW"
+            android:textStyle="bold"
+            android:layout_marginLeft="40dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/purple_500"
+            android:textSize="15sp"
+
+            />
         <Spinner
             android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
@@ -90,48 +88,54 @@
             android:id="@+id/goalName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ENTER YOUR GOAL NAME"
+            android:hint="Enter your goal name"
             android:textColorHint="@color/purple_grey"
             android:padding="10dp"
-            android:layout_margin="20dp"
             android:paddingLeft="15dp"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/buttonrounded4"
+            android:inputType="text"
+            android:background="@color/white"
             android:textSize="20sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
             android:foregroundTint="@color/purple_grey"
             android:elevation="5dp"
-            android:fontFamily="@font/averiasanslibre_light"
+            android:fontFamily="@font/roboto_regular"
             />
         <EditText
             android:id="@+id/goalDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ENTER DURATION IN DAYS"
+            android:hint="Enter duration in days"
             android:textColorHint="@color/purple_grey"
             android:padding="10dp"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/buttonrounded4"
+            android:inputType="number"
+            android:background="@color/white"
             android:textSize="20sp"
             android:foregroundTint="@color/purple_grey"
             android:elevation="5dp"
-            android:fontFamily="@font/averiasanslibre_light"
+            android:fontFamily="@font/roboto_regular"
             />
+
+
         <TextView
             android:layout_marginTop="20dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CHOOSE ANY OF YOUR FRIENDS TO ADD TO THE GOAL"
             android:textStyle="bold"
-            android:background="@drawable/buttonrounded3"
-            android:textAlignment="center"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/purple_500"
             android:textSize="15sp"
-            android:padding="10dp"
+
             />
+
         <Spinner
             android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
@@ -148,18 +152,15 @@
             android:prompt="@string/spinner_title"
             />
         <TextView
+            android:text="YOU CAN CHOOSE ANOTHER FRIEND!"
             android:layout_marginTop="20dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YOU CAN CHOOSE ANOTHER FRIEND!"
             android:textStyle="bold"
-            android:background="@drawable/buttonrounded3"
-            android:textAlignment="center"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
+            android:layout_marginLeft="40dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/purple_500"
             android:textSize="15sp"
-            android:padding="10dp"
             />
         <Spinner
             android:layout_marginTop="10dp"
@@ -177,36 +178,35 @@
             android:prompt="@string/spinner_title"
             />
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
+            android:text="DO YOU WANT TO MAKE YOUR GOAL PUBLIC?"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DO YOU WANT TO MAKE YOUR GOAL PUBLIC?"
+            android:layout_marginLeft="40dp"
             android:textStyle="bold"
-            android:background="@drawable/buttonrounded3"
             android:textAlignment="center"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:padding="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/purple_500"
+            android:textSize="15sp"
+
             />
         <LinearLayout
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
 
             <Button
                 android:id="@+id/publicbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:background="@drawable/buttonroundeddark"
-                android:fontFamily="@font/averiasanslibre_bold"
+                android:background="@drawable/buttonroundednew"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Go Public!"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/purple_grey"
                 android:textSize="15dp"
                 android:elevation="10dp"
                 app:backgroundTint="@null"
@@ -217,36 +217,37 @@
                 android:id="@+id/laterbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:background="@drawable/buttonroundeddark"
-                android:fontFamily="@font/averiasanslibre_bold"
-                android:text="Maybe Later."
+                android:background="@drawable/buttonroundednew"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Maybe later."
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/purple_grey"
                 android:textSize="15dp"
                 android:elevation="10dp"
                 app:backgroundTint="@null"
+
                 />
         </LinearLayout>
 
         <Button
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/setgoalbtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
-            android:text="SET GOAL!"
+            android:background="@drawable/buttonroundednew"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Set Goal!"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/purple_grey"
             android:textSize="20dp"
             android:elevation="10dp"
+            android:layout_marginBottom="20dp"
             app:backgroundTint="@null"
             />
-
     </LinearLayout>
-
 
 </ScrollView>

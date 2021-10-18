@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="6dp"
-                android:fontFamily="@font/averiasanslibre_light"
+                android:fontFamily="@font/roboto_light"
                 android:layout_toLeftOf="@+id/coinpicture"
                 android:text="0"
                 android:textColor="@color/white"
@@ -87,6 +87,25 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="60dp">
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Goals"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:padding="10dp"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,11 +119,12 @@
             android:id="@+id/seeremindersbtn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/buttonroundeddark"
-            android:fontFamily="@font/averiasanslibre_bold"
+            android:background="@drawable/buttonroundednew"
+            android:fontFamily="@font/roboto_regular"
             android:text="My Reminders"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/purple_grey"
+            android:layout_marginBottom="10dp"
             android:textSize="15dp"
             android:elevation="10dp"
             app:backgroundTint="@null"
@@ -116,7 +136,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="100dp"
         android:padding="10dp"
         android:id="@+id/goalsRV"

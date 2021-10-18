@@ -2,6 +2,7 @@ package com.example.thrive;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,12 +59,48 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
         String check=goalsArrayList.get(position).getProgress();
         holder.name.setText(goalsArrayList.get(position).getName());
         holder.progress.setText(goalsArrayList.get(position).getProgress());
+        if( goalsArrayList.get(position).getProgress().equals("Completed!"))
+        {
+            holder.percent.setVisibility(View.INVISIBLE);
+        }
+        if(goalsArrayList.get(position).getFlag().equals("1"))
+        {
+            holder.updateFlag.setVisibility(View.GONE);
+        }
+        if (position%7== 0) {
+            holder.name2.setBackgroundColor(Color.parseColor("#8CA47BE1"));
+            holder.name2.setTextColor(Color.parseColor("#8CA47BE1"));
+        } else if (position%7== 1){
+            holder.name2.setBackgroundColor(Color.parseColor("#8C8ce8ff"));
+            holder.name2.setTextColor(Color.parseColor("#8C8ce8ff"));
+        }
+        else if (position%7== 2){
+            holder.name2.setBackgroundColor(Color.parseColor("#8C451B58"));
+            holder.name2.setTextColor(Color.parseColor("#8C451B58"));
+        }
+        else if (position%7== 3){
+            holder.name2.setBackgroundColor(Color.parseColor("#8C629AEE"));
+            holder.name2.setTextColor(Color.parseColor("#8C629AEE"));
+        }
+        else if (position%7== 4){
+            holder.name2.setBackgroundColor(Color.parseColor("#8Cff8cec"));
+            holder.name2.setTextColor(Color.parseColor("#8Cff8cec"));
+        }
+        else if (position%7== 5){
+            holder.name2.setBackgroundColor(Color.parseColor("#8C03DAC5"));
+            holder.name2.setTextColor(Color.parseColor("#8C03DAC5"));
+        }
+        else if (position%7== 6){
+            holder.name2.setBackgroundColor(Color.parseColor("#8C834D98"));
+            holder.name2.setBackgroundColor(Color.parseColor("#8C834D98"));
+        }
 
         FirebaseAuth fAuth;
         FirebaseFirestore fStore;
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+
 
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +109,14 @@ public class GoalsAdapter extends RecyclerView.Adapter<ViewholderGoals> implemen
                 mainActivity.loadgoal(goalID);
             }
         });
+        holder.progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String goalID = goalsArrayList.get(position).getGoalID();
+                mainActivity.loadgoal(goalID);
+            }
+        });
+
 
         /*Picasso.get().load(goalsArrayList.get(position).getUrl()).into(holder.goalpicture);
         if(check.equals("Completed!")) {

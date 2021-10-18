@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewholderGoals extends RecyclerView.ViewHolder {
 
-    public TextView progress, name;
+    public TextView progress, name,name2,percent;
+    public Button updateFlag;
     //public ProgressBar progressBar;
     //public Button updateprogress, editgoal, deletegoal;
     //public ImageView goalpicture;
@@ -20,6 +21,10 @@ public class ViewholderGoals extends RecyclerView.ViewHolder {
 
         progress = itemView.findViewById(R.id.progress);
         name = itemView.findViewById(R.id.progressgoalname);
+        name2 = itemView.findViewById(R.id.progressgoalname2);
+        updateFlag = itemView.findViewById(R.id.updateflagbtn);
+        updateFlag = itemView.findViewById(R.id.updateflagbtn);
+        percent = itemView.findViewById(R.id.percent);
         /*progressBar=itemView.findViewById(R.id.progress_bar);
         goalpicture=itemView.findViewById(R.id.goalpicture);
         updateprogress = itemView.findViewById(R.id.updateprogress_btn);
