@@ -487,6 +487,7 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                                     });
                                 }
                                 /////////////////////
+                                sendTeamGoalNotification(fid);
                             }
                             if (friendListArrayList.get(i).getName().equals(spinner_value2)) {
                                 String fid = friendListArrayList.get(i).getID();
@@ -539,6 +540,7 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                                     });
                                 }
                                 /////////////////////
+                                sendTeamGoalNotification(fid);
                             }
                         }
                     }
@@ -585,4 +587,35 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
         Intent intent = new Intent(TeamGoalHealth.this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void sendTeamGoalNotification(String receiverID) {
+        String userID = FirebaseAuth.getInstance().getUid();
+        fStore.collection("User").document(userID)
+                .addSnapshotListener(TeamGoalHealth.this, new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot valueSender, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                        if (valueSender != null) {
+                            fStore.collection("User").document(receiverID)
+                                    .addSnapshotListener(TeamGoalHealth.this, new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot valueReceiver, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                            if (valueReceiver != null) {
+                                                String receiverToken = valueReceiver.getString("Token") + "";
+
+                                                NotificationSenderFriendRequest notificationSender = new NotificationSenderFriendRequest(
+                                                        receiverToken + "",
+                                                        "Team Goal",
+                                                        valueSender.getString("Name") + " has set a team goal with you",
+                                                        getApplicationContext(), TeamGoalHealth.this);
+
+                                                notificationSender.sendNotification();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
+
 }
