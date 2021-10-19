@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -30,7 +34,9 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class GoalView extends AppCompatActivity {
 
@@ -44,13 +50,14 @@ public class GoalView extends AppCompatActivity {
 
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
+    private String userID,coin;
 
-    private String userID;
-
-    public TextView progress, name;
+    public TextView progress, name,coinview3;
     public ProgressBar progressBar;
     public Button updateprogress, editgoal, deletegoal;
     public ImageView goalpicture;
+    Dialog coinDialog;
+    List<String> coinval = new ArrayList<String>();
 
     public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
 
@@ -58,6 +65,7 @@ public class GoalView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_view);
+        coinDialog = new Dialog(GoalView.this);
 
         Intent intent = getIntent();
         goalID = intent.getStringExtra(MainActivity.EXTRA_TEXT);
@@ -68,11 +76,22 @@ public class GoalView extends AppCompatActivity {
 
         progress = findViewById(R.id.progress);
         name = findViewById(R.id.progressgoalname);
+        coinview3 = findViewById(R.id.cointextview3);
         progressBar = findViewById(R.id.progress_bar);
         goalpicture = findViewById(R.id.goalpicture);
         updateprogress = findViewById(R.id.updateprogress_btn);
         editgoal = findViewById(R.id.editgoal_btn);
         deletegoal = findViewById(R.id.deletegoal_btn);
+
+        DocumentReference documentReference2 = fStore.collection("User").document(userID);
+        documentReference2.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null) {
+                    coinview3.setText(value.getString("Coin"));
+                }
+            }
+        });
 
         DocumentReference documentReference = fStore.collection("UserGoalInfo").document(userID).collection("Goals").document(goalID);
         documentReference.addSnapshotListener(GoalView.this, new EventListener<DocumentSnapshot>() {
@@ -88,7 +107,7 @@ public class GoalView extends AppCompatActivity {
                     progress.setText(prog);
 
                     Picasso.get().load(url).into(goalpicture);
-                    if(prog!=null) {
+                    if (prog != null) {
                         if (prog.equals("Completed!")) {
                             progressBar.setProgress(100);
                             progress.setText(prog);
@@ -134,6 +153,7 @@ public class GoalView extends AppCompatActivity {
                                 DocumentReference doc2 = fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID);
                                 doc2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     String cnt2, d, p;
+                                    int flag2=0;
 
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -154,6 +174,11 @@ public class GoalView extends AppCompatActivity {
                                                 } else if (temp3 >= 100) {
                                                     p = "Completed!";
                                                     progressBar.setProgress(100);
+                                                    flag2 = 1;
+                                                    dismissAlarm();
+                                                    coinDialog.show();
+
+
                                                 }
                                                 fStore.collection("UserGoalInfo").document(fAuth.getUid()).collection("Goals").document(goalID)
                                                         .update("Progress", p)
@@ -171,8 +196,20 @@ public class GoalView extends AppCompatActivity {
 
                                                             }
                                                         });
+                                                if(flag2==1)
+                                                {   String c=coinview3.getText().toString();
+                                                   int c1=Integer.parseInt(c);
+                                                   c1=c1+100;
+                                                   c=Integer.toString(c1);
+                                                    fStore.collection("User").document(userID)
+                                                            .update("Coin", c)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
 
-
+                                                                }
+                                                            });
+                                                }
                                             }
                                         } else {
 
@@ -233,6 +270,7 @@ public class GoalView extends AppCompatActivity {
                                 if (prog.equals("Completed!")) {
                                     progressBar.setProgress(100);
                                     progress.setText(prog);
+
                                 } else {
                                     int strTointProgress = Integer.parseInt(prog);
                                     progressBar.setProgress(strTointProgress);
@@ -259,7 +297,6 @@ public class GoalView extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            //Toast.makeText(GoalsAdapter.this, "Goal Deleted", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                             fStore.collection("PublicGoals").document(goalID)
@@ -274,11 +311,7 @@ public class GoalView extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-
                 }
-                //Toast.makeText(Profile.this, "Password Changed ", Toast.LENGTH_SHORT).show();
-                // if(imageuri!=null)
-                //{ Picasso.get().load(imageuri).into(imageView);}
             }
         });
     }
@@ -289,6 +322,7 @@ public class GoalView extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -296,4 +330,24 @@ public class GoalView extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void dismissAlarm() {
+
+        coinDialog.setContentView(R.layout.coin_dialog);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            coinDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.buttonroundednew));
+        }
+        coinDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        coinDialog.setCancelable(false);
+
+        Button ok_btn = coinDialog.findViewById(R.id.buttonAlarmok);
+
+
+        ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                coinDialog.dismiss();
+            }
+        });
+
+    }
 }

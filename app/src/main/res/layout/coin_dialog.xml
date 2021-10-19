@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350sp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@drawable/buttonroundednew">
+
+    <TextView
+        android:layout_width="330sp"
+        android:layout_height="wrap_content"
+        android:text="Congratulations on finishing your goals! You Receive 100 coins."
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textStyle="bold"
+        android:textColor="@color/purple_500"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="5dp"
+        />
+
+        <Button
+            android:layout_gravity="right"
+            android:id="@+id/buttonAlarmok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/buttonroundednew"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Okay"
+            android:padding="10dp"
+            android:textColor="@color/purple_700"
+            android:textSize="15dp"
+            />
+
+</LinearLayout>
