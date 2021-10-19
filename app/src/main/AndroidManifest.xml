@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thrive">
-        <activity android:name=".TeamGoalProductivity"></activity>
+        <activity android:name=".Help"></activity>
+        <activity android:name=".TeamGoalProductivity" />
         <activity android:name=".TeamGoalHealth" />
         <activity android:name=".GoalView" />
         <activity android:name=".GoalsUpdate" />

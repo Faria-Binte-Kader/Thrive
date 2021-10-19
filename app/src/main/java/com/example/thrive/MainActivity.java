@@ -98,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
                         if (id == R.id.logout) {
                             startActivity(new Intent(getApplicationContext(), Logout.class));
                         }
+                        if (id == R.id.Help) {
+                            startActivity(new Intent(getApplicationContext(), Help.class));
+                        }
+
                         return true;
                     }
                 });

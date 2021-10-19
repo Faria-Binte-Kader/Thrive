@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">Thrive</string>
+    <string name="create_goal">Click the add button, and create goal according to your need, set sub-category and duration.
+    You can switch from Heath category and Productivity category, under which both have different set of sub categories. After creating goals
+    you will see them in your home page. You can update your daily progress after completing your goal to keep track. You can also edit and
+    delete the goal, by pressing on the goal. After completing every goal, you will receive 100 coins. You can also create goals with one or two
+    other users, and update progress separately to have a team experience.You can also set reminders by clicking the reminder button, in thr add goal
+    section. You can also set the interval for the reminder. After each interval, you will get reminded by thrive. You can also delete
+    the reminder if you want by going to all reminders section.</string>
+    <string name="focus_session">By clicking the focus button on the upper left side of the screen, you can create focus sessions, where you can set count down timers
+    for any amount of time, and meanwhile, you can focus on some work, you can also pause and reset the session.</string>
+    <string name="shop">From the coins that you will earn, you can go to the shop and buy any of the avatars. And you can set any of them
+    as your avatar. </string>
+    <string name="Stat">Statistics will show you your performance for your current and previous goals.</string>
+    <string name="friends">You can search for public goals and users by searching with category, sub-category or user name or goal name.
+    You can see the users public goals by clicking on their name, you can send friend request to them. They can either accept or reject it.
+    You can see notifications for this by clicking the notification button.</string>
     <string name="spinner_title">No Friend</string>
     <string-array name="searchByTypes">
         <item>Goal Category</item>
