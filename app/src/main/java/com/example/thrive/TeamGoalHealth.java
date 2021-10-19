@@ -175,8 +175,9 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                 if (spinnerfriend1.getSelectedItem() != null && spinnerfriend2.getSelectedItem() != null) {
                     spinner_value1 = spinnerfriend1.getSelectedItem().toString();
                     spinner_value2 = spinnerfriend2.getSelectedItem().toString();
-                    if (spinner_value1.equals("No friends")) {
+                    if (spinner_value1.equals("No Friends") && spinner_value2.equals("No Friends")) {
                         text = "You must choose a friend for a team goal.";
+                        Toast.makeText(TeamGoalHealth.this, text, Toast.LENGTH_SHORT).show();
                     } else if (spinner_value1.equals(spinner_value2)) {
                         text = "You have set a team goal with " + spinner_value1;
                         /////////////////////////////
@@ -272,7 +273,7 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                                     Log.d(TAG, "onSuccess: goalAchieved stat is created");
                                 }
                             });
-                            Toast.makeText(TeamGoalHealth.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeamGoalHealth.this, text, Toast.LENGTH_SHORT).show();
                             goalname.setText("");
                             goalduration.setText("");
                             gopublic.setPressed(false);
@@ -334,7 +335,13 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                             }
                         }
                     } else {
-                        text = "You have set a team goal with " + spinner_value1 + " and " + spinner_value2;
+                        if(spinner_value2.equals("No Friends"))
+                        {text = "You have set a team goal with " + spinner_value1;}
+                        else if(spinner_value1.equals("No Friends") && !spinner_value2.equals("No friends"))
+                        {
+                            text = "You have set a team goal with " + spinner_value2;
+                        }else
+                        {text = "You have set a team goal with " + spinner_value1 + " and " + spinner_value2;}
                         ////////////////////////////
                         String name = goalname.getText().toString();
                         String duration = goalduration.getText().toString();
@@ -428,7 +435,7 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
                                     Log.d(TAG, "onSuccess: goalAchieved stat is created");
                                 }
                             });
-                            Toast.makeText(TeamGoalHealth.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeamGoalHealth.this, text, Toast.LENGTH_SHORT).show();
                             goalname.setText("");
                             goalduration.setText("");
                             gopublic.setPressed(false);
@@ -557,7 +564,7 @@ public class TeamGoalHealth extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (buttonView.isChecked()) {
-                    Intent intent = new Intent(TeamGoalHealth.this, AddGoalsProductivity.class);
+                    Intent intent = new Intent(TeamGoalHealth.this, TeamGoalProductivity.class);
                     startActivity(intent);
                 } else {
 

@@ -130,7 +130,6 @@ public class TeamGoalProductivity extends AppCompatActivity implements AdapterVi
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null) {
                     userName=value.getString("Name");
-                    Toast.makeText(TeamGoalProductivity.this, userName, Toast.LENGTH_SHORT).show();
                     fStore.collection("Friends").document(userID).collection(userName+"Friends")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -168,8 +167,9 @@ public class TeamGoalProductivity extends AppCompatActivity implements AdapterVi
                 if (spinnerfriend1.getSelectedItem() != null && spinnerfriend2.getSelectedItem() != null) {
                     spinner_value1 = spinnerfriend1.getSelectedItem().toString();
                     spinner_value2 = spinnerfriend2.getSelectedItem().toString();
-                    if (spinner_value1.equals("No friends")) {
+                    if (spinner_value1.equals("No Friends") && spinner_value2.equals("No Friends")) {
                         text = "You must choose a friend for a team goal.";
+                        Toast.makeText(TeamGoalProductivity.this, text, Toast.LENGTH_SHORT).show();
                     } else if (spinner_value1.equals(spinner_value2)) {
                         text = "You have set a team goal with " + spinner_value1;
                         /////////////////////////////
@@ -250,7 +250,7 @@ public class TeamGoalProductivity extends AppCompatActivity implements AdapterVi
                                     Log.d(TAG, "onSuccess: goalAchieved stat is created");
                                 }
                             });
-                            Toast.makeText(TeamGoalProductivity.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeamGoalProductivity.this, text, Toast.LENGTH_SHORT).show();
                             goalname.setText("");
                             goalduration.setText("");
                             gopublic.setPressed(false);
@@ -312,7 +312,13 @@ public class TeamGoalProductivity extends AppCompatActivity implements AdapterVi
                             }
                         }
                     } else {
-                        text = "You have set a team goal with " + spinner_value1 + " and " + spinner_value2;
+                        if(spinner_value2.equals("No Friends"))
+                        {text = "You have set a team goal with " + spinner_value1;}
+                        else if(spinner_value1.equals("No Friends") && !spinner_value2.equals("No friends"))
+                        {
+                            text = "You have set a team goal with " + spinner_value2;
+                        }else
+                        {text = "You have set a team goal with " + spinner_value1 + " and " + spinner_value2;}
                         ////////////////////////////
                         String name = goalname.getText().toString();
                         String duration = goalduration.getText().toString();
@@ -391,7 +397,7 @@ public class TeamGoalProductivity extends AppCompatActivity implements AdapterVi
                                     Log.d(TAG, "onSuccess: goalAchieved stat is created");
                                 }
                             });
-                            Toast.makeText(TeamGoalProductivity.this, "Goal Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TeamGoalProductivity.this, text, Toast.LENGTH_SHORT).show();
                             goalname.setText("");
                             goalduration.setText("");
                             gopublic.setPressed(false);
